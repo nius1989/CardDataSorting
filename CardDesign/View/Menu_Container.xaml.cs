@@ -71,11 +71,11 @@ namespace CardDesign
             Canvas.SetTop(resetButton, 5);
             this.Children.Add(resetButton);
 
-            keyboard = new FloatingTouchScreenKeyboard();
-            keyboard.Placement = System.Windows.Controls.Primitives.PlacementMode.Center;
-            keyboard.Width = 900;
-            keyboard.Height = 400;
-            menuLayer.Children.Add(keyboard);
+            //keyboard = new FloatingTouchScreenKeyboard();
+            //keyboard.Placement = System.Windows.Controls.Primitives.PlacementMode.Center;
+            //keyboard.Width = 900;
+            //keyboard.Height = 400;
+            //menuLayer.Children.Add(keyboard);
 
             InitializeComponent();
         }
