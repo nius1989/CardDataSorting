@@ -364,7 +364,7 @@ namespace CardDesign
                     new SavingCard(@"Resource\Card\Contextual Card\Slide21.JPG",20,"Hard to Understand","Ben",Colors.Blue),
                     new SavingCard(@"Resource\Card\Contextual Card\Slide22.JPG",21,"Repetitive Behavior","Ben",Colors.Blue),
                     new SavingCard(@"Resource\Card\Contextual Card\Slide23.JPG",22,"Lack of Patience","Ben",Colors.Blue),
-                    new SavingCard(@"Resource\Card\Contextual Card\Slide31.JPG",23,"Nervous","Ben",Colors.Blue)
+                    new SavingCard(@"Resource\Card\Contextual Card\Slide7.JPG",23,"Nervous","Ben",Colors.Blue)
                 };
                 GenerateLayout(@"Resource\Layout\layout_problem.txt", 2, savingCards);
             }
