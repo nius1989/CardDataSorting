@@ -1,17 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using WpfKb.Controls;
 
 namespace CardDesign
@@ -71,11 +62,12 @@ namespace CardDesign
             Canvas.SetTop(resetButton, 5);
             this.Children.Add(resetButton);
 
-            //keyboard = new FloatingTouchScreenKeyboard();
-            //keyboard.Placement = System.Windows.Controls.Primitives.PlacementMode.Center;
-            //keyboard.Width = 900;
-            //keyboard.Height = 400;
-            //menuLayer.Children.Add(keyboard);
+            keyboard = new FloatingTouchScreenKeyboard();
+            keyboard.Placement = System.Windows.Controls.Primitives.PlacementMode.Center;
+            keyboard.Width = 900;
+            keyboard.Height = 400;
+            keyboard.IsOpen = true;
+            menuLayer.Children.Add(keyboard);
 
             InitializeComponent();
         }

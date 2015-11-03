@@ -341,6 +341,13 @@
     <Resource Include="Resource\Image\menu_bg.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resource\InputSimulator.dll" />
+    <Resource Include="Resource\InputSimulator.xml" />
+    <Content Include="Resource\Microsoft.Expression.Interactions.dll" />
+    <Resource Include="Resource\Microsoft.Expression.Interactions.xml" />
+    <Content Include="Resource\System.Windows.Interactivity.dll" />
+    <Resource Include="Resource\System.Windows.Interactivity.xml" />
+    <Resource Include="Resource\WpfKb.xml" />
     <Resource Include="Resource\Image\copy_icon.png" />
     <Resource Include="Resource\Image\green_button.png" />
     <Resource Include="Resource\Image\orange_button.png" />
