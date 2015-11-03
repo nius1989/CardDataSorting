@@ -249,6 +249,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Resource\Card\Activity Card\Slide1.JPG" />
     <Resource Include="Resource\Card\Activity Card\Slide10.JPG" />
@@ -335,17 +336,21 @@
     <Resource Include="Resource\Image\arrow3.png" />
     <Resource Include="Resource\Image\arrow4.png" />
     <Resource Include="Resource\Image\bg.png" />
-    <Resource Include="Resource\Image\menu_bg.png" />
-    <Resource Include="Resource\Layout\layout1.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resource\Image\card_bg.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resource\Image\blue_button.png" />
+    <Resource Include="Resource\Image\card_bg.png" />
+    <Resource Include="Resource\Image\link_icon.png" />
+    <Resource Include="Resource\Image\menu_bg.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resource\Image\link_icon.png" />
+    <Resource Include="Resource\Image\copy_icon.png" />
+    <Resource Include="Resource\Image\green_button.png" />
+    <Resource Include="Resource\Image\orange_button.png" />
+    <Resource Include="Resource\Image\purple_button.png" />
+    <Resource Include="Resource\Image\recycle_bin.png" />
+    <Resource Include="Resource\Image\white_button.png" />
+    <Resource Include="Resource\Layout\layout_activity.txt" />
+    <Resource Include="Resource\Layout\layout_problem.txt" />
+    <Content Include="Resource\WpfKb.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
