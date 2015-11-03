@@ -66,7 +66,6 @@ namespace CardDesign
             keyboard.Placement = System.Windows.Controls.Primitives.PlacementMode.Center;
             keyboard.Width = 900;
             keyboard.Height = 400;
-            keyboard.IsOpen = true;
             menuLayer.Children.Add(keyboard);
 
             InitializeComponent();
@@ -75,7 +74,7 @@ namespace CardDesign
         private void AddBoxButton_Click(object sender, RoutedEventArgs e)
         {
             Console.WriteLine("here");
-            keyboard.Visibility=Visibility.Visible;
+            keyboard.IsOpen = true;
         }
     }
 }
