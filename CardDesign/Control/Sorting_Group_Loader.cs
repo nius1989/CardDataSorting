@@ -10,9 +10,9 @@ namespace CardDesign
     /// <summary>
     /// The class to initialize the sorting icons
     /// </summary>
-    class Sorting_Icon_Loader
+    class Sorting_Group_Loader
     {
-        public Sorting_Icon_Loader(MainWindow mainWindow)
+        public Sorting_Group_Loader(MainWindow mainWindow)
         {
             this.mainWindow = mainWindow;
         }
@@ -44,14 +44,14 @@ namespace CardDesign
                     String groupid = ch.ToString();
                     double x = (STATICS.SCREEN_WIDTH - STATICS.MENU_BAR_SIZE.Width) / 2;
                     double y = STATICS.SCREEN_HEIGHT/2;
-                    Group_List.GroupButtons[groupid] = new Menu_Sort_Box(menuLayer, "", "" + ch, ButtontText[index], ButtonTextBrif[index]);
-                    Group_List.GroupButtons[groupid].IsManipulationEnabled = true;
-                    Group_List.GroupButtons[groupid].IsHitTestVisible = true;
-                    Matrix matrix = new Matrix(1, 0, 0, 1, x + index * (STATICS.MENU_BAR_SIZE.Width-Group_List.GroupButtons[groupid].Width)/2, y);
-                    Group_List.GroupButtons[groupid].RenderTransform = new MatrixTransform(matrix);
-                    Group_List.GroupButtons[groupid].SetStartPosition(matrix.OffsetX + Group_List.GroupButtons[ch.ToString()].Width / 2,
-                        matrix.OffsetY + Group_List.GroupButtons[ch.ToString()].Height / 2);
-                    menuLayer.AddGroupButton(Group_List.GroupButtons[ch.ToString()]);
+                    Group_List.GroupBox[groupid] = new Menu_Sort_Box(menuLayer, "", "" + ch, ButtontText[index], ButtonTextBrif[index]);
+                    Group_List.GroupBox[groupid].IsManipulationEnabled = true;
+                    Group_List.GroupBox[groupid].IsHitTestVisible = true;
+                    Matrix matrix = new Matrix(1, 0, 0, 1, x + index * (STATICS.MENU_BAR_SIZE.Width-Group_List.GroupBox[groupid].Width)/2, y);
+                    Group_List.GroupBox[groupid].RenderTransform = new MatrixTransform(matrix);
+                    Group_List.GroupBox[groupid].SetStartPosition(matrix.OffsetX + Group_List.GroupBox[ch.ToString()].Width / 2,
+                        matrix.OffsetY + Group_List.GroupBox[ch.ToString()].Height / 2);
+                    menuLayer.AddGroupButton(Group_List.GroupBox[ch.ToString()]);
                     index++;
                 }
            

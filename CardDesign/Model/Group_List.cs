@@ -15,12 +15,12 @@ namespace CardDesign
     {
         
         static Dictionary<String, List<Card>> cardGroups = new Dictionary<string, List<Card>>();
-        static Dictionary<String, Menu_Sort_Box> groupButtons = new Dictionary<String, Menu_Sort_Box>();
+        static Dictionary<String, Menu_Sort_Box> groupBox = new Dictionary<String, Menu_Sort_Box>();
 
-        public static Dictionary<String, Menu_Sort_Box> GroupButtons
+        public static Dictionary<String, Menu_Sort_Box> GroupBox
         {
-            get { return Group_List.groupButtons; }
-            set { Group_List.groupButtons = value; }
+            get { return Group_List.groupBox; }
+            set { Group_List.groupBox = value; }
         }
 
 

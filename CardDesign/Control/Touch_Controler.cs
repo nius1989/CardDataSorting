@@ -14,9 +14,9 @@ namespace CardDesign
     /// </summary>
     public class Touch_Controler
     {
-        MainWindow mainWindow;
-        public Touch_Controler(MainWindow mainWindow) {
-            this.mainWindow = mainWindow;
+        Controlers control;
+        public Touch_Controler(Controlers control) {
+            this.control = control;
         }
         public static bool isTouched()
         {
@@ -29,14 +29,14 @@ namespace CardDesign
 
         public My_Point TouchUp(TouchDevice touchDevice, TouchPoint touchPoint)
         {
-            if (mainWindow.GestureIndicatorLayer.Contain(touchDevice.Id))
+            if (control.MainWindow.GestureIndicatorLayer.Contain(touchDevice.Id))
             {
-                mainWindow.GestureIndicatorLayer.Remove(touchDevice.Id);
+                control.MainWindow.GestureIndicatorLayer.Remove(touchDevice.Id);
             }
             My_Point point = Point_List.ReleasePoint(touchDevice.Id);
             if (!isTouched())
             {
-                mainWindow.GestureIndicatorLayer.Clear();
+                control.MainWindow.GestureIndicatorLayer.Clear();
             }
             return point;
         }
@@ -54,13 +54,13 @@ namespace CardDesign
 
                     lock (Point_List.TouchPointList)
                     {
-                        if (!mainWindow.GestureIndicatorLayer.Contain(touchDevice.Id))
+                        if (!control.MainWindow.GestureIndicatorLayer.Contain(touchDevice.Id))
                         {
-                            mainWindow.GestureIndicatorLayer.Add(touchDevice.Id, touchPoint.Position);
+                            control.MainWindow.GestureIndicatorLayer.Add(touchDevice.Id, touchPoint.Position);
                         }
                         else
                         {
-                            mainWindow.GestureIndicatorLayer.Move(touchDevice.Id, touchPoint.Position);
+                            control.MainWindow.GestureIndicatorLayer.Move(touchDevice.Id, touchPoint.Position);
                         }
                     }
                 }

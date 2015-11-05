@@ -15,7 +15,31 @@ namespace CardDesign
             get { return card1; }
             set { card1 = value; }
         }
-
+        public static Gesture_Event_Copying Detect(List<My_Point> points, Gesture_Controler controler) {
+            List<My_Point> result = new List<My_Point>();
+            foreach (My_Point point in points)
+            {
+                if (point.Sender is Copy_Icon)
+                {
+                    result.Add(point);
+                    Card card = (point.Sender as Copy_Icon).Card;
+                    My_Point[] argPoints = result.ToArray();
+                    object[] objects = new object[2];
+                    objects[0] = card;
+                    Gesture_Event_Copying copyEvent = new Gesture_Event_Copying();
+                    copyEvent.Points = argPoints;
+                    Gesture_List.addGesture(copyEvent);
+                    Gesture_Copying_Listener gestureLinkingListener = new Gesture_Copying_Listener(controler, copyEvent);
+                    copyEvent.Register(objects, argPoints);
+                    foreach (My_Point p in result)
+                    {
+                        controler.NewGesturePoints.Remove(p);
+                    }
+                    return copyEvent;
+                }
+            }
+            return null;
+        }
         public override void Register(object[] senders, My_Point[] myPoints)
         {
             if (myPoints != null)
@@ -25,7 +49,7 @@ namespace CardDesign
                 card1 = (Card)senders[0];
                 Gesture_Event_Args gestureEventArgs = new Gesture_Event_Args();
                 gestureEventArgs.GesturePoints = myPoints;
-                gestureEventArgs.Senders = senders;
+                gestureEventArgs.GestureObjects = senders;
                 this.Status = GESTURESTATUS.REGISTER;
                 OnRegistered(this, gestureEventArgs);
             }
@@ -37,7 +61,7 @@ namespace CardDesign
             {
                 Gesture_Event_Args gestureEventArgs = new Gesture_Event_Args();
                 gestureEventArgs.GesturePoints = myPoints;
-                gestureEventArgs.Senders = senders;
+                gestureEventArgs.GestureObjects = senders;
                 this.Status = GESTURESTATUS.CONTINUE;
                 OnContinued(this, gestureEventArgs);
             }
@@ -66,7 +90,7 @@ namespace CardDesign
                 Gesture_Event_Args gestureEventArgs = new Gesture_Event_Args();
                 gestureEventArgs.GesturePoints = myPoints;
                 My_Point point = myPoints[0];
-                gestureEventArgs.Senders = this.Senders;
+                gestureEventArgs.GestureObjects = this.Senders;
                 this.Status = GESTURESTATUS.TERMINATE;
                 OnTerminated(this, gestureEventArgs);
             }
@@ -76,7 +100,7 @@ namespace CardDesign
         {
             Gesture_Event_Args gestureEventArgs = new Gesture_Event_Args();
             gestureEventArgs.GesturePoints = Points;
-            gestureEventArgs.Senders = Senders;
+            gestureEventArgs.GestureObjects = Senders;
             this.Status = GESTURESTATUS.FAIL;
             OnFailed(this, gestureEventArgs);
         }

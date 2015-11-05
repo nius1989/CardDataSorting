@@ -18,7 +18,7 @@ namespace CardDesign
         }
         private object[] senders;
 
-        public object[] Senders
+        public object[] GestureObjects
         {
             get { return senders; }
             set { senders = value; }

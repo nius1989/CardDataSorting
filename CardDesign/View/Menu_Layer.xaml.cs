@@ -79,7 +79,7 @@ namespace CardDesign
                 matrix.Translate(x, y);
                 menuBars[3].RenderTransform = new MatrixTransform(matrix);
                 menuBars[3].IsManipulationEnabled = false;
-                menuBars[3].IsHitTestVisible = false;
+                menuBars[3].IsHitTestVisible = true;
                 this.Children.Add(menuBars[3]);
             }
         }

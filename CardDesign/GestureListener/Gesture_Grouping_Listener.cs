@@ -22,47 +22,47 @@ namespace CardDesign
         }
         public override void TerminateGesture(object sender, Gesture_Event_Args gEventArgs)
         {
-            foreach (Card c in gEventArgs.Senders)
+            foreach (Card c in gEventArgs.GestureObjects)
             {
-                gestureControler.MainWindow.LinkingGestureLayer.Move(c);
+                gestureControler.Control.MainWindow.LinkingGestureLayer.Move(c);
                 c.Dehightlight();
             }
-            gestureControler.MainWindow.GroupingGestureLayer.Remove(sender as Gesture_Event_Grouping);
+            gestureControler.Control.MainWindow.GroupingGestureLayer.Remove(sender as Gesture_Event_Grouping);
             base.TerminateGesture(sender, gEventArgs);
         }
 
         public override void ContinueGesture(object sender, Gesture_Event_Args gEventArgs)
         {
             Gesture_Event_Grouping gesture = sender as Gesture_Event_Grouping;            
-            Card[] cards = gEventArgs.Senders as Card[];
+            Card[] cards = gEventArgs.GestureObjects as Card[];
             if (!gesture.IsGrouping())
             {
                 foreach (Card c in cards)
                 {
                     c.MoveCard(gesture.Vector.X, gesture.Vector.Y, 0);
                 }
-                gestureControler.MainWindow.GroupingGestureLayer.Remove(gesture);
+                gestureControler.Control.MainWindow.GroupingGestureLayer.Remove(gesture);
             }
             base.ContinueGesture(sender, gEventArgs);
         }
 
         public override void RegisterGesture(object sender, Gesture_Event_Args gEventArgs)
         {
-            foreach (Card c in gEventArgs.Senders)
+            foreach (Card c in gEventArgs.GestureObjects)
             {
                 c.Hightlight();
             }
-            gestureControler.MainWindow.GroupingGestureLayer.Add(sender as Gesture_Event_Grouping);
+            gestureControler.Control.MainWindow.GroupingGestureLayer.Add(sender as Gesture_Event_Grouping);
             base.RegisterGesture(sender, gEventArgs);
         }
 
         public override void FailGesture(object sender, Gesture_Event_Args gEventArgs)
         {            
-            foreach (Card c in gEventArgs.Senders)
+            foreach (Card c in gEventArgs.GestureObjects)
             {
                 c.Dehightlight();
             }
-            gestureControler.MainWindow.GroupingGestureLayer.Remove(sender as Gesture_Event_Grouping);
+            gestureControler.Control.MainWindow.GroupingGestureLayer.Remove(sender as Gesture_Event_Grouping);
             base.FailGesture(sender, gEventArgs);
         }
     }

@@ -129,7 +129,7 @@ namespace CardDesign
             mainWindow.Controlers.InitializeControlers();
             mainWindow.Loaders = new Loaders(mainWindow);
             mainWindow.Loaders.CardLoader.LoadCardLayout(selectedLayoutFile.FullName);
-            mainWindow.Loaders.IconControler.InitializeSortButton();
+            //mainWindow.Loaders.GroupBinControler.InitializeSortButton();
         }
 
         private void Button_Click_Save(object sender, RoutedEventArgs e)
@@ -171,14 +171,14 @@ namespace CardDesign
         {
             if (cardCate.Equals("activity"))
             {
-                Sorting_Icon_Loader.ButtontText = categories[0].Split(',');
-                Sorting_Icon_Loader.ButtonTextBrif = categoryBriefs[0].Split(',');
+                Sorting_Group_Loader.ButtontText = categories[0].Split(',');
+                Sorting_Group_Loader.ButtonTextBrif = categoryBriefs[0].Split(',');
                 sortingCate = categories[0];
             }
             else if (cardCate.Equals("problem"))
             {
-                Sorting_Icon_Loader.ButtontText = categories[2].Split(',');
-                Sorting_Icon_Loader.ButtonTextBrif = categoryBriefs[2].Split(',');
+                Sorting_Group_Loader.ButtontText = categories[2].Split(',');
+                Sorting_Group_Loader.ButtonTextBrif = categoryBriefs[2].Split(',');
                 sortingCate = categories[2];
             }
         }
@@ -186,14 +186,14 @@ namespace CardDesign
         {
             if (cardCate.Equals("activity"))
             {
-                Sorting_Icon_Loader.ButtontText = categories[1].Split(',');
-                Sorting_Icon_Loader.ButtonTextBrif = categoryBriefs[1].Split(',');
+                Sorting_Group_Loader.ButtontText = categories[1].Split(',');
+                Sorting_Group_Loader.ButtonTextBrif = categoryBriefs[1].Split(',');
                 sortingCate = categories[1];
             }
             else if (cardCate.Equals("problem"))
             {
-                Sorting_Icon_Loader.ButtontText = categories[3].Split(',');
-                Sorting_Icon_Loader.ButtonTextBrif = categoryBriefs[3].Split(',');
+                Sorting_Group_Loader.ButtontText = categories[3].Split(',');
+                Sorting_Group_Loader.ButtonTextBrif = categoryBriefs[3].Split(',');
                 sortingCate = categories[3];
             }
         }

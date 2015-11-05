@@ -171,7 +171,7 @@ namespace CardDesign
             Card_List.CardList.Clear();            
             Gesture_List.GestureList.Clear();
             Group_List.CardGroups.Clear();
-            Group_List.GroupButtons.Clear();
+            Group_List.GroupBox.Clear();
             Link_List.CardLinks.Clear();
             Point_List.TouchPointList.Clear();                       
         }

@@ -43,7 +43,7 @@ namespace CardDesign
             {
                 if (Group_List.CardGroups.ContainsKey(key))
                 {
-                    Point center = Group_List.GroupButtons[key].CurrentPosition;
+                    Point center = Group_List.GroupBox[key].CurrentPosition;
                     Card[] cards = Group_List.CardGroups[key].ToArray();
                     if (cards != null && cards.Length > 0)
                     {

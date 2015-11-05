@@ -17,6 +17,51 @@ namespace CardDesign
             get { return startSize; }
             set { startSize = value; }
         }
+
+        public static Gesture_Event_Emphasizing Detect(List<My_Point> points,Gesture_Controler controler)
+        {
+            List<My_Point> result = new List<My_Point>();
+            Gesture_Event_Emphasizing emphasizeEvent = null;
+            if (points.Count > 0)
+            {
+                for (int i = 0; i < points.Count; i++)
+                {
+                    if (Calculator.CalDistance(points[i].StartPoint, points[i].CurrentPoint) < STATICS.MIN_DISTANCE_FOR_MOVE && points[i].Life > STATICS.MIN_LONG_PRESS_LIFE && points[i].Sender is Card)
+                    {
+                        bool moreThan1 = false;
+                        if (points.Count > 1)
+                        {
+                            for (int m = 0; m < points.Count; m++)
+                            {
+                                if (i != m && points[i].Sender == points[m].Sender)
+                                {
+                                    moreThan1 = true;
+                                    break;
+                                }
+                            }
+                        }
+                        if (!moreThan1)
+                        {
+                            result.Add(points[i]);
+                            My_Point[] argPoints = result.ToArray();
+                            object[] objects = new object[argPoints.Length];
+                            objects[0] = argPoints[0].Sender;
+                            emphasizeEvent = new Gesture_Event_Emphasizing();
+                            emphasizeEvent.Points = argPoints;
+                            Gesture_List.addGesture(emphasizeEvent);
+                            Gesture_Emphasizing_Listener gestureListener = new Gesture_Emphasizing_Listener(controler, emphasizeEvent);
+                            emphasizeEvent.Register(objects, argPoints);
+                            foreach (My_Point p in result)
+                            {
+                                points.Remove(p);
+                            }
+                            return emphasizeEvent;
+                        }
+                    }
+                }
+            }
+            return null;
+        }
         public double GetSize()
         {
             TouchPoint point0 = Points[0].CurrentPoint;
@@ -31,7 +76,7 @@ namespace CardDesign
                 Senders = senders;
                 Gesture_Event_Args gestureEventArgs = new Gesture_Event_Args();
                 gestureEventArgs.GesturePoints = myPoints;
-                gestureEventArgs.Senders = senders;
+                gestureEventArgs.GestureObjects = senders;
                 this.Status = GESTURESTATUS.REGISTER;
                 startSize = GetSize();
                 OnRegistered(this, gestureEventArgs);
@@ -44,7 +89,7 @@ namespace CardDesign
             {
                 Gesture_Event_Args gestureEventArgs = new Gesture_Event_Args();
                 gestureEventArgs.GesturePoints = myPoints;
-                gestureEventArgs.Senders = senders;
+                gestureEventArgs.GestureObjects = senders;
                 this.Status = GESTURESTATUS.CONTINUE;
                 OnContinued(this, gestureEventArgs);
             }
@@ -72,7 +117,7 @@ namespace CardDesign
             {
                 Gesture_Event_Args gestureEventArgs = new Gesture_Event_Args();
                 gestureEventArgs.GesturePoints = myPoints;
-                gestureEventArgs.Senders = senders;
+                gestureEventArgs.GestureObjects = senders;
                 this.Status = GESTURESTATUS.TERMINATE;
                 OnTerminated(this, gestureEventArgs);
             }
@@ -82,7 +127,7 @@ namespace CardDesign
         {
             Gesture_Event_Args gestureEventArgs = new Gesture_Event_Args();
             gestureEventArgs.GesturePoints = Points;
-            gestureEventArgs.Senders = Senders;
+            gestureEventArgs.GestureObjects = Senders;
             this.Status = GESTURESTATUS.FAIL;
             OnFailed(this, gestureEventArgs); 
         }

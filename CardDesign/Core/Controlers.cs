@@ -7,7 +7,7 @@ using System.Windows.Media;
 
 namespace CardDesign
 {
-    class Controlers
+    public class Controlers
     {
         private Touch_Controler touchControler;
 
@@ -37,7 +37,31 @@ namespace CardDesign
             get { return userControler; }
             set { userControler = value; }
         }
+
+        Sorting_Group_Controler sortingBoxControler;
+
+        internal Sorting_Group_Controler SortingBoxControler
+        {
+            get{return sortingBoxControler;}
+            set{sortingBoxControler = value;}
+        }
+
+        public MainWindow MainWindow
+        {
+            get
+            {
+                return mainWindow;
+            }
+
+            set
+            {
+                mainWindow = value;
+            }
+        }
+
+
         MainWindow mainWindow;
+
         public Controlers(MainWindow mainWindow)
         {
 
@@ -45,17 +69,17 @@ namespace CardDesign
             STATICS.USER_COLOR["Ben"] = Color.FromArgb(255, 0, 255, 0);
             STATICS.USER_COLOR["Chris"] = Color.FromArgb(255, 255, 255, 255);
             STATICS.USER_COLOR["Danny"] = Color.FromArgb(255, 128, 0, 128);
-            this.mainWindow = mainWindow;
+            this.MainWindow = mainWindow;
             
         }
         public void InitializeControlers() {
-            userControler = new User_Controler(mainWindow);
-            cardControler = new Card_Controler(mainWindow);
+            userControler = new User_Controler(this);
+            cardControler = new Card_Controler(this);
             cardControler.Start();
-            touchControler = new Touch_Controler(mainWindow);
-            gestureControler = new Gesture_Controler(mainWindow);
-            gestureControler.start();
-
+            touchControler = new Touch_Controler(this);
+            gestureControler = new Gesture_Controler(this);
+            gestureControler.Start();
+            sortingBoxControler = new Sorting_Group_Controler(this);
         }
         public void Deinitialize()
         {

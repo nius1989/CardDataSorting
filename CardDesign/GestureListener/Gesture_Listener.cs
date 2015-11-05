@@ -39,7 +39,7 @@ namespace CardDesign
             gestureEvent.Terminated -= terminateHandler;
             gestureEvent.Failed -= failHandler;
 
-            Record_Helper.PrintRecord(gestureControler.MainWindow, gestureEvent, gEventArgs, GESTURESTATUS.TERMINATE);
+            Record_Helper.PrintRecord(gestureControler.Control.MainWindow, gestureEvent, gEventArgs, GESTURESTATUS.TERMINATE);
         }
 
         public virtual void ContinueGesture(object sender, Gesture_Event_Args gEventArgs)
@@ -48,7 +48,7 @@ namespace CardDesign
 
         public virtual void RegisterGesture(object sender, Gesture_Event_Args gEventArgs)
         {
-            Record_Helper.PrintRecord(gestureControler.MainWindow, gestureEvent, gEventArgs, GESTURESTATUS.REGISTER);
+            Record_Helper.PrintRecord(gestureControler.Control.MainWindow, gestureEvent, gEventArgs, GESTURESTATUS.REGISTER);
         }
         public virtual void FailGesture(object sender, Gesture_Event_Args gEventArgs)
         {
@@ -56,7 +56,7 @@ namespace CardDesign
             gestureEvent.Continued -= continueHandler;
             gestureEvent.Terminated -= terminateHandler;
             gestureEvent.Failed -= failHandler;
-            Record_Helper.PrintRecord(gestureControler.MainWindow, gestureEvent, gEventArgs, GESTURESTATUS.FAIL);
+            Record_Helper.PrintRecord(gestureControler.Control.MainWindow, gestureEvent, gEventArgs, GESTURESTATUS.FAIL);
         }
     }
 }

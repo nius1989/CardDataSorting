@@ -3,58 +3,64 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace CardDesign
 {
-    class Gesture_Event_Cutting_Sorting:Gesture_Event
+    class Gesture_Event_Sorting_Group:Gesture_Event
     {
-        public static Gesture_Event_Cutting_Sorting Detect(List<My_Point> points,Gesture_Controler controler)
+
+        public static Gesture_Event_Sorting_Group Detect(List<My_Point> points,Gesture_Controler controler)
         {
             List<My_Point> result = new List<My_Point>();
-            Gesture_Event_Cutting_Sorting cuttingEvent = null;
-            if (Group_List.CardGroups.Count > 0 && controler.Control.MainWindow.SortingGestureLayer.GroupLinks.Count > 0)
+            Gesture_Event_Grouping resturedCluster = null;
+            Gesture_Event_Sorting_Group sortingGroupEvent = null;
+            foreach (My_Point p in points)
             {
-                String[] keys = controler.Control.MainWindow.SortingGestureLayer.GroupLinks.Keys.ToArray();
-                foreach (My_Point p in points)
+                if (p.Sender is Menu_Sort_Box)
                 {
-                    if (p.Sender is Card_Layer)
+                    foreach (Gesture_Event gesture in Gesture_List.GestureList)
                     {
-                        foreach (String key in keys)
+                        if (gesture is Gesture_Event_Grouping)
                         {
-                            Menu_Sort_Box button = Group_List.GroupBox[key];
-                            if (Group_List.CardGroups.ContainsKey(key))
+                            Gesture_Event_Grouping cluster = gesture as Gesture_Event_Grouping;
+                            if (cluster.IsGrouping())
                             {
-                                Card[] cards = Group_List.CardGroups[key].ToArray();
-                                foreach (Card c in cards)
+                                My_Point[] clusterPoints = cluster.Points;
+                                if (Enclose_Helper.PNPoly(clusterPoints, p.CurrentPoint.Position.X, p.CurrentPoint.Position.Y))
                                 {
-                                    bool isIntersect = Calculator.DoLinesIntersect(new Point(button.CurrentPosition.X, button.CurrentPosition.Y),
-                                        new Point(c.CurrentPosition.X, c.CurrentPosition.Y),
-                                        new Point(p.StartPoint.Position.X, p.StartPoint.Position.Y),
-                                        new Point(p.CurrentPoint.Position.X, p.CurrentPoint.Position.Y));
-                                    if (isIntersect)
+                                    resturedCluster = cluster;
+                                    result.Add(p);
+                                    foreach (My_Point clusterPoint in clusterPoints)
                                     {
-                                        result.Add(p);
-                                        My_Point[] argPoints = result.ToArray();
-                                        object[] objects = new object[2];
-                                        objects[0] = button;
-                                        objects[1] = c;
-                                        cuttingEvent = new Gesture_Event_Cutting_Sorting();
-                                        cuttingEvent.Points = argPoints;
-                                        Gesture_List.addGesture(cuttingEvent);
-                                        Gesture_Cutting_Sorting_Listener gestureListener = new Gesture_Cutting_Sorting_Listener(controler, cuttingEvent);
-                                        cuttingEvent.Register(objects, argPoints);
-                                        foreach (My_Point p2 in result)
-                                        {
-                                            points.Remove(p2);
-                                        }
-                                        return cuttingEvent;
+                                        result.Add(clusterPoint);
                                     }
+                                    My_Point[] argPoints = result.ToArray();
+                                    object[] objects = new object[cluster.Senders.Length + 1];
+                                    objects[0] = cluster.Points[0].Sender;
+                                    for (int i = 0; i < cluster.Senders.Length; i++)
+                                    {
+                                        objects[i + 1] = cluster.Senders[i];
+                                    }
+                                    sortingGroupEvent = new Gesture_Event_Sorting_Group();
+                                    sortingGroupEvent.Points = cluster.Points;
+                                    Gesture_List.addGesture(sortingGroupEvent);
+                                    Gesture_SortingGroup_Listener listener = new Gesture_SortingGroup_Listener(controler, sortingGroupEvent);
+                                    sortingGroupEvent.Register(objects, argPoints);
                                 }
                             }
                         }
                     }
                 }
+            }
+            if (resturedCluster != null)
+            {
+                Gesture_List.removeGesture(resturedCluster);
+                controler.Control.MainWindow.GroupingGestureLayer.Remove(resturedCluster);
+                foreach (My_Point p in result)
+                {
+                    points.Remove(p);
+                }
+                return sortingGroupEvent;
             }
             return null;
         }
@@ -99,7 +105,7 @@ namespace CardDesign
         protected override bool checkTerminate(object[] senders, My_Point[] myPoints)
         {
             //DONG: TO DO check if the the gesture is terminated
-            return !Points[0].IsLive;
+            return !Points[0].IsLive || !Points[1].IsLive || !Points[2].IsLive || !Points[3].IsLive || !Points[4].IsLive;
         }
         public override void Terminate(object[] senders, My_Point[] myPoints)
         {

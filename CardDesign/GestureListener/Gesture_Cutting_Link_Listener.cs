@@ -15,9 +15,9 @@ namespace CardDesign
         }
          public override void TerminateGesture(object sender, Gesture_Event_Args gEventArgs)
         {
-            Gesture_Event_Linking link = gEventArgs.Senders[0] as Gesture_Event_Linking;
+            Gesture_Event_Linking link = gEventArgs.GestureObjects[0] as Gesture_Event_Linking;
             Link_List.RemoveLink(link);
-            gestureControler.MainWindow.LinkingGestureLayer.Remove(link);
+            gestureControler.Control.MainWindow.LinkingGestureLayer.Remove(link);
             base.TerminateGesture(sender, gEventArgs);
         }
 

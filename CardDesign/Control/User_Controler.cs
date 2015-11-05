@@ -21,9 +21,9 @@ namespace CardDesign
             set { userList = value; }
         }
 
-        MainWindow mainWindow;
-        public User_Controler(MainWindow mainWin) {
-            this.mainWindow = mainWin;
+        Controlers control;
+        public User_Controler(Controlers control) {
+            this.control = control;
             User user = new User();
             user.Name = "Alex";
             user.UserColor = STATICS.USER_COLOR["Alex"];

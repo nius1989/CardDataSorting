@@ -25,9 +25,9 @@ namespace CardDesign
 
         public override void TerminateGesture(object sender, Gesture_Event_Args gEventArgs)
         {
-            Card c = gEventArgs.Senders[0] as Card;
-            Menu_Sort_Box b = gEventArgs.Senders[1] as Menu_Sort_Box;
-            if (!gestureControler.MainWindow.MenuLayer.IsButtonInOriginPos(b) )
+            Card c = gEventArgs.GestureObjects[0] as Card;
+            Menu_Sort_Box b = gEventArgs.GestureObjects[1] as Menu_Sort_Box;
+            if (!gestureControler.Control.MainWindow.MenuLayer.IsButtonInOriginPos(b))
             {
                 c.SortToGroup(b.GroupID);
                 Group_List.Add(b.GroupID, c);
@@ -52,8 +52,8 @@ namespace CardDesign
 
         public override void RegisterGesture(object sender, Gesture_Event_Args gEventArgs)
         {
-            Menu_Sort_Box b = gEventArgs.Senders[1] as Menu_Sort_Box;
-            if (Group_List.CardGroups.ContainsKey(b.GroupID) && !gestureControler.MainWindow.MenuLayer.IsButtonInOriginPos(b))
+            Menu_Sort_Box b = gEventArgs.GestureObjects[1] as Menu_Sort_Box;
+            if (Group_List.CardGroups.ContainsKey(b.GroupID) && !gestureControler.Control.MainWindow.MenuLayer.IsButtonInOriginPos(b))
             {
                 Card[] cards = Group_List.CardGroups[b.GroupID].ToArray();
                 foreach (Card c in cards) { c.Hightlight(Colors.Gold); }
@@ -62,7 +62,7 @@ namespace CardDesign
         }
         public override void FailGesture(object sender, Gesture_Event_Args gEventArgs) 
         {
-            Menu_Sort_Box b = gEventArgs.Senders[1] as Menu_Sort_Box;
+            Menu_Sort_Box b = gEventArgs.GestureObjects[1] as Menu_Sort_Box;
 
             if (Group_List.CardGroups.ContainsKey(b.GroupID))
             {

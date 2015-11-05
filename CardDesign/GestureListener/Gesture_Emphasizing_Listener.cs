@@ -29,7 +29,7 @@ namespace CardDesign
 
         public override void TerminateGesture(object sender, Gesture_Event_Args gEventArgs)
         {
-            Card c = gEventArgs.Senders[0] as Card;
+            Card c = gEventArgs.GestureObjects[0] as Card;
             double newsize = (sender as Gesture_Event_Emphasizing).GetSize();
             double oldsize = (sender as Gesture_Event_Emphasizing).StartSize;
             if (newsize < oldsize) {
@@ -40,7 +40,7 @@ namespace CardDesign
 
         public override void ContinueGesture(object sender, Gesture_Event_Args gEventArgs)
         {
-            Card c = gEventArgs.Senders[0] as Card;
+            Card c = gEventArgs.GestureObjects[0] as Card;
             double newsize = (sender as Gesture_Event_Emphasizing).GetSize();
             double oldsize = (sender as Gesture_Event_Emphasizing).StartSize;
             if (newsize != oldsize)

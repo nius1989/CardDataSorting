@@ -20,12 +20,12 @@ namespace CardDesign
         public override void TerminateGesture(object sender, Gesture_Event_Args gEventArgs)
         {
             Gesture_Event_Linking gesture = sender as Gesture_Event_Linking;
-            if (gEventArgs.Senders != null && gEventArgs.Senders[1] != null)
+            if (gEventArgs.GestureObjects != null && gEventArgs.GestureObjects[1] != null)
             {
-                gestureControler.MainWindow.LinkingGestureLayer.Move(gesture);
+                gestureControler.Control.MainWindow.LinkingGestureLayer.Move(gesture);
             }
             else {
-                gestureControler.MainWindow.LinkingGestureLayer.Remove(gesture);
+                gestureControler.Control.MainWindow.LinkingGestureLayer.Remove(gesture);
             }
 
             base.TerminateGesture(sender, gEventArgs);
@@ -34,14 +34,14 @@ namespace CardDesign
         public override void ContinueGesture(object sender, Gesture_Event_Args gEventArgs)
         {
             Gesture_Event_Linking gesture = sender as Gesture_Event_Linking;
-            gestureControler.MainWindow.LinkingGestureLayer.Move(gesture);
+            gestureControler.Control.MainWindow.LinkingGestureLayer.Move(gesture);
             base.ContinueGesture(sender, gEventArgs);
         }
 
         public override void RegisterGesture(object sender, Gesture_Event_Args gEventArgs)
         {
             Gesture_Event_Linking gesture = sender as Gesture_Event_Linking;
-            gestureControler.MainWindow.LinkingGestureLayer.Add(gesture);
+            gestureControler.Control.MainWindow.LinkingGestureLayer.Add(gesture);
             base.RegisterGesture(sender, gEventArgs);
         }
 

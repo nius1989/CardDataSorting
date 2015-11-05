@@ -8,6 +8,44 @@ namespace CardDesign
 {
     public class Gesture_Event_Showing:Gesture_Event
     {
+        public static Gesture_Event_Showing Detect(List<My_Point> points,Gesture_Controler controler)
+        {
+            List<My_Point> result = new List<My_Point>();
+            if (points.Count > 0)
+            {
+                for (int i = 0; i < points.Count; i++)
+                {
+                    if (points[i].Life > STATICS.MIN_SHOW_LIFE && points[i].Sender is Card)
+                    {
+                        result.Add(points[i]);
+                        for (int m = 0; m < points.Count; m++)
+                        {
+                            if (i != m && points[i].Sender == points[m].Sender && points[m].Life > STATICS.MIN_SHOW_LIFE)
+                            {
+                                result.Add(points[m]);
+                            }
+                        }
+                        if (result.Count > 2)
+                        {
+                            My_Point[] argPoints = result.ToArray();
+                            object[] objects = new object[1];
+                            objects[0] = argPoints[0].Sender;
+                            Gesture_Event_Showing showEvent = new Gesture_Event_Showing();
+                            showEvent.Points = argPoints;
+                            Gesture_List.addGesture(showEvent);
+                            Gesture_Showing_Listener gestureListener = new Gesture_Showing_Listener(controler, showEvent);
+                            showEvent.Register(objects, argPoints);
+                            return showEvent;
+                        }
+                        else
+                        {
+                            result.Clear();
+                        }
+                    }
+                }
+            }
+            return null;
+        }
         public override void Register(object[] senders, My_Point[] myPoints)
         {
             if (myPoints != null)
@@ -16,7 +54,7 @@ namespace CardDesign
                 Senders = senders;
                 Gesture_Event_Args gestureEventArgs = new Gesture_Event_Args();
                 gestureEventArgs.GesturePoints = myPoints;
-                gestureEventArgs.Senders = senders;
+                gestureEventArgs.GestureObjects = senders;
                 this.Status = GESTURESTATUS.REGISTER;
                 OnRegistered(this, gestureEventArgs);
             }
@@ -28,7 +66,7 @@ namespace CardDesign
             {
                 Gesture_Event_Args gestureEventArgs = new Gesture_Event_Args();
                 gestureEventArgs.GesturePoints = myPoints;
-                gestureEventArgs.Senders = senders;
+                gestureEventArgs.GestureObjects = senders;
                 this.Status = GESTURESTATUS.CONTINUE;
                 OnContinued(this, gestureEventArgs);
             }
@@ -58,7 +96,7 @@ namespace CardDesign
             {
                 Gesture_Event_Args gestureEventArgs = new Gesture_Event_Args();
                 gestureEventArgs.GesturePoints = myPoints;
-                gestureEventArgs.Senders = senders;
+                gestureEventArgs.GestureObjects = senders;
                 this.Status = GESTURESTATUS.TERMINATE;
                 OnTerminated(this, gestureEventArgs);
             }
@@ -68,7 +106,7 @@ namespace CardDesign
         {
             Gesture_Event_Args gestureEventArgs = new Gesture_Event_Args();
             gestureEventArgs.GesturePoints = Points;
-            gestureEventArgs.Senders = Senders;
+            gestureEventArgs.GestureObjects = Senders;
             this.Status = GESTURESTATUS.FAIL;
             OnFailed(this, gestureEventArgs);
         }

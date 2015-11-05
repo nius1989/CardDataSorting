@@ -24,7 +24,6 @@ namespace CardDesign
     /// </summary>
     public partial class Card : Canvas
     {
-
         Card_Loader cardControler;
         int uID = 0;
         int zIndex = 0;
@@ -413,7 +412,7 @@ namespace CardDesign
                     String str = "";
                     foreach (String s in sortingGroups)
                     {
-                        str += Group_List.GroupButtons[s].GroupTextBrief+" ";
+                        str += Group_List.GroupBox[s].GroupTextBrief+" ";
                     }
                     sortingGroupText.Text = str;
                 }
@@ -429,7 +428,7 @@ namespace CardDesign
                     String str = "";
                     foreach (String s in sortingGroups)
                     {
-                        str += Group_List.GroupButtons[s].GroupTextBrief + " ";
+                        str += Group_List.GroupBox[s].GroupTextBrief + " ";
                     }
                     sortingGroupText.Text = str;
                 }

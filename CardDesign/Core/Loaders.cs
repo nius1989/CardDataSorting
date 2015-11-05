@@ -15,17 +15,17 @@ namespace CardDesign
             set { cardLoader = value; }
         }
 
-        Sorting_Icon_Loader iconLoader;
-        internal Sorting_Icon_Loader IconControler
+        Sorting_Group_Loader groupBinLoader;
+        internal Sorting_Group_Loader GroupBinControler
         {
-            get { return iconLoader; }
-            set { iconLoader = value; }
+            get { return groupBinLoader; }
+            set { groupBinLoader = value; }
         }
 
         public Loaders(MainWindow mainWindow)
         {
             cardLoader = new Card_Loader(mainWindow);
-            iconLoader = new Sorting_Icon_Loader(mainWindow);
+            groupBinLoader = new Sorting_Group_Loader(mainWindow);
         }
 
         internal void Deinitialize()

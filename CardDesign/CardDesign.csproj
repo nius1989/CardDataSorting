@@ -81,14 +81,14 @@
     <Compile Include="GestureListener\Gesture_Linking_Listener.cs" />
     <Compile Include="GestureListener\Gesture_Sorting_Listener.cs" />
     <Compile Include="GestureListener\Gesture_Showing_Listener.cs" />
-    <Compile Include="Control\Sorting_Icon_Loader.cs" />
+    <Compile Include="Control\Sorting_Group_Loader.cs" />
     <Compile Include="Control\Touch_Controler.cs" />
     <Compile Include="Control\User_Controler.cs" />
     <Compile Include="Model\Card_List.cs" />
     <Compile Include="GestureEvent\Gesture_Event_Copying.cs" />
     <Compile Include="GestureEvent\Gesture_Event_Cutting_Link.cs" />
     <Compile Include="GestureEvent\Gesture_Event_Cutting_Sorting.cs" />
-    <Compile Include="GestureEvent\Gesture_Event_SortingGroup.cs" />
+    <Compile Include="GestureEvent\Gesture_Event_Sorting_Group.cs" />
     <Compile Include="GestureEvent\Gesture_Event_Showing_Sorting.cs" />
     <Compile Include="Model\Group_List.cs" />
     <Compile Include="GestureEvent\Gesture_Event_Emphasizing.cs" />
@@ -102,8 +102,13 @@
     <Compile Include="Model\Link_List.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Tool\Calculator.cs" />
+    <Compile Include="Tool\Enclose_Helper.cs" />
     <Compile Include="Tool\LinearMatrixAnimation.cs" />
     <Compile Include="Tool\Record_Helper.cs" />
+    <Compile Include="View\BaseCard.cs" />
+    <Compile Include="View\Document_Card.xaml.cs">
+      <DependentUpon>Document_Card.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Grouping_Gesture_Layer.xaml.cs">
       <DependentUpon>Grouping_Gesture_Layer.xaml</DependentUpon>
     </Compile>
@@ -163,6 +168,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\Document_Card.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Grouping_Gesture_Layer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -342,12 +351,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resource\InputSimulator.dll" />
-    <Resource Include="Resource\InputSimulator.xml" />
     <Content Include="Resource\Microsoft.Expression.Interactions.dll" />
-    <Resource Include="Resource\Microsoft.Expression.Interactions.xml" />
     <Content Include="Resource\System.Windows.Interactivity.dll" />
-    <Resource Include="Resource\System.Windows.Interactivity.xml" />
-    <Resource Include="Resource\WpfKb.xml" />
     <Resource Include="Resource\Image\copy_icon.png" />
     <Resource Include="Resource\Image\green_button.png" />
     <Resource Include="Resource\Image\orange_button.png" />

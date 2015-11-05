@@ -23,7 +23,7 @@ namespace CardDesign
         public override void TerminateGesture(object sender, Gesture_Event_Args gEventArgs)
         {
             
-            Card card = gEventArgs.Senders[0] as Card;
+            Card card = gEventArgs.GestureObjects[0] as Card;
             foreach (Card c in Card_List.CardList)
             {
                 if (c != card)
@@ -44,7 +44,7 @@ namespace CardDesign
 
         public override void RegisterGesture(object sender, Gesture_Event_Args gEventArgs)
         {
-            Card card = gEventArgs.Senders[0] as Card;
+            Card card = gEventArgs.GestureObjects[0] as Card;
             foreach (Card c in Card_List.CardList) {
                 if (c != card) {
                     if (c.UID == card.UID) {
@@ -55,8 +55,8 @@ namespace CardDesign
             base.RegisterGesture(sender, gEventArgs);
         }
         public override void FailGesture(object sender, Gesture_Event_Args gEventArgs)
-        {      
-            gestureControler.MainWindow.SortingGestureLayer.RemoveAll();
+        {
+            gestureControler.Control.MainWindow.SortingGestureLayer.RemoveAll();
             base.FailGesture(sender, gEventArgs);
         }
     }

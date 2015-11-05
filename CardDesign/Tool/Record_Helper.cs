@@ -32,7 +32,7 @@ namespace CardDesign
 
                 List<String> cards = new List<string>();
                 List<String> buttons = new List<string>();
-                foreach (object obj in args.Senders) {
+                foreach (object obj in args.GestureObjects) {
                     if (obj is Card) {
                         Card c = obj as Card;
                         oneRecord += "$" + "Card={" + c.Owner + "," + c.UID + "," + c.CardText + "}";

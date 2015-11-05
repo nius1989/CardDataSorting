@@ -23,8 +23,8 @@ namespace CardDesign
 
         public override void ContinueGesture(object sender, Gesture_Event_Args gEventArgs)
         {
-            if(gEventArgs.Senders.Length>1){
-                Card card2 = gEventArgs.Senders[0] as Card;
+            if(gEventArgs.GestureObjects.Length>1){
+                Card card2 = gEventArgs.GestureObjects[0] as Card;
                 card2.MoveCard(gEventArgs.GesturePoints[0].CurrentPoint.Position.X - lastPosi.X,
                     gEventArgs.GesturePoints[0].CurrentPoint.Position.Y - lastPosi.Y,
                     0);
@@ -36,10 +36,10 @@ namespace CardDesign
         public override void RegisterGesture(object sender, Gesture_Event_Args gEventArgs)
         {
 
-            Card card=gEventArgs.Senders[0] as Card;
-            Card card2=gestureControler.MainWindow.Controlers.CardControler.CopyCard(card);
+            Card card=gEventArgs.GestureObjects[0] as Card;
+            Card card2 = gestureControler.Control.MainWindow.Controlers.CardControler.CopyCard(card);
             if (card2 != null) {
-                gEventArgs.Senders[1] = card2;
+                gEventArgs.GestureObjects[1] = card2;
             }
             lastPosi = gEventArgs.GesturePoints[0].CurrentPoint.Position;
             base.RegisterGesture(sender, gEventArgs);

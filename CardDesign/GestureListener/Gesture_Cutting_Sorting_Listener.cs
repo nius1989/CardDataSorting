@@ -21,12 +21,10 @@ namespace CardDesign
         }
          public override void TerminateGesture(object sender, Gesture_Event_Args gEventArgs)
         {
-            Card c = gEventArgs.Senders[1] as Card;
-            Menu_Sort_Box b = gEventArgs.Senders[0] as Menu_Sort_Box;
+            Card c = gEventArgs.GestureObjects[1] as Card;
+            Menu_Sort_Box b = gEventArgs.GestureObjects[0] as Menu_Sort_Box;
             Group_List.RemoveCard(b.GroupID, c);
-            gestureControler.MainWindow.SortingGestureLayer.Repaint();
-
-            
+            gestureControler.Control.MainWindow.SortingGestureLayer.Repaint();            
             base.TerminateGesture(sender, gEventArgs);
         }
 
