@@ -24,8 +24,8 @@ namespace CardDesign
             textBlock.Width = STATICS.DEAULT_CARD_SIZE.Width-2;
             textBlock.Height = STATICS.DEAULT_CARD_SIZE.Height-2;
             textBlock.Foreground = new SolidColorBrush(Colors.Black);
-            textBlock.FontSize = 7;
-            textBlock.LineHeight = 9;
+            textBlock.FontSize = 5;
+            textBlock.LineHeight = 7;
             textBlock.TextWrapping = TextWrapping.Wrap;
             Matrix mx = new Matrix();
             mx.Translate(-textBlock.Width / 2, -textBlock.Height / 2);

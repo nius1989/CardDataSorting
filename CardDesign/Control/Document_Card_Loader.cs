@@ -56,17 +56,17 @@ namespace CardDesign
             int index = 0;
             Dictionary<String, int[]> stackPosi = new Dictionary<string, int[]>();
             stackPosi.Add("Alex", new int[] { 
-                (int)STATICS.DEAULT_CARD_SIZE_WITH_BORDER.Width + rand.Next(100) - 50, 
-                STATICS.SCREEN_HEIGHT - (int)STATICS.DEAULT_CARD_SIZE_WITH_BORDER.Height + rand.Next(20) - 10 });
+                (int)STATICS.DEAULT_CARD_SIZE_WITH_BORDER.Width, 
+                STATICS.SCREEN_HEIGHT - (int)STATICS.DEAULT_CARD_SIZE_WITH_BORDER.Height});
             stackPosi.Add("Ben", new int[] { 
-                (int)STATICS.DEAULT_CARD_SIZE_WITH_BORDER.Width + rand.Next(100) - 50, 
-                STATICS.SCREEN_HEIGHT - (int)STATICS.DEAULT_CARD_SIZE_WITH_BORDER.Height + rand.Next(20) - 10 });
+                STATICS.SCREEN_WIDTH -  (int)STATICS.DEAULT_CARD_SIZE_WITH_BORDER.Width , 
+                STATICS.SCREEN_HEIGHT - (int)STATICS.DEAULT_CARD_SIZE_WITH_BORDER.Height});
             stackPosi.Add("Chris", new int[] { 
-                (int)STATICS.DEAULT_CARD_SIZE_WITH_BORDER.Width + rand.Next(100) - 50, 
-                STATICS.SCREEN_HEIGHT - (int)STATICS.DEAULT_CARD_SIZE_WITH_BORDER.Height + rand.Next(20) - 10 });
+                (int)STATICS.DEAULT_CARD_SIZE_WITH_BORDER.Width, 
+                STATICS.SCREEN_HEIGHT - (int)STATICS.DEAULT_CARD_SIZE_WITH_BORDER.Height });
             stackPosi.Add("Danny", new int[] { 
-                (int)STATICS.DEAULT_CARD_SIZE_WITH_BORDER.Width + rand.Next(100) - 50, 
-                STATICS.SCREEN_HEIGHT - (int)STATICS.DEAULT_CARD_SIZE_WITH_BORDER.Height + rand.Next(20) - 10 });
+                (int)STATICS.DEAULT_CARD_SIZE_WITH_BORDER.Width, 
+                STATICS.SCREEN_HEIGHT - (int)STATICS.DEAULT_CARD_SIZE_WITH_BORDER.Height});
             for (int i = 0; i < loadingCards.Length; i++)
             {
                 if (savingCards[i].userID.Equals("Alex") && STATICS.ALEX_ACTIVE ||
@@ -75,7 +75,10 @@ namespace CardDesign
                     savingCards[i].userID.Equals("Danny") && STATICS.DANNY_ACTIVE)
                 {
                     loadingCards[i] = new LoadingCard();
-                    loadingCards[i].position = stackPosi[savingCards[i].userID];
+                    if (i < loadingCards.Length / 2)
+                        loadingCards[i].position = new int[]{stackPosi["Alex"][0]+rand.Next(60)-30,stackPosi["Alex"][1]+rand.Next(60)-30};
+                    else
+                        loadingCards[i].position = new int[] { stackPosi["Ben"][0] + rand.Next(60) - 30, stackPosi["Ben"][1] + rand.Next(60) - 30 };
                     loadingCards[i].rotate = rand.Next(8) - 4;
                     loadingCards[i].cardID = savingCards[i].cardID;
                     loadingCards[i].userID = savingCards[i].userID;

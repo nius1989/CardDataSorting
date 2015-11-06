@@ -140,9 +140,9 @@ namespace CardDesign
                        -backgroundRect.Height / 2));
             backgroundRect.Fill = new SolidColorBrush(backgroundColor);
 
-            //ResetBrightness();
+            ResetBrightness();
 
-            sortingGroupText.Foreground = new SolidColorBrush(Colors.White);
+            sortingGroupText.Foreground = new SolidColorBrush(Colors.Gray);
             sortingGroupText.FontSize = 14;
             sortingGroupText.FontFamily = new FontFamily("Quartz MS");
             sortingGroupText.TextWrapping = TextWrapping.WrapWithOverflow;
