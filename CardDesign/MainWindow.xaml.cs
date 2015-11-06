@@ -128,6 +128,8 @@ namespace CardDesign
             Timeline.DesiredFrameRateProperty.OverrideMetadata(typeof(Timeline), new FrameworkPropertyMetadata { DefaultValue = 28 });
             controlWindow = new Control_Window(this);
             controlWindow.Show();
+
+            this.Visibility = Visibility.Hidden;
         }
         public void SetLayout(String layoutFile)
         {
@@ -175,6 +177,15 @@ namespace CardDesign
             Link_List.CardLinks.Clear();
             Point_List.TouchPointList.Clear();                       
         }
+
+        internal void Start(String layoutFile) {
+            InitializeViews();
+            Controlers = new Controlers(this);
+            Controlers.Initialize();
+            Loaders = new Loaders(this);
+            Loaders.Initialize(layoutFile);
+            this.Visibility = Visibility.Visible;
+        }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Maximized;
@@ -182,13 +193,13 @@ namespace CardDesign
 
         protected override void OnMouseEnter(MouseEventArgs e)
         {
-            //Mouse.OverrideCursor = Cursors.None;
+            Mouse.OverrideCursor = Cursors.None;
             base.OnMouseEnter(e);
         }
 
         protected override void OnMouseLeave(MouseEventArgs e)
         {
-            //Mouse.OverrideCursor = Cursors.Arrow;
+            Mouse.OverrideCursor = Cursors.Arrow;
             base.OnMouseLeave(e);
         }
     }

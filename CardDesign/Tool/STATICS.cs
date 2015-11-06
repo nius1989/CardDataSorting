@@ -10,7 +10,7 @@ namespace CardDesign
 {
     class STATICS
     {
-        public static bool DEBUG_MODE = false;
+        public static bool DEBUG_MODE = true;
         public static int SCREEN_WIDTH = 1920;
         public static int SCREEN_HEIGHT = 1080;
         public static Size DEAULT_CARD_SIZE = new Size(160,120);//default card size
@@ -22,7 +22,7 @@ namespace CardDesign
         public static double MIN_DISTANCE_FOR_MOVE = 30;
         public static double MIN_LONG_PRESS_LIFE = 300;//Min time to active emphasizing gesture
         public static double MIN_SHOW_LIFE = 1000;//Min time to active showing gesture
-        public static double START_CARD_BRIGHT = 0.3;
+        public static double START_CARD_BRIGHT = 1.0;
         public static int CARD_NUMBER = 16;
         public static double MAX_CARD_SCALE = 8;
         public static double MIN_CARD_SCALE = 0.67;

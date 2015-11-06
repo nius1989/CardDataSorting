@@ -35,8 +35,8 @@ namespace CardDesign
                 foreach (object obj in args.GestureObjects) {
                     if (obj is Card) {
                         Card c = obj as Card;
-                        oneRecord += "$" + "Card={" + c.Owner + "," + c.UID + "," + c.CardText + "}";
-                        cards.Add(c.Owner + "," + c.UID + "," + c.CardText);
+                        oneRecord += "$" + "Card={" + c.Owner + "," + c.UUID + ","  + "}";
+                        cards.Add(c.Owner + "," + c.UUID + ",");
                     }
                     else if (obj is Menu_Sort_Box) {
                         Menu_Sort_Box b = obj as Menu_Sort_Box;

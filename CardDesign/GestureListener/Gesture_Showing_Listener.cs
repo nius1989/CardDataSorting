@@ -28,7 +28,7 @@ namespace CardDesign
             {
                 if (c != card)
                 {
-                    if (c.UID == card.UID)
+                    if (c.UUID == card.UUID)
                     {
                         c.Dehightlight();
                     }
@@ -47,7 +47,7 @@ namespace CardDesign
             Card card = gEventArgs.GestureObjects[0] as Card;
             foreach (Card c in Card_List.CardList) {
                 if (c != card) {
-                    if (c.UID == card.UID) {
+                    if (c.UUID == card.UUID) {
                         c.Hightlight();
                     }
                 }

@@ -72,10 +72,9 @@ namespace CardDesign
             this.MainWindow = mainWindow;
             
         }
-        public void InitializeControlers() {
+        public void Initialize() {
             userControler = new User_Controler(this);
             cardControler = new Card_Controler(this);
-            cardControler.Start();
             touchControler = new Touch_Controler(this);
             gestureControler = new Gesture_Controler(this);
             gestureControler.Start();
@@ -87,7 +86,6 @@ namespace CardDesign
             Link_List.CardLinks.Clear();
             Group_List.CardGroups.Clear();
             Card_List.CardList.Clear();
-            cardControler.Quit();
             cardControler = null;
             gestureControler.quit();
             gestureControler = null;

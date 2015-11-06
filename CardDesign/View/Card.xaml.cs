@@ -24,24 +24,18 @@ namespace CardDesign
     /// </summary>
     public partial class Card : Canvas
     {
-        Card_Loader cardControler;
-        int uID = 0;
-        int zIndex = 0;
+        Card_Controler cardControler;
+        String uuid = "";
         String owner = "";
-        String cardText = "";
+        int zIndex = 0;
         Rectangle backgroundRect = new Rectangle();
         Rectangle hightlightMask = new Rectangle();
-        Image image = new Image();
-        TextBlock topText = new TextBlock();
-        TextBlock bottomText = new TextBlock();
         TextBlock sortingGroupText = new TextBlock();
         Linking_Icon linkingIcon;
         Copy_Icon copyIcon;
-        String imgFile;
         Color backgroundColor;
         Color hightlightColor = Colors.Gold;
         double brightness = STATICS.START_CARD_BRIGHT;
-        DoubleAnimation highlightAnim;
         Point defaultPostion = new Point(0, 0);
         Point previousPostion = new Point(0, 0);
         Point currentPosition = new Point(0, 0);
@@ -49,13 +43,10 @@ namespace CardDesign
         double currentScale = 1;
         double currentRotation = 0;
         int touchPointNum = 0;
-        bool isJointInterested = false;
-        List<String> sortingGroups = new List<string>();
+        List<String> groupLists = new List<string>();
         Vector direction = new Vector(1, 1);
 
-
-
-        public Card_Loader CardControler
+        public Card_Controler CardControler
         {
             get { return cardControler; }
             set { cardControler = value; }
@@ -85,26 +76,16 @@ namespace CardDesign
             get { return hightlightColor; }
             set { hightlightColor = value; }
         }
-        public int UID
+        public String UUID
         {
-            get { return uID; }
-            set { uID = value; }
+            get { return uuid; }
+            set { uuid = value; }
         }
-        public String ImgFile
-        {
-            get { return imgFile; }
-            set { imgFile = value; }
-        }
+
         public Point CurrentPosition
         {
             get { return currentPosition; }
             set { currentPosition = value; }
-        }
-
-        public bool IsJointInterested
-        {
-            get { return isJointInterested; }
-            set { isJointInterested = value; }
         }
 
         public double Brightness
@@ -112,15 +93,10 @@ namespace CardDesign
             get { return brightness; }
             set { brightness = value; }
         }
-        public String CardText
-        {
-            get { return cardText; }
-            set { cardText = value; }
-        }
         public List<String> SortingGroups
         {
-            get { return sortingGroups; }
-            set { sortingGroups = value; }
+            get { return groupLists; }
+            set { groupLists = value; }
         }
         public double CurrentRotation
         {
@@ -142,50 +118,29 @@ namespace CardDesign
             get { return direction; }
             set { direction = value; }
         }
-        public Card(Card_Loader cardControl)
+        public Card(Card_Controler cardControl)
         {
             InitializeComponent();
-            this.IsManipulationEnabled = true;
             this.cardControler = cardControl;
+            this.IsManipulationEnabled = true;
 
             this.Width = STATICS.DEAULT_CARD_SIZE_WITH_BORDER.Width;
             this.Height = STATICS.DEAULT_CARD_SIZE_WITH_BORDER.Height;
         }
-        public void InitializeCard(String imgFile, String cardTxt, Color maskColor, Point defaultPosi, double defaultDegree, double defaultScale, int zidx)
+        public virtual void InitializeCard(Color? maskColor, Point defaultPosi, double defaultDegree, double defaultScale, int zidx)
         {
-            SetCardImage(imgFile);
 
-            this.backgroundColor = maskColor;
+            this.backgroundColor = maskColor != null ? maskColor.Value : Colors.White;
             backgroundRect.Width = STATICS.DEAULT_CARD_SIZE.Width;
             backgroundRect.Height = STATICS.DEAULT_CARD_SIZE.Height;
-            backgroundRect.Opacity = 1;
-            backgroundRect.StrokeThickness = 0;
+            backgroundRect.StrokeThickness = 0.3;
+            backgroundRect.Stroke = new SolidColorBrush(Colors.Black);
             backgroundRect.RenderTransform = new MatrixTransform(new Matrix(1, 0, 0, 1,
                        -backgroundRect.Width / 2,
                        -backgroundRect.Height / 2));
-            backgroundRect.Opacity = 0.9;
-            Rectangle shine = new Rectangle();
-            shine.Width = STATICS.DEAULT_CARD_SIZE.Width;
-            shine.Height = STATICS.DEAULT_CARD_SIZE.Height;
-            shine.Opacity = 0.3;
-            ImageBrush ib = new ImageBrush();
-            ib.ImageSource = new BitmapImage(new Uri(@"Resource\Image\card_bg.png", UriKind.Relative));
-            shine.Fill = ib;
-            shine.RenderTransform = new MatrixTransform(new Matrix(1, 0, 0, 1,
-                       -backgroundRect.Width / 2,
-                       -backgroundRect.Height / 2));
+            backgroundRect.Fill = new SolidColorBrush(backgroundColor);
 
-            ResetBrightness();
-
-            this.cardText = cardTxt;
-            topText.Text = this.cardText;
-            bottomText.Text = this.cardText;
-
-            topText.Foreground = new SolidColorBrush(Colors.White);
-            topText.FontSize = 16;
-            topText.Width = backgroundRect.Width;
-            topText.TextWrapping = TextWrapping.WrapWithOverflow;
-            topText.RenderTransform = new MatrixTransform(new Matrix(1, 0, 0, 1, -backgroundRect.Width / 2 + 7, -backgroundRect.Height / 2 + 3));
+            //ResetBrightness();
 
             sortingGroupText.Foreground = new SolidColorBrush(Colors.White);
             sortingGroupText.FontSize = 14;
@@ -197,11 +152,6 @@ namespace CardDesign
             matrix.Translate(-backgroundRect.Width / 2, -backgroundRect.Height / 2 + 5);
             matrix.Rotate(180);
             matrix.Translate(-5, 9);
-            bottomText.RenderTransform = new MatrixTransform(matrix);
-            bottomText.Foreground = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255));
-            bottomText.FontSize = 16;
-            bottomText.Width = backgroundRect.Width;
-            bottomText.TextWrapping = TextWrapping.WrapWithOverflow;
 
             hightlightMask.Width = this.Width;
             hightlightMask.Height = this.Height;
@@ -225,10 +175,6 @@ namespace CardDesign
 
             this.Container.Children.Add(hightlightMask);
             this.Container.Children.Add(backgroundRect);
-            this.Container.Children.Add(shine);
-            this.Container.Children.Add(image);
-            this.Container.Children.Add(topText);
-            this.Container.Children.Add(bottomText);
             this.Container.Children.Add(sortingGroupText);
 
 
@@ -258,7 +204,6 @@ namespace CardDesign
                 }
                 else if (newOpacity < STATICS.START_CARD_BRIGHT)//if dehight
                 {
-                    isJointInterested = false;
                     newOpacity = STATICS.START_CARD_BRIGHT;
                 }
                 brightness = newOpacity;
@@ -272,21 +217,7 @@ namespace CardDesign
                 updateMaskColor();
             }));
         }
-        public void SetCardImage(String file)
-        {
-            imgFile = file;
-            Dispatcher.BeginInvoke(new Action(() =>
-            {
-                BitmapImage img = new BitmapImage(new Uri(imgFile, UriKind.RelativeOrAbsolute));
-                image.Height = 60;
-                image.Width = image.Height * img.Width / img.Height;
-                image.Source = img;
-                //image.Opacity = STATICS.START_CARD_BRIGHT; 
-                double offsetV = (STATICS.DEAULT_CARD_SIZE.Height - image.Height) / 2;
-                double offsetH = (STATICS.DEAULT_CARD_SIZE.Width - image.Width) / 2;
-                image.RenderTransform = new MatrixTransform(new Matrix(1, 0, 0, 1, -STATICS.DEAULT_CARD_SIZE.Width / 2, -STATICS.DEAULT_CARD_SIZE.Height / 2));
-            }));
-        }
+
         public void MoveCard(double x, double y, double duration)
         {
             Dispatcher.BeginInvoke(new Action(() =>
@@ -360,13 +291,9 @@ namespace CardDesign
         {
             Dispatcher.BeginInvoke(new Action(() =>
                {
-                   if (!isJointInterested)
-                   {
-                       this.hightlightMask.Fill = new SolidColorBrush(hightlightColor);
-                       DoubleAnimation animation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(STATICS.ANIMATION_DURATION * 0.3));
-                       this.hightlightMask.BeginAnimation(Canvas.OpacityProperty, animation);
-
-                   }
+                   this.hightlightMask.Fill = new SolidColorBrush(hightlightColor);
+                   DoubleAnimation animation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(STATICS.ANIMATION_DURATION * 0.3));
+                   this.hightlightMask.BeginAnimation(Canvas.OpacityProperty, animation);
                }));
         }
 
@@ -374,43 +301,20 @@ namespace CardDesign
         {
             Dispatcher.BeginInvoke(new Action(() =>
                {
-                   if (!isJointInterested)
-                   {
                        DoubleAnimation animation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(STATICS.ANIMATION_DURATION * 0.3));
                        this.hightlightMask.BeginAnimation(Canvas.OpacityProperty, animation);
-                   }
                }));
         }
 
-        public void HightlightJointInterest()
-        {
-            Dispatcher.BeginInvoke(new Action(() =>
-           {
-               this.hightlightMask.Fill = new SolidColorBrush(Color.FromArgb(255, 255, 215, 0));
-               highlightAnim = new DoubleAnimation(0, 0.8, TimeSpan.FromSeconds(STATICS.ANIMATION_DURATION * 5));
-               highlightAnim.RepeatBehavior = RepeatBehavior.Forever;
-               this.hightlightMask.BeginAnimation(Canvas.OpacityProperty, highlightAnim);
-               isJointInterested = true;
-           }));
-        }
-        public void DehightJointInterest()
-        {
-            Dispatcher.BeginInvoke(new Action(() =>
-            {
-                //this.hightlightMask.Fill = new SolidColorBrush(hightlightColor);
-                DoubleAnimation animation = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(STATICS.ANIMATION_DURATION * 0.3));
-                this.hightlightMask.BeginAnimation(Canvas.OpacityProperty, animation);
-            }));
-        }
         public void SortToGroup(String groupID)
         {
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                if (!sortingGroups.Contains(groupID))
+                if (!groupLists.Contains(groupID))
                 {
-                    sortingGroups.Add(groupID);
+                    groupLists.Add(groupID);
                     String str = "";
-                    foreach (String s in sortingGroups)
+                    foreach (String s in groupLists)
                     {
                         str += Group_List.GroupBox[s].GroupTextBrief+" ";
                     }
@@ -422,11 +326,11 @@ namespace CardDesign
         {
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                if (sortingGroups.Contains(groupNum))
+                if (groupLists.Contains(groupNum))
                 {
-                    sortingGroups.Remove(groupNum);
+                    groupLists.Remove(groupNum);
                     String str = "";
-                    foreach (String s in sortingGroups)
+                    foreach (String s in groupLists)
                     {
                         str += Group_List.GroupBox[s].GroupTextBrief + " ";
                     }
@@ -444,9 +348,7 @@ namespace CardDesign
         protected override void OnTouchDown(TouchEventArgs e)
         {
             this.CaptureTouch(e.TouchDevice);
-            TouchPoint point = e.GetTouchPoint(cardControler.MainWindow.CardLayer);
-            cardControler.MainWindow.Controlers.TouchControler.TouchDown(this, this.GetType(), e.TouchDevice.Id, point);
-            cardControler.MainWindow.ControlWindow.UpdateTextInfo(cardControler.MainWindow.Controlers.TouchControler.ToString(), 1);
+            cardControler.TouchDownCard(this, e);
             e.Handled = true;
             Hightlight();
             previousPostion = this.currentPosition;
@@ -471,21 +373,14 @@ namespace CardDesign
 
         protected override void OnTouchMove(TouchEventArgs e)
         {
-            TouchPoint point = e.GetTouchPoint(cardControler.MainWindow.CardLayer);
-            cardControler.MainWindow.Controlers.TouchControler.TouchMove(this, this.GetType(), e.TouchDevice, point);
-            if (STATICS.DEBUG_MODE)
-            {
-                cardControler.MainWindow.ControlWindow.UpdateTextInfo(cardControler.MainWindow.Controlers.TouchControler.ToString(), 1);
-            }
+            cardControler.TouchDownCard(this, e);
             e.Handled = true;
             base.OnTouchMove(e);
         }
 
         protected override void OnTouchUp(TouchEventArgs e)
         {
-            TouchPoint point = e.GetTouchPoint(cardControler.MainWindow.CardLayer);
-            cardControler.MainWindow.Controlers.TouchControler.TouchUp(e.TouchDevice, point);
-            cardControler.MainWindow.ControlWindow.UpdateTextInfo(cardControler.MainWindow.Controlers.TouchControler.ToString(), 1);
+            cardControler.TouchUpCard(this, e);
             e.Handled = true;
             Dehightlight();
             touchPointNum=0;
@@ -505,32 +400,12 @@ namespace CardDesign
             }
             base.OnTouchUp(e);
         }
-
-        //protected override void OnMouseEnter(System.Windows.Input.MouseEventArgs e)
-        //{
-        //    cardControler.MainWindow.ControlWindow.UpdateTextInfo(cardControler.MainWindow.Controlers.TouchControler.ToString(), 1);
-        //    e.Handled = true;
-        //    Hightlight();
-        //    previousPostion = this.currentPosition;
-        //    base.OnMouseEnter(e);
-        //}
-        //protected override void OnMouseMove(System.Windows.Input.MouseEventArgs e)
-        //{
-            
-        //}
-
-        //protected override void OnMouseLeave(System.Windows.Input.MouseEventArgs e)
-        //{
-        //    cardControler.MainWindow.ControlWindow.UpdateTextInfo(cardControler.MainWindow.Controlers.TouchControler.ToString(), 1);
-        //    e.Handled = true;
-        //    Dehightlight();
-        //}
         public override string ToString()
         {
             String result = "";
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                result = this.uID + " " + this.Owner + " " + this.topText;
+                result = this.uuid + " " + this.Owner;
             }), System.Windows.Threading.DispatcherPriority.Send);
             return base.ToString();
         }

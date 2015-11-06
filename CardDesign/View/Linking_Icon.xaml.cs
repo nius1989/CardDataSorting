@@ -40,36 +40,21 @@ namespace CardDesign
         protected override void OnTouchDown(TouchEventArgs e)
         {
             this.CaptureTouch(e.TouchDevice);
-            TouchPoint point = e.GetTouchPoint(card.CardControler.MainWindow.CardLayer);
-            card.CardControler.MainWindow.Controlers.TouchControler.TouchDown(this, this.GetType(), e.TouchDevice.Id, point);
-            Matrix mtx = (this.RenderTransform as MatrixTransform).Matrix;
-            mtx.ScaleAt(1.5, 1.5,this.Width/2,-STATICS.DEAULT_CARD_SIZE.Height+this.Height/2);
-            this.RenderTransform = new MatrixTransform(mtx);
-            card.CardControler.MainWindow.ControlWindow.UpdateTextInfo(card.CardControler.MainWindow.Controlers.TouchControler.ToString(), 1);
+            card.CardControler.TouchDownCard(this,e);
             e.Handled = true;
-            base.OnTouchMove(e);
+            base.OnTouchDown(e);
         }
 
         protected override void OnTouchMove(TouchEventArgs e)
         {
-            TouchPoint point = e.GetTouchPoint(card.CardControler.MainWindow.CardLayer);
-            card.CardControler.MainWindow.Controlers.TouchControler.TouchMove(this, this.GetType(), e.TouchDevice, point);
-            if (STATICS.DEBUG_MODE)
-            {
-                card.CardControler.MainWindow.ControlWindow.UpdateTextInfo(card.CardControler.MainWindow.Controlers.TouchControler.ToString(), 1);
-            }
+            card.CardControler.TouchMoveCard(this, e); 
             e.Handled = true;
             base.OnTouchMove(e);
         }
 
         protected override void OnTouchUp(TouchEventArgs e)
         {
-            TouchPoint point = e.GetTouchPoint(card.CardControler.MainWindow.CardLayer);
-            card.CardControler.MainWindow.Controlers.TouchControler.TouchUp(e.TouchDevice, point);
-            card.CardControler.MainWindow.ControlWindow.UpdateTextInfo(card.CardControler.MainWindow.Controlers.TouchControler.ToString(), 1);
-            Matrix mtx = (this.RenderTransform as MatrixTransform).Matrix;
-            mtx.ScaleAt(1.0 / 1.5, 1.0 / 1.5, this.Width / 2, -STATICS.DEAULT_CARD_SIZE.Height + this.Height / 2);
-            this.RenderTransform = new MatrixTransform(mtx);
+            card.CardControler.TouchUpCard(this, e);
             e.Handled = true;
             base.OnTouchUp(e);
         }

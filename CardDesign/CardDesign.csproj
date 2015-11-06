@@ -67,6 +67,7 @@
     </ApplicationDefinition>
     <Compile Include="Control\Card_Controler.cs" />
     <Compile Include="Control\Card_Loader.cs" />
+    <Compile Include="Control\Document_Card_Loader.cs" />
     <Compile Include="Core\Controlers.cs" />
     <Compile Include="Core\Loaders.cs" />
     <Compile Include="GestureListener\Gesture_Copying_Listener.cs" />
@@ -100,15 +101,16 @@
     <Compile Include="Model\Gesture_List.cs" />
     <Compile Include="GestureListener\Gesture_Listener.cs" />
     <Compile Include="Model\Link_List.cs" />
+    <Compile Include="Model\Data_Loading_Template.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Tool\Calculator.cs" />
     <Compile Include="Tool\Enclose_Helper.cs" />
     <Compile Include="Tool\LinearMatrixAnimation.cs" />
     <Compile Include="Tool\Record_Helper.cs" />
-    <Compile Include="View\BaseCard.cs" />
     <Compile Include="View\Document_Card.xaml.cs">
       <DependentUpon>Document_Card.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Document_Card.cs" />
     <Compile Include="View\Grouping_Gesture_Layer.xaml.cs">
       <DependentUpon>Grouping_Gesture_Layer.xaml</DependentUpon>
     </Compile>
@@ -350,6 +352,7 @@
     <Resource Include="Resource\Image\menu_bg.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resource\Data\data_100.txt" />
     <Content Include="Resource\InputSimulator.dll" />
     <Content Include="Resource\Microsoft.Expression.Interactions.dll" />
     <Content Include="Resource\System.Windows.Interactivity.dll" />

@@ -12,12 +12,12 @@ namespace CardDesign
     /// </summary>
     class Sorting_Group_Loader
     {
-        public Sorting_Group_Loader(MainWindow mainWindow)
+        Loaders loader;
+        public Sorting_Group_Loader(Loaders loader)
         {
-            this.mainWindow = mainWindow;
+            this.loader = loader;
         }
 
-        MainWindow mainWindow;
 
         public static String[] ButtontText = new String[]{
                 "Physical","Mental","Social"
@@ -27,16 +27,9 @@ namespace CardDesign
                 "Phy","Men","Soc"
                };
 
-
-        public MainWindow MainWindow
-        {
-            get { return mainWindow; }
-            set { mainWindow = value; }
-        }
-
         public void InitializeSortButton()
         {
-            Menu_Layer menuLayer = mainWindow.MenuLayer;
+            Menu_Layer menuLayer = loader.MainWindow.MenuLayer;
             int index = 0;
 
                 for (char ch = 'A'; ch <= 'C'; ch++)

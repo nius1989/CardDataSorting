@@ -27,34 +27,20 @@ namespace CardDesign
         FileInfo selectedLayoutFile;
         String recordDir = @"Output";
         StreamWriter streamWriter;
-        String mode = "";
         String cardCate = "activity";
-        String sortingCate = "";
-        String[] categories = new String[]{
-          "Physical,Mental,Social",
-          "Indoor,Outdoor,Both",
-          "Physical,Mental,Social",
-          "Self,Event,Object"
-        };
-
-        String[] categoryBriefs = new String[]{
-          "Phy,Men,Soc",
-          "In,Out,Both",
-          "Phy,Men,Soc",
-          "Sel,Evt,Obj"
-        };
         public Control_Window(MainWindow mainwin)
         {
             InitializeComponent();
             this.mainWindow = mainwin;
-            InitializeControlWindw();
+            InitializeControlWindow();
         }
 
-        private void InitializeControlWindw()
+        private void InitializeControlWindow()
         {
 
-            Card_Loader.LayoutActivityCard();
-            Card_Loader.LayoutProblemCard();
+            //Card_Loader.LayoutActivityCard();
+            //Card_Loader.LayoutProblemCard();
+            Document_Card_Loader.LayoutDocumentCard(@"Resource\Data\data_100.txt");
             DirectoryInfo dir = new DirectoryInfo(@"Resource\Layout\");
             try
             {
@@ -105,14 +91,14 @@ namespace CardDesign
             if (selected.Content.ToString().IndexOf("activity") >= 0)
             {
                 cardCate = "activity";
-                GroupName1.Content = categories[0];
-                GroupName2.Content = categories[1];
             }
             else if (selected.Content.ToString().IndexOf("problem") >= 0)
             {
                 cardCate = "problem";
-                GroupName1.Content = categories[2];
-                GroupName2.Content = categories[3];
+            }
+            else if (selected.Content.ToString().IndexOf("document") >= 0)
+            {
+                cardCate = "document";
             }
         }
         private void Button_Click_Start(object sender, RoutedEventArgs e)
@@ -121,24 +107,19 @@ namespace CardDesign
             if (!Directory.Exists(recordDir)) {
                 Directory.CreateDirectory(recordDir);
             }
-            String relativeFile =recordDir+"\\"+ groupName.Text.Trim() + "-" + mode + "-" + cardCate + "-" + sortingCate + ".txt";
+            String relativeFile =recordDir+"\\"+ groupName.Text.Trim() + "-" + cardCate + ".txt";
             String recordFullFile = System.IO.Path.Combine(Environment.CurrentDirectory, relativeFile);
             streamWriter = new StreamWriter(recordFullFile);
-            mainWindow.InitializeViews();
-            mainWindow.Controlers = new Controlers(mainWindow);
-            mainWindow.Controlers.InitializeControlers();
-            mainWindow.Loaders = new Loaders(mainWindow);
-            mainWindow.Loaders.CardLoader.LoadCardLayout(selectedLayoutFile.FullName);
-            //mainWindow.Loaders.GroupBinControler.InitializeSortButton();
+            mainWindow.Start(selectedLayoutFile.FullName);
         }
 
         private void Button_Click_Save(object sender, RoutedEventArgs e)
         {
-            String relativeFile = recordDir + "\\" + groupName.Text.Trim() + "-" + mode + "-" + cardCate + "-" + sortingCate + ".csv";
+            String relativeFile = recordDir + "\\" + groupName.Text.Trim()+ "-" + cardCate + ".csv";
             String recordFullFile = System.IO.Path.Combine(Environment.CurrentDirectory, relativeFile);
             StreamWriter streamWriterSave = new StreamWriter(recordFullFile);
             foreach (Card c in Card_List.CardList) {
-                streamWriterSave.WriteLine(c.Owner + "," + c.UID + "," + c.CardText + "," + c.CurrentPosition.ToString() + "," + String.Join(",", c.SortingGroups.ToArray()));
+                streamWriterSave.WriteLine(c.Owner + "," + c.UUID + "," + "," + c.CurrentPosition.ToString() + "," + String.Join(",", c.SortingGroups.ToArray()));
             }
             streamWriterSave.Flush();
             streamWriterSave.Close();
@@ -157,47 +138,7 @@ namespace CardDesign
             infoTextBox2.Text = "";
             mainWindow.Controlers.Deinitialize();
             mainWindow.Loaders.Deinitialize();
-            mainWindow.DeinitViews();
-            
+            mainWindow.DeinitViews();           
         }
-
-        private void RadioButton_Checked(object sender, RoutedEventArgs e)
-        {
-            var button = sender as RadioButton;
-            mode = button.Content.ToString();
-        }
-
-        private void GroupName1_Checked(object sender, RoutedEventArgs e)
-        {
-            if (cardCate.Equals("activity"))
-            {
-                Sorting_Group_Loader.ButtontText = categories[0].Split(',');
-                Sorting_Group_Loader.ButtonTextBrif = categoryBriefs[0].Split(',');
-                sortingCate = categories[0];
-            }
-            else if (cardCate.Equals("problem"))
-            {
-                Sorting_Group_Loader.ButtontText = categories[2].Split(',');
-                Sorting_Group_Loader.ButtonTextBrif = categoryBriefs[2].Split(',');
-                sortingCate = categories[2];
-            }
-        }
-        private void GroupName2_Checked(object sender, RoutedEventArgs e)
-        {
-            if (cardCate.Equals("activity"))
-            {
-                Sorting_Group_Loader.ButtontText = categories[1].Split(',');
-                Sorting_Group_Loader.ButtonTextBrif = categoryBriefs[1].Split(',');
-                sortingCate = categories[1];
-            }
-            else if (cardCate.Equals("problem"))
-            {
-                Sorting_Group_Loader.ButtontText = categories[3].Split(',');
-                Sorting_Group_Loader.ButtonTextBrif = categoryBriefs[3].Split(',');
-                sortingCate = categories[3];
-            }
-        }
-
-
     }
 }
