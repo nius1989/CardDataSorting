@@ -84,6 +84,14 @@ namespace CardDesign
             }
         }
 
+        internal void RemoveGroupButton(Menu_Sort_Box box)
+        {
+            Dispatcher.Invoke(new Action(() =>
+            {
+                this.Children.Remove(box);
+            }));
+        }
+
         public void AddGroupButton(Menu_Sort_Box button) {
             Dispatcher.BeginInvoke(new Action(() =>
             {

@@ -34,6 +34,19 @@ namespace CardDesign
             }
         }
 
+        public Menu_Recycle_Bin RecycleButton
+        {
+            get
+            {
+                return recycleButton;
+            }
+
+            set
+            {
+                recycleButton = value;
+            }
+        }
+
         public Menu_Container(Menu_Layer menuLayer, String user)
         {
             this.User = user;
@@ -51,16 +64,16 @@ namespace CardDesign
             this.Children.Add(addBoxButton);
             addBoxButton.Click += AddBoxButton_Click;
 
-            recycleButton.Width = (this.Width - 200) / 3;
-            recycleButton.Height = (this.Height - 10);
-            Canvas.SetLeft(recycleButton, 100 + addBoxButton.Width);
-            Canvas.SetTop(recycleButton, 5);
-            this.Children.Add(recycleButton);
+            RecycleButton.Width = (this.Width - 200) / 3;
+            RecycleButton.Height = (this.Height - 10);
+            Canvas.SetLeft(RecycleButton, 100 + addBoxButton.Width);
+            Canvas.SetTop(RecycleButton, 5);
+            this.Children.Add(RecycleButton);
 
             resetButton.Width = (this.Width - 200) / 3;
             resetButton.Height = (this.Height - 10);
             resetButton.Content = "Reset";
-            Canvas.SetLeft(resetButton, 150 + addBoxButton.Width + recycleButton.Width);
+            Canvas.SetLeft(resetButton, 150 + addBoxButton.Width + RecycleButton.Width);
             Canvas.SetTop(resetButton, 5);
             this.Children.Add(resetButton);
             
@@ -94,6 +107,8 @@ namespace CardDesign
                 Matrix mtTB = new Matrix();
                 mtTB.Translate(x, y - bin_textBox.Height);
                 bin_textBox.RenderTransform = new MatrixTransform(mtTB);
+                RecycleButton.XCoord = STATICS.SCREEN_WIDTH / 2;
+                RecycleButton.YCoord = STATICS.SCREEN_HEIGHT - this.Height / 2;
             }
             else if (STATICS.BEN_ACTIVE && User.Equals("Ben"))
             {
@@ -112,6 +127,8 @@ namespace CardDesign
                 mtTB.Rotate(90);
                 mtTB.Translate(x + bin_textBox.Height, y);
                 bin_textBox.RenderTransform = new MatrixTransform(mtTB);
+                RecycleButton.XCoord = this.Height / 2;
+                RecycleButton.YCoord = STATICS.SCREEN_HEIGHT / 2;
             }
             else if (STATICS.DANNY_ACTIVE && User.Equals("Danny"))
             {
@@ -126,6 +143,8 @@ namespace CardDesign
                 mtTB.Rotate(-90);
                 mtTB.Translate(x - bin_textBox.Height, y);
                 bin_textBox.RenderTransform = new MatrixTransform(mtTB);
+                RecycleButton.XCoord = STATICS.SCREEN_WIDTH - this.Height / 2;
+                RecycleButton.YCoord = STATICS.SCREEN_HEIGHT / 2;
             }
             menuLayer.Children.Add(bin_textBox);
             bin_textBox.Visibility = Visibility.Hidden;

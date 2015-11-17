@@ -70,9 +70,11 @@
     <Compile Include="Control\Document_Card_Loader.cs" />
     <Compile Include="Core\Controlers.cs" />
     <Compile Include="Core\Loaders.cs" />
+    <Compile Include="GestureEvent\Gesture_Event_Deleting_Bin.cs" />
     <Compile Include="GestureListener\Gesture_Copying_Listener.cs" />
     <Compile Include="GestureListener\Gesture_Cutting_Link_Listener.cs" />
     <Compile Include="GestureListener\Gesture_Cutting_Sorting_Listener.cs" />
+    <Compile Include="GestureListener\Gesture_Deleting_Bin_Listener.cs" />
     <Compile Include="GestureListener\Gesture_SortingGroup_Listener.cs" />
     <Compile Include="GestureListener\Gesture_Showing_Sorting_Listener.cs" />
     <Compile Include="Control\Sorting_Group_Controler.cs" />

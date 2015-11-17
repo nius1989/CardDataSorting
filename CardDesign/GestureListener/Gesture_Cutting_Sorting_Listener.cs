@@ -23,7 +23,7 @@ namespace CardDesign
         {
             Card c = gEventArgs.GestureObjects[1] as Card;
             Menu_Sort_Box b = gEventArgs.GestureObjects[0] as Menu_Sort_Box;
-            Group_List.RemoveCard(b.GroupID, c);
+            Group_List.RemoveCard(b, c);
             gestureControler.Control.MainWindow.SortingGestureLayer.Repaint();            
             base.TerminateGesture(sender, gEventArgs);
         }

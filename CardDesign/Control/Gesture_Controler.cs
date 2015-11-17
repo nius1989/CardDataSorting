@@ -153,6 +153,7 @@ namespace CardDesign
                 Gesture_Event_Showing_Sorting.Detect(newGesturePoints,this);
                 Gesture_Event_Cutting_Sorting.Detect(newGesturePoints, this);
                 Gesture_Event_Cutting_Link.Detect(newGesturePoints, this);
+                Gesture_Event_Deleting_Bin.Detect(newGesturePoints, this);
             }
         }        
     }

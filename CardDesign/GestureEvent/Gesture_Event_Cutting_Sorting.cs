@@ -15,20 +15,19 @@ namespace CardDesign
             Gesture_Event_Cutting_Sorting cuttingEvent = null;
             if (Group_List.CardGroups.Count > 0 && controler.Control.MainWindow.SortingGestureLayer.GroupLinks.Count > 0)
             {
-                String[] keys = controler.Control.MainWindow.SortingGestureLayer.GroupLinks.Keys.ToArray();
+                Menu_Sort_Box[] keys = controler.Control.MainWindow.SortingGestureLayer.GroupLinks.Keys.ToArray();
                 foreach (My_Point p in points)
                 {
                     if (p.Sender is Card_Layer)
                     {
-                        foreach (String key in keys)
+                        foreach (Menu_Sort_Box key in keys)
                         {
-                            Menu_Sort_Box button = Group_List.GroupBox[key];
                             if (Group_List.CardGroups.ContainsKey(key))
                             {
                                 Card[] cards = Group_List.CardGroups[key].ToArray();
                                 foreach (Card c in cards)
                                 {
-                                    bool isIntersect = Calculator.DoLinesIntersect(new Point(button.CurrentPosition.X, button.CurrentPosition.Y),
+                                    bool isIntersect = Calculator.DoLinesIntersect(new Point(key.CurrentPosition.X, key.CurrentPosition.Y),
                                         new Point(c.CurrentPosition.X, c.CurrentPosition.Y),
                                         new Point(p.StartPoint.Position.X, p.StartPoint.Position.Y),
                                         new Point(p.CurrentPoint.Position.X, p.CurrentPoint.Position.Y));
@@ -37,7 +36,7 @@ namespace CardDesign
                                         result.Add(p);
                                         My_Point[] argPoints = result.ToArray();
                                         object[] objects = new object[2];
-                                        objects[0] = button;
+                                        objects[0] = key;
                                         objects[1] = c;
                                         cuttingEvent = new Gesture_Event_Cutting_Sorting();
                                         cuttingEvent.Points = argPoints;

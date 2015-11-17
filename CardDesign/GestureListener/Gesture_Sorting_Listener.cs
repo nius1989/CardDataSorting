@@ -29,16 +29,16 @@ namespace CardDesign
             Menu_Sort_Box b = gEventArgs.GestureObjects[1] as Menu_Sort_Box;
             if (!gestureControler.Control.MainWindow.MenuLayer.IsButtonInOriginPos(b))
             {
-                c.SortToGroup(b.GroupID);
-                Group_List.Add(b.GroupID, c);
+                c.SortToGroup(b);
+                Group_List.Add(b, c);
                 My_Point point = gEventArgs.GesturePoints[0];
                 Vector v = new Vector(c.PreviousPostion.X - c.CurrentPosition.X, c.PreviousPostion.Y - c.CurrentPosition.Y);
                 v.Normalize();
                 c.MoveCard(v.X * 150, v.Y * 150, 0.5);                
             }
-            if (Group_List.CardGroups.ContainsKey(b.GroupID))
+            if (Group_List.CardGroups.ContainsKey(b))
             {
-                Card[] cards = Group_List.CardGroups[b.GroupID].ToArray();
+                Card[] cards = Group_List.CardGroups[b].ToArray();
                 foreach (Card cc in cards) { cc.Dehightlight(); }
             }
             base.TerminateGesture(sender,gEventArgs);
@@ -53,9 +53,9 @@ namespace CardDesign
         public override void RegisterGesture(object sender, Gesture_Event_Args gEventArgs)
         {
             Menu_Sort_Box b = gEventArgs.GestureObjects[1] as Menu_Sort_Box;
-            if (Group_List.CardGroups.ContainsKey(b.GroupID) && !gestureControler.Control.MainWindow.MenuLayer.IsButtonInOriginPos(b))
+            if (Group_List.CardGroups.ContainsKey(b) && !gestureControler.Control.MainWindow.MenuLayer.IsButtonInOriginPos(b))
             {
-                Card[] cards = Group_List.CardGroups[b.GroupID].ToArray();
+                Card[] cards = Group_List.CardGroups[b].ToArray();
                 foreach (Card c in cards) { c.Hightlight(Colors.Gold); }
             }
             base.RegisterGesture(sender, gEventArgs);
@@ -64,9 +64,9 @@ namespace CardDesign
         {
             Menu_Sort_Box b = gEventArgs.GestureObjects[1] as Menu_Sort_Box;
 
-            if (Group_List.CardGroups.ContainsKey(b.GroupID))
+            if (Group_List.CardGroups.ContainsKey(b))
             {
-                Card[] cards = Group_List.CardGroups[b.GroupID].ToArray();
+                Card[] cards = Group_List.CardGroups[b].ToArray();
                 foreach (Card c in cards) { c.Dehightlight(); }
             }
             base.FailGesture(sender, gEventArgs);

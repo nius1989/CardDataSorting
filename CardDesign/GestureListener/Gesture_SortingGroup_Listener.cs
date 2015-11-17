@@ -31,13 +31,13 @@ namespace CardDesign
             }
             foreach (Card card in cards)
             {
-                if (!gestureControler.Control.MainWindow.Controlers.SortingBoxControler.ContainCard(button.GroupID, card))
+                if (!gestureControler.Control.MainWindow.Controlers.SortingBoxControler.ContainCard(button, card))
                 {
-                    gestureControler.Control.MainWindow.Controlers.SortingBoxControler.GroupCard(button.GroupID, card);
+                    gestureControler.Control.MainWindow.Controlers.SortingBoxControler.GroupCard(button, card);
                 }
                 else
                 {
-                    gestureControler.Control.MainWindow.Controlers.SortingBoxControler.RemoveCard(button.GroupID, card);
+                    gestureControler.Control.MainWindow.Controlers.SortingBoxControler.RemoveCard(button, card);
                 }
             }
             base.TerminateGesture(sender, gEventArgs);

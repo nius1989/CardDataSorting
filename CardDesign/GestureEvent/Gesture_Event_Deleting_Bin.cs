@@ -6,20 +6,23 @@ using System.Threading.Tasks;
 
 namespace CardDesign
 {
-    class Gesture_Event_Sorting : Gesture_Event
+    class Gesture_Event_Deleting_Bin : Gesture_Event
     {
-        public static Gesture_Event_Sorting Detect(List<My_Point> points, Gesture_Controler controler)
+
+        public static Gesture_Event_Deleting_Bin Detect(List<My_Point> points, Gesture_Controler controler)
         {
             List<My_Point> result = new List<My_Point>();
-            Gesture_Event_Sorting sortEvent = null;
+            Gesture_Event_Deleting_Bin deletingEvent = null;
             foreach (My_Point p in points)
             {
-                if (!result.Contains(p) && p.Sender is Card && Calculator.CalDistance(p.StartPoint, p.CurrentPoint) >= STATICS.MIN_DISTANCE_FOR_MOVE)
+                if (!result.Contains(p) && p.Sender is Menu_Sort_Box)
                 {
-                    Card c = p.Sender as Card;
-                    foreach (Menu_Sort_Box box in Group_List.GroupBox)
+                    Menu_Sort_Box category = p.Sender as Menu_Sort_Box;
+                    foreach (Menu_Container mc in controler.Control.MainWindow.MenuLayer.MenuBars)
                     {
-                        if (c.Contain(box.CurrentPosition))
+                        if (mc != null && category != null && Math.Sqrt(Math.Pow((category.CurrentPosition.X - mc.RecycleButton.XCoord), 2) +
+                            Math.Pow((category.CurrentPosition.Y - mc.RecycleButton.YCoord), 2))
+                            < 50)
                         {
                             foreach (My_Point p2 in points)
                             {
@@ -28,27 +31,23 @@ namespace CardDesign
                             }
                             My_Point[] argPoints = result.ToArray();
                             object[] objects = new object[2];
-                            objects[0] = c;
-                            objects[1] = box;
-                            sortEvent = new Gesture_Event_Sorting();
-                            sortEvent.Points = argPoints;
-                            Gesture_List.addGesture(sortEvent);
-                            Gesture_Sorting_Listener gestureListener = new Gesture_Sorting_Listener(controler, sortEvent);
-                            sortEvent.Register(objects, argPoints);
+                            objects[0] = category;
+                            objects[1] = mc.RecycleButton;
+                            deletingEvent = new Gesture_Event_Deleting_Bin();
+                            Gesture_List.addGesture(deletingEvent);
+                            Gesture_Deleting_Bin_Listener gestureListener = new Gesture_Deleting_Bin_Listener(controler, deletingEvent);
+                            deletingEvent.Register(objects, argPoints);
                         }
                     }
+                    
                 }
             }
-            foreach (My_Point p in result)
-            {
-                points.Remove(p);
-            }
-            return sortEvent;
+            return deletingEvent;
         }
 
         public override void Register(object[] senders, My_Point[] myPoints)
         {
-            if (myPoints != null)
+            if (myPoints != null && senders != null)
             {
                 Points = myPoints;
                 Senders = senders;
@@ -59,6 +58,7 @@ namespace CardDesign
                 OnRegistered(this, gestureEventArgs);
             }
         }
+
         public override void Continue(object[] senders, My_Point[] myPoints)
         {
             bool isValid = checkValid(senders, myPoints);
@@ -79,24 +79,35 @@ namespace CardDesign
             {
                 Terminate(senders, myPoints);
             }
+
         }
+
         protected override bool checkTerminate(object[] senders, My_Point[] myPoints)
         {
-            foreach (My_Point p in myPoints) {
-                if (!p.IsLive) {
+            foreach (My_Point p in myPoints)
+            {
+                if (!p.IsLive)
+                {
                     return true;
                 }
             }
-            return false;
+            return false; 
         }
+
         protected override bool checkValid(object[] senders, My_Point[] myPoints)
         {
-            Card c = senders[0] as Card;
-            Menu_Sort_Box b = senders[1] as Menu_Sort_Box;
-            bool crit1 = c.Contain(b.CurrentPosition);
-            bool crit2 = !Group_List.ContainCard(b, c);
-            return crit1 && crit2;
+            Menu_Sort_Box categoryBox = senders[0] as Menu_Sort_Box;
+            Menu_Recycle_Bin recycleBox = senders[1] as Menu_Recycle_Bin;
+
+            if (recycleBox != null && categoryBox != null && Math.Sqrt(Math.Pow((categoryBox.CurrentPosition.X - recycleBox.XCoord), 2) +
+                Math.Pow((categoryBox.CurrentPosition.Y - recycleBox.YCoord), 2))
+                < 50)
+            {
+                return true;
+            }
+            return false;
         }
+
         public override void Terminate(object[] senders, My_Point[] myPoints)
         {
             if (myPoints != null && senders != null)

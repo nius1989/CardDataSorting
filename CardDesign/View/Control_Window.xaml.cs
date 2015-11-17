@@ -119,7 +119,7 @@ namespace CardDesign
             String recordFullFile = System.IO.Path.Combine(Environment.CurrentDirectory, relativeFile);
             StreamWriter streamWriterSave = new StreamWriter(recordFullFile);
             foreach (Card c in Card_List.CardList) {
-                streamWriterSave.WriteLine(c.Owner + "," + c.UUID + "," + "," + c.CurrentPosition.ToString() + "," + String.Join(",", c.SortingGroups.ToArray()));
+                streamWriterSave.WriteLine(c.Owner + "," + c.UUID + "," + "," + c.CurrentPosition.ToString() + "," + String.Join(",", c.SortingGroups.Select(s=>s.GroupID).ToArray()));
             }
             streamWriterSave.Flush();
             streamWriterSave.Close();

@@ -14,24 +14,24 @@ namespace CardDesign
     public class Group_List
     {
         
-        static Dictionary<String, List<Card>> cardGroups = new Dictionary<string, List<Card>>();
-        static Dictionary<String, Menu_Sort_Box> groupBox = new Dictionary<String, Menu_Sort_Box>();
+        static Dictionary<Menu_Sort_Box, List<Card>> cardGroups = new Dictionary<Menu_Sort_Box, List<Card>>();
+        static List<Menu_Sort_Box> groupBox = new List<Menu_Sort_Box>();
 
-        public static Dictionary<String, Menu_Sort_Box> GroupBox
+        public static List<Menu_Sort_Box> GroupBox
         {
             get { return Group_List.groupBox; }
             set { Group_List.groupBox = value; }
         }
 
 
-        public static Dictionary<String, List<Card>> CardGroups
+        public static Dictionary<Menu_Sort_Box, List<Card>> CardGroups
         {
             get { return Group_List.cardGroups; }
             set { Group_List.cardGroups = value; }
         }
 
         //Add a card to the group "key"
-        public static void Add(String key, Card card)
+        public static void Add(Menu_Sort_Box key, Card card)
         {
             if (!cardGroups.ContainsKey(key))
             {
@@ -44,8 +44,17 @@ namespace CardDesign
                 cardGroups[key].Add(card);
             }
         }
+
+        public static void CreateGroup(Menu_Sort_Box key) {
+            groupBox.Add(key);
+            if (!cardGroups.ContainsKey(key))
+            {
+                List<Card> list = new List<Card>();
+                cardGroups.Add(key, list);
+            }
+        }
         //delete the group "key"
-        public static void Remove(String key)
+        public static void Remove(Menu_Sort_Box key)
         {
             if (cardGroups.ContainsKey(key))
             {
@@ -57,7 +66,7 @@ namespace CardDesign
             }
         }
         //remove the card from the group "key"
-        public static void RemoveCard(String key, Card card)
+        public static void RemoveCard(Menu_Sort_Box key, Card card)
         {
             if (cardGroups.ContainsKey(key))
             {
@@ -72,7 +81,7 @@ namespace CardDesign
                 }
             }
         }
-        public static bool ContainCard(String key, Card card) {
+        public static bool ContainCard(Menu_Sort_Box key, Card card) {
             if (cardGroups.ContainsKey(key))
             {
                 return cardGroups[key].Contains(card);

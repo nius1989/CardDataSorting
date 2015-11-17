@@ -10,6 +10,21 @@ namespace CardDesign
     /// </summary>
     public partial class Menu_Recycle_Bin : Canvas
     {
+        double xCoord;
+        double yCoord;
+
+        public double XCoord
+        {
+            get { return xCoord; }
+            set { xCoord = value; }
+        }
+
+        public double YCoord
+        {
+            get { return yCoord; }
+            set { yCoord = value; }
+
+        }
         public Menu_Recycle_Bin()
         {
             InitializeComponent();

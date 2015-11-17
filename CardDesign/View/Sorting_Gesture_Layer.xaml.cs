@@ -20,9 +20,9 @@ namespace CardDesign
     /// </summary>
     public partial class Sorting_Gesture_Layer : Canvas
     {
-        Dictionary<String, Line[]> groupLinks = new Dictionary<String, Line[]>();
+        Dictionary<Menu_Sort_Box, Line[]> groupLinks = new Dictionary<Menu_Sort_Box, Line[]>();
 
-        public Dictionary<String, Line[]> GroupLinks
+        public Dictionary<Menu_Sort_Box, Line[]> GroupLinks
         {
             get {
                 return groupLinks;
@@ -37,13 +37,13 @@ namespace CardDesign
             this.IsHitTestVisible = false;
             this.IsManipulationEnabled = false;
         }
-        public void ShowLines(String key)
+        public void ShowLines(Menu_Sort_Box key)
         {
             Dispatcher.BeginInvoke(new Action(() =>
             {
                 if (Group_List.CardGroups.ContainsKey(key))
                 {
-                    Point center = Group_List.GroupBox[key].CurrentPosition;
+                    Point center = key.CurrentPosition;
                     Card[] cards = Group_List.CardGroups[key].ToArray();
                     if (cards != null && cards.Length > 0)
                     {
@@ -65,7 +65,7 @@ namespace CardDesign
                 }
             }));
         }
-        public void RemoveLines(String key)
+        public void RemoveLines(Menu_Sort_Box key)
         {
             Dispatcher.BeginInvoke(new Action(() =>
                {
@@ -83,7 +83,7 @@ namespace CardDesign
         public void RemoveAll() {
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                foreach (String key in groupLinks.Keys)
+                foreach (Menu_Sort_Box key in groupLinks.Keys)
                 {
                     RemoveLines(key);
                 }
@@ -92,8 +92,8 @@ namespace CardDesign
 
         public void Repaint()
         {
-            String[] keys = groupLinks.Keys.ToArray();
-            foreach (String key in keys) {
+            Menu_Sort_Box[] keys = groupLinks.Keys.ToArray();
+            foreach (Menu_Sort_Box key in keys) {
                 RemoveLines(key);
                 ShowLines(key);
             }

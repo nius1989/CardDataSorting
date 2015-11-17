@@ -43,7 +43,7 @@ namespace CardDesign
         double currentScale = 1;
         double currentRotation = 0;
         int touchPointNum = 0;
-        List<String> groupLists = new List<string>();
+        List<Menu_Sort_Box> groupLists = new List<Menu_Sort_Box>();
         Vector direction = new Vector(1, 1);
 
         public Card_Controler CardControler
@@ -93,7 +93,7 @@ namespace CardDesign
             get { return brightness; }
             set { brightness = value; }
         }
-        public List<String> SortingGroups
+        public List<Menu_Sort_Box> SortingGroups
         {
             get { return groupLists; }
             set { groupLists = value; }
@@ -306,33 +306,33 @@ namespace CardDesign
                }));
         }
 
-        public void SortToGroup(String groupID)
+        public void SortToGroup(Menu_Sort_Box msBox)
         {
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                if (!groupLists.Contains(groupID))
+                if (!groupLists.Contains(msBox))
                 {
-                    groupLists.Add(groupID);
+                    groupLists.Add(msBox);
                     String str = "";
-                    foreach (String s in groupLists)
+                    foreach (Menu_Sort_Box s in groupLists)
                     {
-                        str += Group_List.GroupBox[s].GroupTextBrief+" ";
+                        str += s.GroupTextBrief+" ";
                     }
                     sortingGroupText.Text = str;
                 }
             }));
         }
-        public void RemoveFromGroup(String groupNum)
+        public void RemoveFromGroup(Menu_Sort_Box msBox)
         {
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                if (groupLists.Contains(groupNum))
+                if (groupLists.Contains(msBox))
                 {
-                    groupLists.Remove(groupNum);
+                    groupLists.Remove(msBox);
                     String str = "";
-                    foreach (String s in groupLists)
+                    foreach (Menu_Sort_Box s in groupLists)
                     {
-                        str += Group_List.GroupBox[s].GroupTextBrief + " ";
+                        str += s.GroupTextBrief + " ";
                     }
                     sortingGroupText.Text = str;
                 }

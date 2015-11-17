@@ -24,7 +24,7 @@ namespace CardDesign
         public override void TerminateGesture(object sender, Gesture_Event_Args gEventArgs)
         {
             Menu_Sort_Box b = gEventArgs.GestureObjects[0] as Menu_Sort_Box;
-            gestureControler.Control.MainWindow.SortingGestureLayer.RemoveLines(b.GroupID);
+            gestureControler.Control.MainWindow.SortingGestureLayer.RemoveLines(b);
             base.TerminateGesture(sender,gEventArgs);
         }
 
@@ -36,13 +36,13 @@ namespace CardDesign
         public override void RegisterGesture(object sender, Gesture_Event_Args gEventArgs)
         {
             Menu_Sort_Box b=gEventArgs.GestureObjects[0] as Menu_Sort_Box;
-            gestureControler.Control.MainWindow.SortingGestureLayer.ShowLines(b.GroupID);
+            gestureControler.Control.MainWindow.SortingGestureLayer.ShowLines(b);
             base.RegisterGesture(sender, gEventArgs);
         }
         public override void FailGesture(object sender, Gesture_Event_Args gEventArgs) 
         {
             Menu_Sort_Box b = gEventArgs.GestureObjects[0] as Menu_Sort_Box;
-            gestureControler.Control.MainWindow.SortingGestureLayer.RemoveLines(b.GroupID);
+            gestureControler.Control.MainWindow.SortingGestureLayer.RemoveLines(b);
             base.FailGesture(sender, gEventArgs);
         }
     }

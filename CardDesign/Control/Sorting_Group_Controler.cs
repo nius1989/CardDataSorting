@@ -21,26 +21,37 @@ namespace CardDesign
         public Sorting_Group_Controler(Controlers control) {
             this.control = control;           
         }
-        public bool ContainCard(String key, Card c)
+
+        internal void DeleteGroup(Menu_Sort_Box box)
+        {
+            Card[] cards = Group_List.CardGroups[box].ToArray();
+            foreach (Card c in cards) {
+                c.RemoveFromGroup(box);
+            }
+            Group_List.Remove(box);
+            control.MainWindow.MenuLayer.RemoveGroupButton(box);
+        }
+
+        public bool ContainCard(Menu_Sort_Box key, Card c)
         {
             return Group_List.CardGroups.ContainsKey(key)&&
                 Group_List.CardGroups[key].Contains(c);
         }
-        public void GroupCard(String key, Card c) {
+        public void GroupCard(Menu_Sort_Box key, Card c) {
             Group_List.Add(key, c);
             c.SortToGroup(key);
         }
-        public void RemoveCard(String key, Card c) {
+        public void RemoveCard(Menu_Sort_Box key, Card c) {
             Group_List.RemoveCard(key, c);
             c.RemoveFromGroup(key);
         }
-        public void HighlightCards(String key) {
+        public void HighlightCards(Menu_Sort_Box key) {
             List<Card> cards = Group_List.CardGroups[key];
             foreach (Card c in cards) {
                 c.Hightlight();
             }
         }
-        public void DehighlightCards(String key)
+        public void DehighlightCards(Menu_Sort_Box key)
         {
             List<Card> cards = Group_List.CardGroups[key];
             foreach (Card c in cards)
@@ -50,14 +61,14 @@ namespace CardDesign
         }
 
         public void CreateGroup(String owner, String id, String text, String textbrief, Point position) {
-            Group_List.GroupBox[id] = new Menu_Sort_Box(control.MainWindow.MenuLayer, owner, id, text, textbrief);
-            Group_List.GroupBox[id].IsManipulationEnabled = true;
-            Group_List.GroupBox[id].IsHitTestVisible = true;
+            Menu_Sort_Box box = new Menu_Sort_Box(control.MainWindow.MenuLayer, owner, id, text, textbrief);
+            box.IsManipulationEnabled = true;
+            box.IsHitTestVisible = true;
             Matrix matrix = new Matrix(1, 0, 0, 1, position.X, position.Y);
-            Group_List.GroupBox[id].RenderTransform = new MatrixTransform(matrix);
-            Group_List.GroupBox[id].SetStartPosition(matrix.OffsetX + Group_List.GroupBox[id].Width / 2,
-                matrix.OffsetY + Group_List.GroupBox[id].Height / 2);
-            control.MainWindow.MenuLayer.AddGroupButton(Group_List.GroupBox[id]);
+            box.RenderTransform = new MatrixTransform(matrix);
+            box.SetStartPosition(matrix.OffsetX + box.Width / 2, matrix.OffsetY + box.Height / 2);
+            Group_List.CreateGroup(box);
+            control.MainWindow.MenuLayer.AddGroupButton(box);
         }
     }
 }
