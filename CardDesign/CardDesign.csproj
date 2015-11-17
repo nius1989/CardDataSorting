@@ -85,6 +85,8 @@
     <Compile Include="Control\Sorting_Group_Loader.cs" />
     <Compile Include="Control\Touch_Controler.cs" />
     <Compile Include="Control\User_Controler.cs" />
+    <Compile Include="Model\Card\My_Doc.cs" />
+    <Compile Include="Model\Card\My_Word.cs" />
     <Compile Include="Model\Card_List.cs" />
     <Compile Include="GestureEvent\Gesture_Event_Copying.cs" />
     <Compile Include="GestureEvent\Gesture_Event_Cutting_Link.cs" />
@@ -106,10 +108,11 @@
     <Compile Include="Tool\Calculator.cs" />
     <Compile Include="Tool\Enclose_Helper.cs" />
     <Compile Include="Tool\LinearMatrixAnimation.cs" />
+    <Compile Include="Tool\Punctuation_Remover.cs" />
     <Compile Include="Tool\Record_Helper.cs" />
-    <Compile Include="View\Document_Card.xaml.cs">
-      <DependentUpon>Document_Card.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Model\Card\Word_Frequency.cs" />
+    <Compile Include="Tool\Stemmer.cs" />
+    <Compile Include="Tool\Stop_Words_Remover.cs" />
     <Compile Include="View\Document_Card.cs" />
     <Compile Include="View\Grouping_Gesture_Layer.xaml.cs">
       <DependentUpon>Grouping_Gesture_Layer.xaml</DependentUpon>
@@ -170,10 +173,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\Document_Card.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\Grouping_Gesture_Layer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

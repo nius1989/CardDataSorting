@@ -110,7 +110,7 @@ namespace CardDesign
         }
         protected override void OnManipulationDelta(ManipulationDeltaEventArgs e)
         {
-            Card element = e.Source as Card;
+            var element = e.Source as Card;
             ManipulationDelta delta = e.DeltaManipulation;
 
             if (delta.Translation.Length > 0.0001)
@@ -121,10 +121,15 @@ namespace CardDesign
                 {
                     element.CurrentScale = element.CurrentScale * delta.Scale.X;
                     matrix.Scale(element.CurrentScale, element.CurrentScale);
+                    if (e.Source is Document_Card)
+                    {
+                        var d = e.Source as Document_Card;
+                        d.UpdateText();
+                    }
                 }
                 else
                 {
-                    matrix.Scale(element.CurrentScale, element.CurrentScale);
+                    matrix.Scale(element.CurrentScale, element.CurrentScale);     
                 }
 
                 element.CurrentRotation += delta.Rotation;

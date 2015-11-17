@@ -94,17 +94,8 @@ namespace CardDesign
             Card c = senders[0] as Card;
             Menu_Sort_Box b = senders[1] as Menu_Sort_Box;
             bool crit1 = c.Contain(b.CurrentPosition);
-            bool isLeave = false;
-            foreach (My_Point p in myPoints)
-            {
-                if (!p.IsLive)
-                {
-                    isLeave = true;
-                    break;
-                }
-            }
-            bool crit2 = isLeave && Group_List.ContainCard(b.GroupID, c);
-            return crit1 && !crit2;
+            bool crit2 = !Group_List.ContainCard(b.GroupID, c);
+            return crit1 && crit2;
         }
         public override void Terminate(object[] senders, My_Point[] myPoints)
         {

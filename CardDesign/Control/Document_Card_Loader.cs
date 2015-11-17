@@ -12,6 +12,8 @@ namespace CardDesign
 {
     class Document_Card_Loader
     {
+        Stemmer stemmer = new Stemmer();
+        Stop_Words_Remover remover = new Stop_Words_Remover();
         public class SavingCard
         {
             public SavingCard(String userID, String cardID, String text)
@@ -111,7 +113,27 @@ namespace CardDesign
                         Document_Card myCard = new Document_Card(loader.MainWindow.Controlers.CardControler);
                         myCard.UUID = readCard.cardID;
                         myCard.Owner = readCard.userID;
-                        myCard.Text = readCard.text; 
+                        String review = readCard.text;
+                        String[] words = review.Split(' ');
+                        List<My_Word> wordlist = new List<My_Word>();
+                        foreach (String w in words)
+                        {
+                            My_Word oneWord = new My_Word();
+                            oneWord.OringinalContent = w;
+                            String procW = w.ToLower();
+                            procW = Punctuation_Remover.RemovePunctuation(procW);
+                            procW = remover.RemoveStopwords(procW);
+                            if (!procW.Equals("STOPWORD") && procW.Length > 0)
+                            {
+                                procW = stemmer.Stem(procW);
+                            }
+                            oneWord.ProcessedContent = procW;
+                            wordlist.Add(oneWord);
+                        }
+                        My_Doc doc = new My_Doc();
+                        My_Word[] wordArray = wordlist.ToArray();                       
+                        doc.SetContent(wordArray);
+                        myCard.Doc = doc;
                         myCard.InitializeCard(null, new Point(readCard.position[0], readCard.position[1]), readCard.rotate, 1, zindex++);
                         
                         Card_List.AddCard(myCard);

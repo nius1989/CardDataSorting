@@ -98,9 +98,10 @@ namespace CardDesign
 
             if (System.Windows.Forms.Screen.AllScreens.Length >= 2)
             {
-
                 STATICS.SCREEN_WIDTH = System.Windows.Forms.Screen.AllScreens[1].Bounds.Width;
                 STATICS.SCREEN_HEIGHT = System.Windows.Forms.Screen.AllScreens[1].Bounds.Height;
+                STATICS.SCREEN_NUM = 2;
+                Console.WriteLine(STATICS.SCREEN_WIDTH + " " + STATICS.SCREEN_HEIGHT);
                 STATICS.DEAULT_CARD_SIZE = new Size(0.08333 * STATICS.SCREEN_WIDTH, 0.11111 * STATICS.SCREEN_HEIGHT);
                 STATICS.DEAULT_CARD_SIZE_WITH_BORDER = new Size(0.08333 * STATICS.SCREEN_WIDTH + 10, 0.11111 * STATICS.SCREEN_HEIGHT + 10); 
                 System.Drawing.Rectangle screenBounds = System.Windows.Forms.Screen.AllScreens[1].Bounds;
@@ -111,6 +112,7 @@ namespace CardDesign
             {
                 STATICS.SCREEN_WIDTH = (int)SystemParameters.PrimaryScreenWidth;
                 STATICS.SCREEN_HEIGHT = (int)SystemParameters.PrimaryScreenHeight;
+                STATICS.SCREEN_NUM = 1;
                 STATICS.DEAULT_CARD_SIZE = new Size(0.08333 * STATICS.SCREEN_WIDTH, 0.11111 * STATICS.SCREEN_HEIGHT);
                 STATICS.DEAULT_CARD_SIZE_WITH_BORDER = new Size(0.08333 * STATICS.SCREEN_WIDTH + 10, 0.11111 * STATICS.SCREEN_HEIGHT + 10);
                 this.Width = STATICS.SCREEN_WIDTH;
@@ -193,13 +195,13 @@ namespace CardDesign
 
         protected override void OnMouseEnter(MouseEventArgs e)
         {
-            Mouse.OverrideCursor = Cursors.None;
+            //Mouse.OverrideCursor = Cursors.None;
             base.OnMouseEnter(e);
         }
 
         protected override void OnMouseLeave(MouseEventArgs e)
         {
-            Mouse.OverrideCursor = Cursors.Arrow;
+            //Mouse.OverrideCursor = Cursors.Arrow;
             base.OnMouseLeave(e);
         }
     }

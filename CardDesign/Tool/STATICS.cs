@@ -13,6 +13,7 @@ namespace CardDesign
         public static bool DEBUG_MODE = true;
         public static int SCREEN_WIDTH = 1920;
         public static int SCREEN_HEIGHT = 1080;
+        public static int SCREEN_NUM = 1;
         public static Size DEAULT_CARD_SIZE = new Size(160,120);//default card size
         public static Size DEAULT_CARD_SIZE_WITH_BORDER = new Size(170,130);//default card size
         public static double POINT_REFRESH_RATE = 100;//refresh the data every "refreshRate" millionseconds

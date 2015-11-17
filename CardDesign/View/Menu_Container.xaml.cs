@@ -63,13 +63,17 @@ namespace CardDesign
             Canvas.SetLeft(resetButton, 150 + addBoxButton.Width + recycleButton.Width);
             Canvas.SetTop(resetButton, 5);
             this.Children.Add(resetButton);
+            
 
             keyboard = new FloatingTouchScreenKeyboard();
             keyboard.IsDragHelperAllowedToHide = true;
             keyboard.Width = STATICS.MENU_BAR_SIZE.Width;
             keyboard.Height = 250;
-            keyboard.Placement = System.Windows.Controls.Primitives.PlacementMode.Relative;
-            keyboard.PlacementTarget = menuLayer;
+            if (STATICS.SCREEN_NUM == 1)
+                keyboard.Placement = System.Windows.Controls.Primitives.PlacementMode.Absolute;
+            else
+                keyboard.Placement = System.Windows.Controls.Primitives.PlacementMode.Relative;
+            keyboard.PlacementTarget =menuLayer.MainWindow;
             keyboard.TouchDown += Keyboard_TouchDown;
             keyboard.MouseLeftButtonDown += Keyboard_MouseLeftButtonDown;
 
@@ -85,7 +89,8 @@ namespace CardDesign
             {
                 double x = (STATICS.SCREEN_WIDTH - this.Width) / 2;
                 double y = STATICS.SCREEN_HEIGHT - this.Height - keyboard.Height;
-                keyboard.PlacementRectangle = new Rect(x, y, keyboard.Width, keyboard.Height);
+                keyboard.HorizontalOffset = x;
+                keyboard.VerticalOffset = y;
                 Matrix mtTB = new Matrix();
                 mtTB.Translate(x, y - bin_textBox.Height);
                 bin_textBox.RenderTransform = new MatrixTransform(mtTB);
@@ -101,7 +106,8 @@ namespace CardDesign
                 keyboard.RenderTransform = new MatrixTransform(mtx);
                 double x = STATICS.MENU_BAR_SIZE.Height + keyboard.Height;
                 double y = (STATICS.SCREEN_HEIGHT - keyboard.Width) / 2;
-                keyboard.PlacementRectangle = new Rect(x, y, keyboard.Width, keyboard.Height);
+                keyboard.HorizontalOffset = x;
+                keyboard.VerticalOffset = y;
                 Matrix mtTB = new Matrix();
                 mtTB.Rotate(90);
                 mtTB.Translate(x + bin_textBox.Height, y);
@@ -114,7 +120,8 @@ namespace CardDesign
                 keyboard.RenderTransform = new MatrixTransform(mtx);
                 double x = STATICS.SCREEN_WIDTH - keyboard.Height - STATICS.MENU_BAR_SIZE.Height;
                 double y = (STATICS.SCREEN_HEIGHT + keyboard.Width) / 2;
-                keyboard.PlacementRectangle = new Rect(x, y, keyboard.Width, keyboard.Height);
+                keyboard.HorizontalOffset = x;
+                keyboard.VerticalOffset = y;
                 Matrix mtTB = new Matrix();
                 mtTB.Rotate(-90);
                 mtTB.Translate(x - bin_textBox.Height, y);
@@ -129,10 +136,11 @@ namespace CardDesign
         {
             if (e.Key == Key.Enter)
             {
+                String brief = bin_textBox.Text.Length > 2 ? bin_textBox.Text.Substring(0, 3) : bin_textBox.Text;
                 menuLayer.MainWindow.Controlers.SortingBoxControler.CreateGroup(user,
                 bin_textBox.Text,
                 bin_textBox.Text,
-                bin_textBox.Text.Substring(0, 3),
+                brief,
                 new Point(STATICS.SCREEN_WIDTH/2, STATICS.SCREEN_HEIGHT / 2)
                 );
                 bin_textBox.Visibility = Visibility.Hidden;
