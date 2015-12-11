@@ -358,6 +358,7 @@
   <ItemGroup>
     <Resource Include="Resource\Data\data_100.txt" />
     <Content Include="Resource\InputSimulator.dll" />
+    <Resource Include="Resource\Layout\paper_card.txt" />
     <Content Include="Resource\Microsoft.Expression.Interactions.dll" />
     <Content Include="Resource\System.Windows.Interactivity.dll" />
     <Resource Include="Resource\Image\copy_icon.png" />
