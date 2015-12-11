@@ -61,8 +61,6 @@ namespace CardDesign
         {
             this.loader = loader;
         }
-
-
         public static String GenerateLayout(String savingFile, int lineNum, SavingCard[] savingCards)
         {
             String filedir = Path.Combine(Environment.CurrentDirectory, savingFile);

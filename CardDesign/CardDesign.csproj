@@ -57,7 +57,7 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="WpfKb, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\WpfKb.dll</HintPath>
+      <HintPath>Resource\WpfKb.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -67,7 +67,7 @@
     </ApplicationDefinition>
     <Compile Include="Control\Card_Controler.cs" />
     <Compile Include="Control\Card_Loader.cs" />
-    <Compile Include="Control\Document_Card_Loader.cs" />
+    <Compile Include="Control\Paper_Card_Loader.cs" />
     <Compile Include="Core\Controlers.cs" />
     <Compile Include="Core\Loaders.cs" />
     <Compile Include="GestureEvent\Gesture_Event_Deleting_Bin.cs" />
@@ -87,8 +87,7 @@
     <Compile Include="Control\Sorting_Group_Loader.cs" />
     <Compile Include="Control\Touch_Controler.cs" />
     <Compile Include="Control\User_Controler.cs" />
-    <Compile Include="Model\Card\My_Doc.cs" />
-    <Compile Include="Model\Card\My_Word.cs" />
+    <Compile Include="Model\Card\Paper_Card\Author.cs" />
     <Compile Include="Model\Card_List.cs" />
     <Compile Include="GestureEvent\Gesture_Event_Copying.cs" />
     <Compile Include="GestureEvent\Gesture_Event_Cutting_Link.cs" />
@@ -105,17 +104,16 @@
     <Compile Include="Model\Gesture_List.cs" />
     <Compile Include="GestureListener\Gesture_Listener.cs" />
     <Compile Include="Model\Link_List.cs" />
-    <Compile Include="Model\Data_Loading_Template.cs" />
+    <Compile Include="Model\Card\Paper_Card\My_Paper.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Tool\Calculator.cs" />
     <Compile Include="Tool\Enclose_Helper.cs" />
     <Compile Include="Tool\LinearMatrixAnimation.cs" />
+    <Compile Include="Tool\Paper_Converter.cs" />
     <Compile Include="Tool\Punctuation_Remover.cs" />
     <Compile Include="Tool\Record_Helper.cs" />
-    <Compile Include="Model\Card\Word_Frequency.cs" />
     <Compile Include="Tool\Stemmer.cs" />
     <Compile Include="Tool\Stop_Words_Remover.cs" />
-    <Compile Include="View\Document_Card.cs" />
     <Compile Include="View\Grouping_Gesture_Layer.xaml.cs">
       <DependentUpon>Grouping_Gesture_Layer.xaml</DependentUpon>
     </Compile>
@@ -160,6 +158,11 @@
     <Compile Include="View\Menu_Layer.xaml.cs">
       <DependentUpon>Menu_Layer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Paper_Card\Layer_Base.cs" />
+    <Compile Include="View\Paper_Card\Layer_One.cs" />
+    <Compile Include="View\Paper_Card\Layer_Three.cs" />
+    <Compile Include="View\Paper_Card\Layer_Two.cs" />
+    <Compile Include="View\Paper_Card\Paper_Card.cs" />
     <Compile Include="View\Sorting_Gesture_Layer.xaml.cs">
       <DependentUpon>Sorting_Gesture_Layer.xaml</DependentUpon>
     </Compile>

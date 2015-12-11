@@ -121,11 +121,6 @@ namespace CardDesign
                 {
                     element.CurrentScale = element.CurrentScale * delta.Scale.X;
                     matrix.Scale(element.CurrentScale, element.CurrentScale);
-                    if (e.Source is Document_Card)
-                    {
-                        var d = e.Source as Document_Card;
-                        d.UpdateText();
-                    }
                 }
                 else
                 {

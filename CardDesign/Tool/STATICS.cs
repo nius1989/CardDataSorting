@@ -10,7 +10,7 @@ namespace CardDesign
 {
     class STATICS
     {
-        public static bool DEBUG_MODE = true;
+        public static bool DEBUG_MODE = false;
         public static int SCREEN_WIDTH = 1920;
         public static int SCREEN_HEIGHT = 1080;
         public static int SCREEN_NUM = 1;

@@ -40,7 +40,8 @@ namespace CardDesign
 
             //Card_Loader.LayoutActivityCard();
             //Card_Loader.LayoutProblemCard();
-            Document_Card_Loader.LayoutDocumentCard(@"Resource\Data\data_100.txt");
+            Paper_Card_Loader.LayoutPaperCard(@"Resource\Data\2015_paper_list.txt");
+            
             DirectoryInfo dir = new DirectoryInfo(@"Resource\Layout\");
             try
             {

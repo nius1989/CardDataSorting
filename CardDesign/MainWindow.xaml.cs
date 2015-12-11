@@ -86,6 +86,7 @@ namespace CardDesign
         }
 
         Rect boundary = new Rect();
+        private string fileName = "";
 
         public Rect Boundary
         {
@@ -133,10 +134,6 @@ namespace CardDesign
 
             this.Visibility = Visibility.Hidden;
         }
-        public void SetLayout(String layoutFile)
-        {
-            loaders.CardLoader.LoadCardLayout(layoutFile);
-        }
         public void InitializeViews()
         {
             cardLayer = new Card_Layer(this);                        
@@ -155,6 +152,14 @@ namespace CardDesign
             MainContainer.Children.Add(gestureIndicatorLayer);
             MainContainer.Children.Add(menuLayer);
         }
+
+        internal void Reinitialize()
+        {
+            DeinitViews();
+            InitializeViews();
+            loaders.PaperCardLoader.LoadCardLayout(fileName);
+        }
+
         public void DeinitViews() {
             MainContainer.Children.Remove(bottomLayer);
             MainContainer.Children.Remove(linkingGestureLayer);
@@ -182,6 +187,7 @@ namespace CardDesign
 
         internal void Start(String layoutFile) {
             InitializeViews();
+            fileName = layoutFile;
             Controlers = new Controlers(this);
             Controlers.Initialize();
             Loaders = new Loaders(this);

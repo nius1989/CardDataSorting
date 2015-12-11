@@ -16,10 +16,14 @@ namespace CardDesign
         Menu_Layer menuLayer;
         String user;
         Button addBoxButton = new Button();
-        Menu_Recycle_Bin recycleButton = new Menu_Recycle_Bin();
+        Menu_Recycle_Bin recycleButton;
         Button resetButton = new Button();
         FloatingTouchScreenKeyboard keyboard;
         TextBox bin_textBox = new TextBox();
+
+        TextBox resetNotification = new TextBox();
+        TextBox recycleNotification = new TextBox();
+        Boolean isClicked = false;
 
         public String User
         {
@@ -32,6 +36,11 @@ namespace CardDesign
             {
                 user = value;
             }
+        }
+
+        public Boolean IsClicked
+        {
+            get { return isClicked; }
         }
 
         public Menu_Recycle_Bin RecycleButton
@@ -50,6 +59,7 @@ namespace CardDesign
         public Menu_Container(Menu_Layer menuLayer, String user)
         {
             this.User = user;
+            recycleButton = new Menu_Recycle_Bin(this);
             ImageBrush ib = new ImageBrush();
             ib.ImageSource = new BitmapImage(new Uri(@"Resource\Image\menu_bg.png", UriKind.Relative));
             this.Background = ib;
@@ -73,22 +83,25 @@ namespace CardDesign
             resetButton.Width = (this.Width - 200) / 3;
             resetButton.Height = (this.Height - 10);
             resetButton.Content = "Reset";
+            resetButton.TouchDown += ResetButton_Pressed;
+            resetButton.TouchUp += ResetButton_Released;
             Canvas.SetLeft(resetButton, 150 + addBoxButton.Width + RecycleButton.Width);
             Canvas.SetTop(resetButton, 5);
             this.Children.Add(resetButton);
-            
+                     
+            InitializeComponent();
+        }
 
+
+
+        public void InitializeContainer() {
             keyboard = new FloatingTouchScreenKeyboard();
             keyboard.IsDragHelperAllowedToHide = true;
             keyboard.Width = STATICS.MENU_BAR_SIZE.Width;
-            keyboard.Height = 250;
-            if (STATICS.SCREEN_NUM == 1)
-                keyboard.Placement = System.Windows.Controls.Primitives.PlacementMode.Absolute;
-            else
-                keyboard.Placement = System.Windows.Controls.Primitives.PlacementMode.Relative;
-            keyboard.PlacementTarget =menuLayer.MainWindow;
+            keyboard.Height = 260;
             keyboard.TouchDown += Keyboard_TouchDown;
             keyboard.MouseLeftButtonDown += Keyboard_MouseLeftButtonDown;
+            keyboard.Visibility = Visibility.Hidden;
 
             bin_textBox.Width = keyboard.Width;
             bin_textBox.Height = 30;
@@ -96,17 +109,37 @@ namespace CardDesign
             bin_textBox.Foreground = new SolidColorBrush(Colors.Black);
             bin_textBox.MaxLines = 2;
             bin_textBox.KeyDown += Bin_textBox_KeyDown;
+            bin_textBox.Visibility = Visibility.Hidden;
 
+            resetNotification.Width = 100;
+            resetNotification.Height = 100;
+            resetNotification.IsManipulationEnabled = false;
+            resetNotification.AppendText("The board will be \nreset if all three\nreset buttons are \npressed at the \nsame time");
+            resetNotification.Visibility = Visibility.Hidden;
+            Canvas.SetLeft(resetNotification, 170 + addBoxButton.Width + recycleButton.Width);
+            Canvas.SetTop(resetNotification, this.Height * -2);
+            this.Children.Add(resetNotification);
+
+            recycleNotification.Width = 80;
+            recycleNotification.Height = 50;
+            recycleNotification.IsManipulationEnabled = false;
+            recycleNotification.AppendText("The category \nbox will be \ndeleted.");
+            recycleNotification.Visibility = Visibility.Hidden;
+            Canvas.SetLeft(recycleNotification, 125 + addBoxButton.Width);
+            Canvas.SetTop(recycleNotification, this.Height * -1);
+            this.Children.Add(recycleNotification);
+
+            Matrix mtKBD = new Matrix();
+            mtKBD.Translate(-5, keyboard.Height * -1);
+            keyboard.RenderTransform = new MatrixTransform(mtKBD);
+
+            Matrix mtTB = new Matrix();
+            mtTB.Translate(0, -1 * (keyboard.Height + bin_textBox.Height + 100));
+            bin_textBox.RenderTransform = new MatrixTransform(mtTB);
 
             if (STATICS.ALEX_ACTIVE && User.Equals("Alex"))
             {
-                double x = (STATICS.SCREEN_WIDTH - this.Width) / 2;
-                double y = STATICS.SCREEN_HEIGHT - this.Height - keyboard.Height;
-                keyboard.HorizontalOffset = x;
-                keyboard.VerticalOffset = y;
-                Matrix mtTB = new Matrix();
-                mtTB.Translate(x, y - bin_textBox.Height);
-                bin_textBox.RenderTransform = new MatrixTransform(mtTB);
+
                 RecycleButton.XCoord = STATICS.SCREEN_WIDTH / 2;
                 RecycleButton.YCoord = STATICS.SCREEN_HEIGHT - this.Height / 2;
             }
@@ -116,41 +149,17 @@ namespace CardDesign
             }
             else if (STATICS.CHRIS_ACTIVE && User.Equals("Chris"))
             {
-                Matrix mtx = new Matrix();
-                mtx.Rotate(90);
-                keyboard.RenderTransform = new MatrixTransform(mtx);
-                double x = STATICS.MENU_BAR_SIZE.Height + keyboard.Height;
-                double y = (STATICS.SCREEN_HEIGHT - keyboard.Width) / 2;
-                keyboard.HorizontalOffset = x;
-                keyboard.VerticalOffset = y;
-                Matrix mtTB = new Matrix();
-                mtTB.Rotate(90);
-                mtTB.Translate(x + bin_textBox.Height, y);
-                bin_textBox.RenderTransform = new MatrixTransform(mtTB);
                 RecycleButton.XCoord = this.Height / 2;
                 RecycleButton.YCoord = STATICS.SCREEN_HEIGHT / 2;
             }
             else if (STATICS.DANNY_ACTIVE && User.Equals("Danny"))
             {
-                Matrix mtx = new Matrix();
-                mtx.Rotate(-90);
-                keyboard.RenderTransform = new MatrixTransform(mtx);
-                double x = STATICS.SCREEN_WIDTH - keyboard.Height - STATICS.MENU_BAR_SIZE.Height;
-                double y = (STATICS.SCREEN_HEIGHT + keyboard.Width) / 2;
-                keyboard.HorizontalOffset = x;
-                keyboard.VerticalOffset = y;
-                Matrix mtTB = new Matrix();
-                mtTB.Rotate(-90);
-                mtTB.Translate(x - bin_textBox.Height, y);
-                bin_textBox.RenderTransform = new MatrixTransform(mtTB);
                 RecycleButton.XCoord = STATICS.SCREEN_WIDTH - this.Height / 2;
                 RecycleButton.YCoord = STATICS.SCREEN_HEIGHT / 2;
             }
-            menuLayer.Children.Add(bin_textBox);
-            bin_textBox.Visibility = Visibility.Hidden;
-            InitializeComponent();
+            this.Container.Children.Add(bin_textBox);
+            this.Container.Children.Add(keyboard);
         }
-
         private void Bin_textBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
@@ -164,8 +173,8 @@ namespace CardDesign
                 );
                 bin_textBox.Visibility = Visibility.Hidden;
                 bin_textBox.Text = "";
-                keyboard.IsOpen = false;
                 addBoxButton.Content = "Create Box";
+                keyboard.Visibility = Visibility.Hidden;
             }
         }
 
@@ -187,17 +196,58 @@ namespace CardDesign
             if (addBoxButton.Content.Equals("Create Box"))
             {
                 bin_textBox.Visibility = Visibility.Visible;
+                keyboard.Visibility = Visibility.Visible;
                 bin_textBox.Text = "";
-                keyboard.IsOpen = true;
                 addBoxButton.Content = "Cancel";
             }
             else
             {
                 bin_textBox.Visibility = Visibility.Hidden;
+                keyboard.Visibility = Visibility.Hidden;
                 bin_textBox.Text = "";
-                keyboard.IsOpen = false;
                 addBoxButton.Content = "Create Box";
             }
+        }
+
+        private void displayResetNotification()
+        {
+            if (isClicked)
+            {
+                resetNotification.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                resetNotification.Visibility = Visibility.Hidden;
+            }
+        }
+
+        public void displayRecycleNotification()
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                recycleNotification.Visibility = Visibility.Visible;
+            }));
+        }
+
+        public void removeRecycleNotification()
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                recycleNotification.Visibility = Visibility.Hidden;
+            }));
+        }
+
+        private void ResetButton_Pressed(object sender, RoutedEventArgs e)
+        {
+            isClicked = true;
+            menuLayer.resetBoard();
+            displayResetNotification();
+        }
+
+        private void ResetButton_Released(object sender, RoutedEventArgs e)
+        {
+            isClicked = false;
+            displayResetNotification();
         }
     }
 }

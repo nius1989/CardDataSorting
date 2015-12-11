@@ -12,6 +12,7 @@ namespace CardDesign
     {
         double xCoord;
         double yCoord;
+        Menu_Container mc;
 
         public double XCoord
         {
@@ -25,12 +26,18 @@ namespace CardDesign
             set { yCoord = value; }
 
         }
-        public Menu_Recycle_Bin()
+
+        public Menu_Container Mc
+        {
+            get { return mc; }
+        }
+        public Menu_Recycle_Bin(Menu_Container menu)
         {
             InitializeComponent();
             ImageBrush ib = new ImageBrush();
             ib.ImageSource = new BitmapImage(new Uri(@"Resource\Image\recycle_bin.png", UriKind.Relative));
             this.Background = ib;
+            mc = menu;
         }
     }
 }

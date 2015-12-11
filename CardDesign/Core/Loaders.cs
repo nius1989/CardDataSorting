@@ -9,13 +9,14 @@ namespace CardDesign
     public class Loaders
     {
         Card_Loader cardLoader;
-        Document_Card_Loader documentCardLoader;
+        Paper_Card_Loader paperCardLoader;
 
-        internal Document_Card_Loader DocumentCardLoader
+        internal Paper_Card_Loader PaperCardLoader
         {
-            get { return documentCardLoader; }
-            set { documentCardLoader = value; }
+            get { return paperCardLoader; }
+            set { paperCardLoader = value; }
         }
+
         public Card_Loader CardLoader
         {
             get { return cardLoader; }
@@ -40,13 +41,14 @@ namespace CardDesign
             this.mainWindow = mainWindow;
             cardLoader = new Card_Loader(this);
             groupBinLoader = new Sorting_Group_Loader(this);
-            documentCardLoader = new Document_Card_Loader(this);
+            paperCardLoader = new Paper_Card_Loader(this);
         }
         internal void Initialize(String file)
         {
-            //mainWindow.Loaders.CardLoader.LoadCardLayout(file);
-            mainWindow.Loaders.DocumentCardLoader.LoadCardLayout(file);
-            //mainWindow.Loaders.GroupBinControler.InitializeSortButton();       
+            //cardLoader.LoadCardLayout(file);
+            //documentCardLoader.LoadCardLayout(file);
+            paperCardLoader.LoadCardLayout(file);
+            //groupBinControler.InitializeSortButton();       
         }
         internal void Deinitialize()
         {

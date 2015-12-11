@@ -51,7 +51,7 @@ namespace CardDesign
             get { return cardControler; }
             set { cardControler = value; }
         }
-        public double CurrentScale
+        public virtual double CurrentScale
         {
             get { return currentScale; }
             set { currentScale = value; }

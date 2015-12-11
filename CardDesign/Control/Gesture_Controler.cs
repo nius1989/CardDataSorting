@@ -1,5 +1,6 @@
-﻿ using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -143,8 +144,9 @@ namespace CardDesign
         {
             if (newGesturePoints.Count > 0)
             {
+                // the code that you want to measure comes here
                 Gesture_Event_Linking.Detect(newGesturePoints, this);
-                Gesture_Event_Copying.Detect(newGesturePoints, this);
+                //Gesture_Event_Copying.Detect(newGesturePoints, this);
                 Gesture_Event_Sorting.Detect(newGesturePoints, this);
                 //Gesture_Event_Emphasizing.Detect(newGesturePoints, this);
                 Gesture_Event_Grouping.Detect(newGesturePoints,this);
@@ -154,6 +156,9 @@ namespace CardDesign
                 Gesture_Event_Cutting_Sorting.Detect(newGesturePoints, this);
                 Gesture_Event_Cutting_Link.Detect(newGesturePoints, this);
                 Gesture_Event_Deleting_Bin.Detect(newGesturePoints, this);
+
+
+
             }
         }        
     }

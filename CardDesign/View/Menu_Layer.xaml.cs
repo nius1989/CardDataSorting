@@ -34,6 +34,7 @@ namespace CardDesign
             if (STATICS.ALEX_ACTIVE)
             {
                 menuBars[0] = new Menu_Container(this,"Alex");
+                menuBars[0].InitializeContainer();
                 double x = (STATICS.SCREEN_WIDTH - menuBars[0].Width) / 2;
                 double y = STATICS.SCREEN_HEIGHT - menuBars[0].Height;
 
@@ -46,6 +47,7 @@ namespace CardDesign
             if (STATICS.BEN_ACTIVE)
             {
                 menuBars[1] = new Menu_Container(this, "Ben");
+                menuBars[1].InitializeContainer();
                 double x = (STATICS.SCREEN_WIDTH + menuBars[1].Width) / 2;
                 double y = menuBars[0].Height;
                 Matrix matrix = new Matrix(1, 0, 0, 1, 0, 0);
@@ -59,6 +61,7 @@ namespace CardDesign
             if (STATICS.CHRIS_ACTIVE)
             {
                 menuBars[2] = new Menu_Container(this, "Chris");
+                menuBars[2].InitializeContainer();
                 double x = menuBars[2].Height;
                 double y = (STATICS.SCREEN_HEIGHT - menuBars[0].Width) / 2;
                 Matrix matrix = new Matrix(1, 0, 0, 1, 0, 0);
@@ -72,6 +75,7 @@ namespace CardDesign
             if (STATICS.DANNY_ACTIVE)
             {
                 menuBars[3] = new Menu_Container(this, "Danny");
+                menuBars[3].InitializeContainer();
                 double x = STATICS.SCREEN_WIDTH - menuBars[3].Height;
                 double y = (STATICS.SCREEN_HEIGHT + menuBars[3].Width) / 2;
                 Matrix matrix = new Matrix(1, 0, 0, 1, 0, 0);
@@ -121,6 +125,22 @@ namespace CardDesign
             }
             else
                 return false;
+        }
+
+        public void resetBoard()
+        {
+            int resetCounter = 0;
+            foreach (Menu_Container mc in menuBars)
+            {
+                if (mc != null && mc.IsClicked)
+                {
+                    resetCounter++;
+                }
+            }
+            if (resetCounter == 3)
+            {
+                mainWindow.Reinitialize();
+            }
         }
     }
 }

@@ -24,6 +24,7 @@ namespace CardDesign
                             Math.Pow((category.CurrentPosition.Y - mc.RecycleButton.YCoord), 2))
                             < 50)
                         {
+                            mc.displayRecycleNotification();
                             foreach (My_Point p2 in points)
                             {
                                 if (p.Sender == p2.Sender && !result.Contains(p2))
@@ -37,6 +38,10 @@ namespace CardDesign
                             Gesture_List.addGesture(deletingEvent);
                             Gesture_Deleting_Bin_Listener gestureListener = new Gesture_Deleting_Bin_Listener(controler, deletingEvent);
                             deletingEvent.Register(objects, argPoints);
+                        }
+                        else if (mc != null)
+                        {
+                            mc.removeRecycleNotification();
                         }
                     }
                     
@@ -117,6 +122,11 @@ namespace CardDesign
                 gestureEventArgs.GestureObjects = senders;
                 this.Status = GESTURESTATUS.TERMINATE;
                 OnTerminated(this, gestureEventArgs);
+            }
+            Menu_Recycle_Bin mc = senders[1] as Menu_Recycle_Bin;
+            if (mc != null)
+            {
+                mc.Mc.removeRecycleNotification();
             }
         }
 
