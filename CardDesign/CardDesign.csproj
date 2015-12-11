@@ -357,6 +357,7 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resource\Data\data_100.txt" />
+    <Resource Include="Resource\Data\2015_paper_list.txt" />
     <Content Include="Resource\InputSimulator.dll" />
     <Resource Include="Resource\Layout\paper_card.txt" />
     <Content Include="Resource\Microsoft.Expression.Interactions.dll" />
