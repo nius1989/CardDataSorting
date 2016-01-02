@@ -37,10 +37,7 @@ namespace CardDesign
 
         private void InitializeControlWindow()
         {
-
-            //Card_Loader.LayoutActivityCard();
-            //Card_Loader.LayoutProblemCard();
-            Paper_Card_Loader.LayoutPaperCard(@"Resource\Data\2015_paper_list.txt");
+            News_Card_Loader.LayoutPaperCard(@"Resource\Data\newsDocs.txt");
             
             DirectoryInfo dir = new DirectoryInfo(@"Resource\Layout\");
             try

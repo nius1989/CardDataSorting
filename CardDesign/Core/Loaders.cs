@@ -8,19 +8,12 @@ namespace CardDesign
 {
     public class Loaders
     {
-        Card_Loader cardLoader;
-        Paper_Card_Loader paperCardLoader;
+        News_Card_Loader newsCardLoader;
 
-        internal Paper_Card_Loader PaperCardLoader
+        internal News_Card_Loader NewsCardLoader
         {
-            get { return paperCardLoader; }
-            set { paperCardLoader = value; }
-        }
-
-        public Card_Loader CardLoader
-        {
-            get { return cardLoader; }
-            set { cardLoader = value; }
+            get { return newsCardLoader; }
+            set { newsCardLoader = value; }
         }
 
         Sorting_Group_Loader groupBinLoader;
@@ -39,16 +32,12 @@ namespace CardDesign
         public Loaders(MainWindow mainWindow)
         {
             this.mainWindow = mainWindow;
-            cardLoader = new Card_Loader(this);
             groupBinLoader = new Sorting_Group_Loader(this);
-            paperCardLoader = new Paper_Card_Loader(this);
+            newsCardLoader = new News_Card_Loader(this);
         }
         internal void Initialize(String file)
         {
-            //cardLoader.LoadCardLayout(file);
-            //documentCardLoader.LoadCardLayout(file);
-            paperCardLoader.LoadCardLayout(file);
-            //groupBinControler.InitializeSortButton();       
+            newsCardLoader.LoadCardLayout(file);     
         }
         internal void Deinitialize()
         {

@@ -13,8 +13,6 @@ namespace CardDesign
     public class Card_Controler
     {
         Controlers control;
-        Thread jointInterestDetectionThread;
-        bool isRunning = false;
         DateTime[] startTimes = new DateTime[STATICS.CARD_NUMBER];
 
         public Controlers Control

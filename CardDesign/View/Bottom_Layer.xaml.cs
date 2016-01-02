@@ -31,6 +31,12 @@ namespace CardDesign
             this.Background = ib;
             this.Height = STATICS.SCREEN_HEIGHT;
             this.Width = STATICS.SCREEN_WIDTH;
+            Rectangle rect = new Rectangle();
+            rect.Width = STATICS.COLLABORATIVE_ZOON.Width;
+            rect.Height = STATICS.COLLABORATIVE_ZOON.Height;
+            rect.Fill = new SolidColorBrush(Colors.Yellow);
+            rect.RenderTransform = new MatrixTransform(new Matrix(1, 0, 0, 1, STATICS.COLLABORATIVE_ZOON.Left, STATICS.COLLABORATIVE_ZOON.Top));
+            this.Children.Add(rect);
         }
     }
 }

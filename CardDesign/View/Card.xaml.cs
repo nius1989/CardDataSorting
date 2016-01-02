@@ -130,15 +130,15 @@ namespace CardDesign
         public virtual void InitializeCard(Color? maskColor, Point defaultPosi, double defaultDegree, double defaultScale, int zidx)
         {
 
-            this.backgroundColor = maskColor != null ? maskColor.Value : Colors.White;
+            this.backgroundColor = Colors.White;
             backgroundRect.Width = STATICS.DEAULT_CARD_SIZE.Width;
             backgroundRect.Height = STATICS.DEAULT_CARD_SIZE.Height;
-            backgroundRect.StrokeThickness = 0.3;
-            backgroundRect.Stroke = new SolidColorBrush(Colors.Black);
-            backgroundRect.RenderTransform = new MatrixTransform(new Matrix(1, 0, 0, 1,
-                       -backgroundRect.Width / 2,
-                       -backgroundRect.Height / 2));
+            backgroundRect.StrokeThickness = 2;
+            backgroundRect.Stroke = new SolidColorBrush(maskColor != null ? maskColor.Value : Colors.Black);
             backgroundRect.Fill = new SolidColorBrush(backgroundColor);
+            Matrix mtx = new Matrix();
+            mtx.Translate(-backgroundRect.Width / 2, -backgroundRect.Height / 2);
+            backgroundRect.RenderTransform = new MatrixTransform(mtx);
 
             ResetBrightness();
 

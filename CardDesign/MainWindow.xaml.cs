@@ -1,18 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace CardDesign
 {
@@ -27,7 +16,7 @@ namespace CardDesign
             get { return controlWindow; }
             set { controlWindow = value; }
         }
-
+        Cloud_Window cloudWindow;
         Controlers controlers;
         internal Controlers Controlers
         {
@@ -93,21 +82,42 @@ namespace CardDesign
             get { return boundary; }
             set { boundary = value; }
         }
+
+        public Cloud_Window CloudWindow
+        {
+            get
+            {
+                return cloudWindow;
+            }
+
+            set
+            {
+                cloudWindow = value;
+            }
+        }
+
+        System.Drawing.Rectangle screen0;
+        System.Drawing.Rectangle screen1;
+
         public MainWindow()
         {
             InitializeComponent();
-
             if (System.Windows.Forms.Screen.AllScreens.Length >= 2)
             {
-                STATICS.SCREEN_WIDTH = System.Windows.Forms.Screen.AllScreens[1].Bounds.Width;
-                STATICS.SCREEN_HEIGHT = System.Windows.Forms.Screen.AllScreens[1].Bounds.Height;
+                screen0 = System.Windows.Forms.Screen.AllScreens[0].Bounds;
+                screen1= System.Windows.Forms.Screen.AllScreens[1].Bounds;
+                //STATICS.SCREEN_WIDTH = screen0.Width;
+                //STATICS.SCREEN_HEIGHT = screen0.Height;
+                STATICS.SCREEN_WIDTH = 1235;
+                STATICS.SCREEN_HEIGHT = 825;
                 STATICS.SCREEN_NUM = 2;
                 Console.WriteLine(STATICS.SCREEN_WIDTH + " " + STATICS.SCREEN_HEIGHT);
                 STATICS.DEAULT_CARD_SIZE = new Size(0.08333 * STATICS.SCREEN_WIDTH, 0.11111 * STATICS.SCREEN_HEIGHT);
-                STATICS.DEAULT_CARD_SIZE_WITH_BORDER = new Size(0.08333 * STATICS.SCREEN_WIDTH + 10, 0.11111 * STATICS.SCREEN_HEIGHT + 10); 
-                System.Drawing.Rectangle screenBounds = System.Windows.Forms.Screen.AllScreens[1].Bounds;
+                STATICS.DEAULT_CARD_SIZE_WITH_BORDER = new Size(0.08333 * STATICS.SCREEN_WIDTH + 5, 0.11111 * STATICS.SCREEN_HEIGHT + 5); 
+                System.Drawing.Rectangle screenBounds = System.Windows.Forms.Screen.AllScreens[0].Bounds;
                 this.Left = screenBounds.Left;
                 this.Top = screenBounds.Top;
+                InitializeCloudView();
             }
             else
             {
@@ -115,7 +125,7 @@ namespace CardDesign
                 STATICS.SCREEN_HEIGHT = (int)SystemParameters.PrimaryScreenHeight;
                 STATICS.SCREEN_NUM = 1;
                 STATICS.DEAULT_CARD_SIZE = new Size(0.08333 * STATICS.SCREEN_WIDTH, 0.11111 * STATICS.SCREEN_HEIGHT);
-                STATICS.DEAULT_CARD_SIZE_WITH_BORDER = new Size(0.08333 * STATICS.SCREEN_WIDTH + 10, 0.11111 * STATICS.SCREEN_HEIGHT + 10);
+                STATICS.DEAULT_CARD_SIZE_WITH_BORDER = new Size(0.08333 * STATICS.SCREEN_WIDTH + 5, 0.11111 * STATICS.SCREEN_HEIGHT + 5);
                 this.Width = STATICS.SCREEN_WIDTH;
                 this.Height = STATICS.SCREEN_HEIGHT;
                 this.WindowState = System.Windows.WindowState.Maximized;
@@ -134,6 +144,14 @@ namespace CardDesign
 
             this.Visibility = Visibility.Hidden;
         }
+        public void InitializeCloudView() {
+            cloudWindow = new Cloud_Window(this);
+            cloudWindow.Width = screen1.Width;
+            cloudWindow.Height = screen1.Height;
+            cloudWindow.Left = screen1.Left;
+            cloudWindow.Top = screen1.Top;
+            cloudWindow.Visibility = Visibility.Hidden;
+        }
         public void InitializeViews()
         {
             cardLayer = new Card_Layer(this);                        
@@ -143,7 +161,10 @@ namespace CardDesign
             linkingGestureLayer = new Linking_Gesture_Layer();
             groupingGestureLayer = new Grouping_Gesture_Layer();
             sortingGestureLayer = new Sorting_Gesture_Layer(this);
-
+            if (STATICS.SCREEN_NUM == 2) { 
+                InitializeCloudView();
+                cloudWindow.Visibility = Visibility.Visible;
+            }
             MainContainer.Children.Add(bottomLayer);
             MainContainer.Children.Add(linkingGestureLayer);
             MainContainer.Children.Add(sortingGestureLayer);
@@ -157,7 +178,7 @@ namespace CardDesign
         {
             DeinitViews();
             InitializeViews();
-            loaders.PaperCardLoader.LoadCardLayout(fileName);
+            loaders.NewsCardLoader.LoadCardLayout(fileName);
         }
 
         public void DeinitViews() {
@@ -175,7 +196,8 @@ namespace CardDesign
             gestureIndicatorLayer = null;
             menuLayer = null;
             cardLayer = null;
-           
+            if (STATICS.SCREEN_NUM == 2)
+                cloudWindow.Close();
 
             Card_List.CardList.Clear();            
             Gesture_List.GestureList.Clear();
@@ -193,6 +215,8 @@ namespace CardDesign
             Loaders = new Loaders(this);
             Loaders.Initialize(layoutFile);
             this.Visibility = Visibility.Visible;
+            if(STATICS.SCREEN_NUM==2)
+                cloudWindow.Visibility = Visibility.Visible;
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {

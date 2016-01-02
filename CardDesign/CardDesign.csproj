@@ -66,11 +66,13 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Control\Card_Controler.cs" />
-    <Compile Include="Control\Card_Loader.cs" />
-    <Compile Include="Control\Paper_Card_Loader.cs" />
+    <Compile Include="Control\Cloud_Controler.cs" />
+    <Compile Include="Control\News_Card_Loader.cs" />
     <Compile Include="Core\Controlers.cs" />
     <Compile Include="Core\Loaders.cs" />
+    <Compile Include="GestureEvent\Gesture_Event_Collaborative_Zoon.cs" />
     <Compile Include="GestureEvent\Gesture_Event_Deleting_Bin.cs" />
+    <Compile Include="GestureListener\Gesture_Collaborative_Zoon_Listener.cs" />
     <Compile Include="GestureListener\Gesture_Copying_Listener.cs" />
     <Compile Include="GestureListener\Gesture_Cutting_Link_Listener.cs" />
     <Compile Include="GestureListener\Gesture_Cutting_Sorting_Listener.cs" />
@@ -87,7 +89,6 @@
     <Compile Include="Control\Sorting_Group_Loader.cs" />
     <Compile Include="Control\Touch_Controler.cs" />
     <Compile Include="Control\User_Controler.cs" />
-    <Compile Include="Model\Card\Paper_Card\Author.cs" />
     <Compile Include="Model\Card_List.cs" />
     <Compile Include="GestureEvent\Gesture_Event_Copying.cs" />
     <Compile Include="GestureEvent\Gesture_Event_Cutting_Link.cs" />
@@ -104,7 +105,8 @@
     <Compile Include="Model\Gesture_List.cs" />
     <Compile Include="GestureListener\Gesture_Listener.cs" />
     <Compile Include="Model\Link_List.cs" />
-    <Compile Include="Model\Card\Paper_Card\My_Paper.cs" />
+    <Compile Include="Model\Card\Paper_Card\My_News.cs" />
+    <Compile Include="Model\Shared_Card_List.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Tool\Calculator.cs" />
     <Compile Include="Tool\Enclose_Helper.cs" />
@@ -114,6 +116,9 @@
     <Compile Include="Tool\Record_Helper.cs" />
     <Compile Include="Tool\Stemmer.cs" />
     <Compile Include="Tool\Stop_Words_Remover.cs" />
+    <Compile Include="View\Cloud_Window.xaml.cs">
+      <DependentUpon>Cloud_Window.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Grouping_Gesture_Layer.xaml.cs">
       <DependentUpon>Grouping_Gesture_Layer.xaml</DependentUpon>
     </Compile>
@@ -158,11 +163,12 @@
     <Compile Include="View\Menu_Layer.xaml.cs">
       <DependentUpon>Menu_Layer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Paper_Card\Layer_Base.cs" />
-    <Compile Include="View\Paper_Card\Layer_One.cs" />
-    <Compile Include="View\Paper_Card\Layer_Three.cs" />
-    <Compile Include="View\Paper_Card\Layer_Two.cs" />
-    <Compile Include="View\Paper_Card\Paper_Card.cs" />
+    <Compile Include="View\News_Card\Layer_Base.cs" />
+    <Compile Include="View\News_Card\Layer_One.cs" />
+    <Compile Include="View\News_Card\Layer_Three.cs" />
+    <Compile Include="View\News_Card\Layer_Two.cs" />
+    <Compile Include="View\News_Card\News_Card.cs" />
+    <Compile Include="View\News_Card\ZoomWheel.cs" />
     <Compile Include="View\Sorting_Gesture_Layer.xaml.cs">
       <DependentUpon>Sorting_Gesture_Layer.xaml</DependentUpon>
     </Compile>
@@ -178,6 +184,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\Cloud_Window.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\Grouping_Gesture_Layer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -264,7 +274,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\WordCloud\WordCloud.csproj">
+      <Project>{1cfadb13-a713-468d-b0cf-a3ec08e45480}</Project>
+      <Name>WordCloud</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Resource\Card\Activity Card\Slide1.JPG" />
     <Resource Include="Resource\Card\Activity Card\Slide10.JPG" />

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace CardDesign
 {
-    class Paper_Converter : CustomCreationConverter<My_Paper>
+    class Paper_Converter : CustomCreationConverter<My_News>
     {
-        public override My_Paper Create(Type objectType)
+        public override My_News Create(Type objectType)
         {
             throw new NotImplementedException();
         }

@@ -134,7 +134,7 @@ namespace CardDesign
             keyboard.RenderTransform = new MatrixTransform(mtKBD);
 
             Matrix mtTB = new Matrix();
-            mtTB.Translate(0, -1 * (keyboard.Height + bin_textBox.Height + 100));
+            mtTB.Translate(0, -1 * (keyboard.Height + bin_textBox.Height));
             bin_textBox.RenderTransform = new MatrixTransform(mtTB);
 
             if (STATICS.ALEX_ACTIVE && User.Equals("Alex"))
