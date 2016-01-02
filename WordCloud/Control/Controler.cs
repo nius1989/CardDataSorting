@@ -51,11 +51,14 @@ namespace WordCloud
         {
             Graph.Initialize(STATICS.FILE_LOC, STATICS.WORD_COUNT);
             nodeList = new NodeList();
+            glowList = new GlowList();
             string[] wholeKeyword = Graph.GetAllKeywords();
             for (int i = 0; i < wholeKeyword.Length; i++)
             {
                 NodeView node = new NodeView(wholeKeyword[i]);
                 nodeList.AddNodeView(wholeKeyword[i], node);
+                GlowView glow = new GlowView(wholeKeyword[i]);
+                glowList.AddGlowView(wholeKeyword[i], glow);
             }
         }
 
@@ -80,34 +83,9 @@ namespace WordCloud
             Point[] points=graphGenerator.GetPoints(STATICS.SCREEN_WIDTH, STATICS.SCREEN_HEIGHT);
             String[] keywordList = Graph.GetKeywords();
             nodeList.UpdateNodeList(keywordList,points);
+            glowList.UpdateGlowList(keywordList,points);
             wordCloudView.ForceDirectedCloud.UpdateNodes(nodeList.GetNodeViews());
-            //nodeList.UpdateNode(points);
-            //glowList.UpdatePosition(points);
-        }
-        private void UpdateNodeList(String[] keywordList, Point[] points)
-        {
-            int index = 0;
-            foreach (string keyword in keywordList) {
-                //nodeList.MoveNode(keyword, points[index]);
-                index++;
-            }
-
-
-            //glowList = new GlowList();
-            //for (int i = 0; i < graph.GetKeywords().Length; i++)
-            //{
-            //    double rank = graph.GetRanking(graph.GetKeywords()[i]);
-            //    if (rank > 0)
-            //    {
-            //        GlowView glow = new GlowView();
-            //        glow.Initialize(this.userNum);
-            //        double glowSize = graph.GetGlowSize(graph.GetKeywords()[i], STATICS.MIN_GLOW_SIZE, STATICS.MAX_GLOW_SIZE);
-            //        double[] proportions = new double[] { 1.0 / 3.0, 2.0 / 3.0, 1.0 };
-            //        glow.Proportion(glowSize, proportions);
-            //        glowList.AddGlowView(graph.GetKeywords()[i], glow);
-            //    }
-            //}
-
-        }
+            wordCloudView.GlowCloud.UpdateGlows(glowList.GetGlowViews());
+        }        
     }
 }

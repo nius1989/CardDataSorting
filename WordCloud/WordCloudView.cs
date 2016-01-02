@@ -11,7 +11,7 @@ namespace WordCloud
     {
         Controler controler;
         ForceDirectedCloudView forceDirectedCloud;
-        //GlowCloudView glowCloud;
+        GlowCloudView glowCloud;
         internal ForceDirectedCloudView ForceDirectedCloud
         {
             get
@@ -24,15 +24,22 @@ namespace WordCloud
                 forceDirectedCloud = value;
             }
         }
+        internal GlowCloudView GlowCloud
+        {
+            get
+            {
+                return glowCloud;
+            }
+        }
         public WordCloudView(double width, double height) {
             this.Width = width;
             this.Height = height;
             controler = new Controler(this);
             controler.SetScreenSize(width, height);
             controler.Initialize();
-            //glowCloud = new GlowCloudView(Controler);
-            ForceDirectedCloud = new ForceDirectedCloudView(Controler);
-            //this.Children.Add(glowCloud);
+            glowCloud = new GlowCloudView(controler);
+            ForceDirectedCloud = new ForceDirectedCloudView(controler);
+            this.Children.Add(glowCloud);
             this.Children.Add(ForceDirectedCloud);
             controler.StartUIThread();
         }

@@ -21,11 +21,6 @@ namespace WordCloud
         }
         
 
-        internal void Clear()
-        {
-            nodeViewList.Clear();
-        }
-
         internal void UpdateNodeList(string[] keywordList, Point[] points)
         {
             ClearRankings();

@@ -11,34 +11,32 @@ namespace WordCloud
 {
     class GlowView:Canvas
     {
-        double[] radius = new double[] { 1 / 3.0, 2 / 3.0, 3 / 3.0 };
-        readonly double DEFAULT_DIAMETER = 100;
+        double[] radius = new double[] { 0, 0, 0, 0 };
         double scale = 1;
         Ellipse[] circles;
         double x = 0, y = 0;
-        int userNum = 3;
-        public void Initialize(int userNum)
+        string keyword;
+        public GlowView(string keyword)
         {
-            this.userNum = userNum;
-            this.Width = DEFAULT_DIAMETER;
-            this.Height = DEFAULT_DIAMETER;
-            Dispatcher.Invoke(new Action(() =>
+            this.Width = STATICS.DEFAULT_GLOW_DIAMETER;
+            this.Height = STATICS.DEFAULT_GLOW_DIAMETER;
+            circles = new Ellipse[4];
+            this.keyword = keyword;
+            for (int i = 3; i >= 0; i--)
             {
-                circles = new Ellipse[userNum];
-                for (int i = userNum - 1; i >= 0; i--)
-                {
-                    circles[i] = new Ellipse();
-                    circles[i].Fill = new SolidColorBrush(STATICS.USER_COLOR[i]);
-                    circles[i].Width = DEFAULT_DIAMETER;
-                    circles[i].Height = DEFAULT_DIAMETER;
-                    Matrix mtx = new Matrix();
-                    mtx.Translate(-circles[i].Width/2, -circles[i].Height/2);
-                    circles[i].RenderTransform = new MatrixTransform(mtx);
-                    this.Children.Add(circles[i]);
-                }
-            }));
+                circles[i] = new Ellipse();
+                circles[i].Fill = new SolidColorBrush(STATICS.USER_COLOR[i]);
+                circles[i].Width = STATICS.DEFAULT_GLOW_DIAMETER;
+                circles[i].Height = STATICS.DEFAULT_GLOW_DIAMETER;
+                Matrix mtx = new Matrix();
+                mtx.Translate(-circles[i].Width / 2, -circles[i].Height / 2);
+                circles[i].RenderTransform = new MatrixTransform(mtx);
+                this.Children.Add(circles[i]);
+            }
         }
-
+        public double GetRanking() {
+            return radius.Max();
+        }
         public void MoveTo(double x, double y)
         {
             Dispatcher.Invoke(new Action(() =>
@@ -51,14 +49,16 @@ namespace WordCloud
                 this.RenderTransform = new MatrixTransform(mtx);
             }));
         }
-
-        public void Proportion(double diameter, params double[] radiuses)
+        public void ClearUserFactors() {
+            this.radius = new double[] { 0, 0, 0, 0 };
+        }
+        public void Proportion(double diameter, double[] radiuses)
         {
             Dispatcher.Invoke(new Action(() =>
             {
                 this.radius = radiuses;
-                scale = diameter / DEFAULT_DIAMETER;
-                for (int i = userNum - 1; i >= 0; i--)
+                scale = diameter / STATICS.DEFAULT_GLOW_DIAMETER;
+                for (int i = 3; i >= 0; i--)
                 {
                     Matrix mtx = new Matrix();
                     mtx.Translate(-circles[i].Width / 2, -circles[i].Height / 2);
@@ -69,6 +69,13 @@ namespace WordCloud
                 mtxG.Scale(scale, scale);
                 mtxG.Translate(x, y);
                 this.RenderTransform = new MatrixTransform(mtxG);
+                var sorted = radius.OrderByDescending(s=>s);
+                int order = 0;
+                foreach (double d in sorted) {
+                    int index = Array.IndexOf(radius, d);
+                    Canvas.SetZIndex(circles[index], order);
+                    order++;
+                }
             }));
         }
     }

@@ -6,41 +6,35 @@ namespace WordCloud
 {
     class GlowList
     {
-        Dictionary<string, GlowView> glowViewList = new Dictionary<string, GlowView>();
+        Dictionary<string, GlowView> glowList = new Dictionary<string, GlowView>();
 
-        internal Dictionary<string, GlowView> NodeViewList
-        {
-            get
-            {
-                return glowViewList;
-            }
-        }
         public GlowView[] GetGlowViews()
         {
-            return glowViewList.Values.ToArray();
+            return glowList.Values.ToArray();
         }
         public void AddGlowView(string identifier, GlowView glowView) {
-            if (!glowViewList.ContainsKey(identifier)) {
-                glowViewList.Add(identifier, glowView);
+            if (!glowList.ContainsKey(identifier)) {
+                glowList.Add(identifier, glowView);
             }
         }
 
-        public void UpdatePosition(Point[] list) {
-            int i = 0;
-            foreach (GlowView gv in glowViewList.Values)
+        public void UpdateGlowList(string[] keywordList, Point[] points) {
+            ClearUserFactor();
+            if (keywordList != null && keywordList.Length > 0 && points != null && points.Length == keywordList.Length)
             {
-                gv.MoveTo(list[i].X, list[i].Y);
-                i++;
+                int index = 0;
+                foreach (string key in keywordList)
+                {
+                    GlowView gv = glowList[key];
+                    gv.MoveTo(points[index].X, points[index].Y);
+                    gv.Proportion(Graph.GetGlowSize(key, STATICS.MIN_GLOW_SIZE, STATICS.MAX_GLOW_SIZE),Graph.GetUserFactor(key));
+                    index++;
+                }
             }
         }
-
-        public void UpdateRadius(double[] sizes, double[][] list)
-        {
-            int i = 0;
-            foreach (GlowView gv in glowViewList.Values)
-            {
-                gv.Proportion(sizes[i], list[i]);
-                i++;
+        public void ClearUserFactor() {
+            foreach (GlowView gv in glowList.Values) {
+                gv.ClearUserFactors();
             }
         }
     }

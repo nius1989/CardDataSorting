@@ -74,6 +74,10 @@ namespace WordCloud
 
         internal static double GetGlowSize(String key, double minRadius, double maxRadiu)
         {
+            if (maxRank == minRank)
+            {
+                return 1;
+            }
             double a = (maxRadiu - minRadius) / (maxRank - minRank);
             double b = minRadius - a * minRank;
             double rank = tfidfDocs.GetRanking(key);

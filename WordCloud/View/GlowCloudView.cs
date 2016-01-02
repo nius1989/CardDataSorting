@@ -14,16 +14,35 @@ namespace WordCloud
             this.controler = controler;
             this.Width = STATICS.SCREEN_WIDTH;
             this.Height = STATICS.SCREEN_HEIGHT;
-            AddGlows(controler.GlowList.GetGlowViews());
+            UpdateGlows(controler.GlowList.GetGlowViews());
         }
 
-        private void AddGlows(GlowView[] glowViews)
+        public void UpdateGlows(GlowView[] glowViews)
         {
             Dispatcher.Invoke(new Action(() =>
             {
                 foreach (GlowView glow in glowViews)
                 {
-                    this.Children.Add(glow);
+                    if (glow.GetRanking() > 0)
+                    {
+                        if (!this.Children.Contains(glow))
+                        {
+                            this.Children.Add(glow);
+                        }
+                    }
+                }
+                List<GlowView> tobeRemoved = new List<GlowView>();
+                foreach (System.Windows.UIElement ele in this.Children)
+                {
+                    GlowView gv = ele as GlowView;
+                    if (gv.GetRanking() == 0)
+                    {
+                        tobeRemoved.Add(gv);
+                    }
+                }
+                foreach (GlowView gv in tobeRemoved)
+                {
+                    this.Children.Remove(gv);
                 }
             }));
         }

@@ -43,7 +43,7 @@ namespace WordCloud
         }
         public NodeView(string keyword) {
             this.text = keyword;
-            this.txtBlock.Text = Graph.GetOriginalWord(text);
+            this.txtBlock.Text = Graph.GetOriginalWord(text).ToUpper();
             txtBlock.TextAlignment = System.Windows.TextAlignment.Center;
             txtBlock.VerticalAlignment = System.Windows.VerticalAlignment.Center;
             txtBlock.FontSize = fontSize;

@@ -79,7 +79,10 @@ namespace TFIDF_Generator
             return tokenGraph;
         }
         internal double[] GetUserFactor(String key) {
-            return graphList[key].userFactor;
+            if (graphList.ContainsKey(key))
+                return graphList[key].userFactor;
+            else
+                return new double[] { 0, 0, 0, 0 };
         }
 
         internal string[] GetAllPossibleKeywords() {
