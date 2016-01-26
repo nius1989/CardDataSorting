@@ -13,13 +13,9 @@ namespace CardDesign
     {
         TextBlock titleBlock = new TextBlock();
         ZoomWheel[] zoomWheels;
-        string userId="Alex";
-        public Layer_Two(string userId)
+        public Layer_Two()
             : base()
-        {
-            
-
-            this.userId = userId;
+        {       
             titleBlock = new TextBlock();
             titleBlock.Width = STATICS.DEAULT_CARD_SIZE.Width;
             titleBlock.Foreground = new SolidColorBrush(Colors.Black);
@@ -28,34 +24,17 @@ namespace CardDesign
             titleBlock.HorizontalAlignment = HorizontalAlignment.Left;
             titleBlock.TextAlignment = TextAlignment.Left;
             titleBlock.FontStretch = FontStretches.Normal;
+            titleBlock.Margin = new Thickness(3);
             this.Children.Add(titleBlock);
             Grid.SetRow(titleBlock, 0);
             Grid.SetColumn(titleBlock, 0);
             Grid.SetColumnSpan(titleBlock, 2);
 
-            List<ZoomWheel> templist = new List<ZoomWheel>();
-            int index = 0;
-            for (int i = 0; i < STATICS.USER_IDS.Length; i++)
-            {
-                if (!STATICS.USER_IDS[i].Equals(userId) && STATICS.USER_ACTIVE[i])
-                {
-                    ZoomWheel zw = new ZoomWheel(STATICS.USER_IDS[i]);
-                    zw.VerticalAlignment = VerticalAlignment.Center;
-                    zw.HorizontalAlignment = HorizontalAlignment.Center;
-                    zw.RenderTransform = new MatrixTransform(new Matrix(1, 0, 0, 1, zw.Width / 2, zw.Height / 2));
-                    templist.Add(zw);
-                    this.Children.Add(zw);
-                    Grid.SetRow(zw, 1);
-                    Grid.SetColumn(zw, index);
-                    index++;
-                }
-            }
-            zoomWheels = templist.ToArray();
             RowDefinition rd = new RowDefinition();
-            rd.Height = new GridLength(STATICS.DEAULT_CARD_SIZE.Height-zoomWheels[0].Height);
+            rd.Height = new GridLength(STATICS.DEAULT_CARD_SIZE.Height-1.5* STATICS.ZOOMWHEEL_RADIUS);
             this.RowDefinitions.Add(rd);
             rd = new RowDefinition();
-            rd.Height = new GridLength(zoomWheels[0].Height);
+            rd.Height = new GridLength(STATICS.ZOOMWHEEL_RADIUS);
             this.RowDefinitions.Add(rd);
             ColumnDefinition gridCol1 = new ColumnDefinition();
             gridCol1.Width = new GridLength(this.Width / 2);
@@ -64,6 +43,22 @@ namespace CardDesign
             gridCol2.Width = new GridLength(this.Width / 2);
             this.ColumnDefinitions.Add(gridCol2);
         }
+        public override void AddZoomWheel(ZoomWheel[] zm)
+        {
+            this.zoomWheels = zm;
+            for (int i = 0; i < zoomWheels.Length; i++)
+            {
+                this.Children.Add(zoomWheels[i]);
+                Grid.SetRow(zoomWheels[i], 1);
+                Grid.SetColumn(zoomWheels[i], i);
+            }
+        }
+        public override void RemoveZoomWheel()
+        {
+            foreach (ZoomWheel zm in zoomWheels) {
+                this.Children.Remove(zm);
+            }
+        }
         public override void SetArticle(My_News news)
         {
             Dispatcher.BeginInvoke(new Action(() =>
@@ -71,12 +66,12 @@ namespace CardDesign
                 this.titleBlock.Text = news.Title;
                 if (news.Title.Length > 50)
                 {
-                    titleBlock.FontSize = 5;
+                    titleBlock.FontSize = 15;
 
                 }
                 if (news.Title.Length > 100)
                 {
-                    titleBlock.FontSize = 2;
+                    titleBlock.FontSize = 10;
                 }
             }));
         }

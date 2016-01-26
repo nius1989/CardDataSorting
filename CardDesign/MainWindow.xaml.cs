@@ -106,14 +106,9 @@ namespace CardDesign
             {
                 screen0 = System.Windows.Forms.Screen.AllScreens[0].Bounds;
                 screen1= System.Windows.Forms.Screen.AllScreens[1].Bounds;
-                //STATICS.SCREEN_WIDTH = screen0.Width;
-                //STATICS.SCREEN_HEIGHT = screen0.Height;
-                STATICS.SCREEN_WIDTH = 1235;
-                STATICS.SCREEN_HEIGHT = 825;
+                STATICS.SCREEN_WIDTH = screen0.Width;
+                STATICS.SCREEN_HEIGHT = screen0.Height;
                 STATICS.SCREEN_NUM = 2;
-                Console.WriteLine(STATICS.SCREEN_WIDTH + " " + STATICS.SCREEN_HEIGHT);
-                STATICS.DEAULT_CARD_SIZE = new Size(0.08333 * STATICS.SCREEN_WIDTH, 0.11111 * STATICS.SCREEN_HEIGHT);
-                STATICS.DEAULT_CARD_SIZE_WITH_BORDER = new Size(0.08333 * STATICS.SCREEN_WIDTH + 5, 0.11111 * STATICS.SCREEN_HEIGHT + 5); 
                 System.Drawing.Rectangle screenBounds = System.Windows.Forms.Screen.AllScreens[0].Bounds;
                 this.Left = screenBounds.Left;
                 this.Top = screenBounds.Top;
@@ -124,8 +119,8 @@ namespace CardDesign
                 STATICS.SCREEN_WIDTH = (int)SystemParameters.PrimaryScreenWidth;
                 STATICS.SCREEN_HEIGHT = (int)SystemParameters.PrimaryScreenHeight;
                 STATICS.SCREEN_NUM = 1;
-                STATICS.DEAULT_CARD_SIZE = new Size(0.08333 * STATICS.SCREEN_WIDTH, 0.11111 * STATICS.SCREEN_HEIGHT);
-                STATICS.DEAULT_CARD_SIZE_WITH_BORDER = new Size(0.08333 * STATICS.SCREEN_WIDTH + 5, 0.11111 * STATICS.SCREEN_HEIGHT + 5);
+                //STATICS.DEAULT_CARD_SIZE = new Size(0.08333 * STATICS.SCREEN_WIDTH, 0.11111 * STATICS.SCREEN_HEIGHT);
+                //STATICS.DEAULT_CARD_SIZE_WITH_BORDER = new Size(0.08333 * STATICS.SCREEN_WIDTH + 5, 0.11111 * STATICS.SCREEN_HEIGHT + 5);
                 this.Width = STATICS.SCREEN_WIDTH;
                 this.Height = STATICS.SCREEN_HEIGHT;
                 this.WindowState = System.Windows.WindowState.Maximized;
@@ -143,14 +138,32 @@ namespace CardDesign
             controlWindow.Show();
 
             this.Visibility = Visibility.Hidden;
+            this.KeyDown += MainWindow_KeyDown;
         }
+
+        private void MainWindow_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape) {
+                controlers.Deinitialize();
+                loaders.Deinitialize();
+                controlWindow.Close();
+                cloudWindow.Close();
+                this.Close();
+                Application.Current.Shutdown();
+            }
+        }
+
         public void InitializeCloudView() {
             cloudWindow = new Cloud_Window(this);
+            if (!cloudWindow.IsLoaded)
+                cloudWindow.WindowStartupLocation = WindowStartupLocation.Manual;
             cloudWindow.Width = screen1.Width;
             cloudWindow.Height = screen1.Height;
             cloudWindow.Left = screen1.Left;
             cloudWindow.Top = screen1.Top;
             cloudWindow.Visibility = Visibility.Hidden;
+            if (cloudWindow.IsLoaded)
+                cloudWindow.WindowState = WindowState.Maximized;
         }
         public void InitializeViews()
         {

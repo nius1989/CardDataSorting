@@ -12,7 +12,7 @@ namespace TFIDF_Generator
         public Token[] RemoveNumber(Token[] tokens) {
             foreach (Token t in tokens)
             {
-                if (!Regex.IsMatch(t.ProcessedContent, @"[a-z]")) {
+                if (!Regex.IsMatch(t.ProcessedContent, @"[a-z]")||t.ProcessedContent.Length==0||t.ProcessedContent.Equals(" ")) {
                     t.WordType = Token.WORDTYPE.NUMBER;
                 }
             }

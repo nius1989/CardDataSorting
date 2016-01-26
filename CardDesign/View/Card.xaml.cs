@@ -1,19 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace CardDesign
@@ -157,20 +148,20 @@ namespace CardDesign
             hightlightMask.Height = this.Height;
             hightlightMask.Fill = Brushes.Transparent;
             this.hightlightMask.RenderTransform = new MatrixTransform(new Matrix(1, 0, 0, 1,
-                       -backgroundRect.Width / 2,
-                       -backgroundRect.Height / 2));
+                       -hightlightMask.Width / 2,
+                       -hightlightMask.Height / 2));
 
 
             linkingIcon = new Linking_Icon(this);
             linkingIcon.RenderTransform = new MatrixTransform(new Matrix(1, 0, 0, 1,
-                -linkingIcon.Width / 2,
-                -(backgroundRect.Height - linkingIcon.Height / 2)));
+                +backgroundRect.Width/2- linkingIcon.Width,
+                -(backgroundRect.Height/2)));
             linkingIcon.Opacity = 0;
 
             copyIcon = new Copy_Icon(this);
             copyIcon.RenderTransform = new MatrixTransform(new Matrix(1, 0, 0, 1,
-                -copyIcon.Width / 2,
-                -copyIcon.Height / 2));
+                 +backgroundRect.Width / 2 - copyIcon.Width,
+                 +(backgroundRect.Height / 2-copyIcon.Height)));
             copyIcon.Opacity = 0;
 
             this.Container.Children.Add(hightlightMask);
@@ -218,64 +209,76 @@ namespace CardDesign
             }));
         }
 
+        
+        public void UpdateTransform()
+        {
+            ScaleTransform st = new ScaleTransform();
+            st.ScaleX = currentScale;
+            st.ScaleY = currentScale;
+            RotateTransform rt = new RotateTransform();
+            rt.Angle = currentRotation;
+            TranslateTransform tt = new TranslateTransform();
+            tt.X = currentPosition.X;
+            tt.Y = currentPosition.Y;
+
+            TransformGroup tg = new TransformGroup();
+            tg.Children.Add(st);
+            tg.Children.Add(rt);
+            tg.Children.Add(tt);
+
+            this.RenderTransform = tg;
+            if (this.FindName("TransformGroup") == null)
+                this.RegisterName("TransformGroup", tg);
+        }
         public void MoveCard(double x, double y, double duration)
         {
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                Matrix fromMatrix = (this.RenderTransform as MatrixTransform).Matrix;
-                Matrix toMatrix = new Matrix();
-                toMatrix.Rotate(currentRotation);
-                toMatrix.Scale(currentScale, currentScale);
-                toMatrix.Translate(currentPosition.X + x, currentPosition.Y + y);
                 if (duration > 0)
                 {
-                    LinearMatrixAnimation anim = new LinearMatrixAnimation(fromMatrix, toMatrix, TimeSpan.FromSeconds(duration));
-                    MatrixTransform trans = new MatrixTransform();
-                    this.RenderTransform.BeginAnimation(MatrixTransform.MatrixProperty, anim);
+                    if (this.RenderTransform != null)
+                    {
+                        UpdateTransform();
+                    }
+                    TranslateTransform trans = (this.RenderTransform as TransformGroup).Children[2] as TranslateTransform;
+                    DoubleAnimation anim1 = new DoubleAnimation(currentPosition.X, currentPosition.X + x, TimeSpan.FromSeconds(duration));
+                    DoubleAnimation anim2 = new DoubleAnimation(currentPosition.Y, currentPosition.Y + y, TimeSpan.FromSeconds(duration));
+                    trans.BeginAnimation(TranslateTransform.XProperty, anim1);
+                    trans.BeginAnimation(TranslateTransform.YProperty, anim2);
+                    currentPosition.X += x;
+                    currentPosition.Y += y;
                 }
                 else
                 {
-                    this.RenderTransform = new MatrixTransform(toMatrix);
+                    currentPosition.X += x;
+                    currentPosition.Y += y;
+                    UpdateTransform();
                 }
-                this.currentPosition = new Point(this.currentPosition.X + x, this.currentPosition.Y + y);
             }));
         }
-        
         private void positCard(Point point)
         {
             Dispatcher.BeginInvoke(new Action(() =>
             {
                 currentPosition.X += point.X;
                 currentPosition.Y += point.Y;
-                MatrixTransform xform = this.RenderTransform as MatrixTransform;
-                Matrix matrix = xform.Matrix;
-                matrix.Translate(point.X, point.Y);
-                this.RenderTransform = new MatrixTransform(matrix);
-            }), System.Windows.Threading.DispatcherPriority.Normal);
+                UpdateTransform();
+            }));
         }
         private void rotateCard(double angle)
         {
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                MatrixTransform xform = this.RenderTransform as MatrixTransform;
-                Matrix matrix = xform.Matrix;
-                matrix.RotateAt(angle,
-                    matrix.OffsetX,
-                matrix.OffsetY);
                 currentRotation += angle;
-                this.RenderTransform = new MatrixTransform(matrix);
+                UpdateTransform();
             }));
         }
-        private void scaleCard(double scale) {
+        private void scaleCard(double scale)
+        {
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                MatrixTransform xform = this.RenderTransform as MatrixTransform;
-                Matrix matrix = xform.Matrix;
-                matrix.ScaleAt(scale,scale,
-                    matrix.OffsetX,
-                matrix.OffsetY);
                 currentScale = scale;
-                this.RenderTransform = new MatrixTransform(matrix);
+                UpdateTransform();
             }));
         }
         public void Hightlight(Color color)

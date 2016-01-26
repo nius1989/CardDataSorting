@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -31,7 +26,15 @@ namespace CardDesign
         public Card_Controler(Controlers control) {
             this.Control = control;
         }
-
+        public News_Card SearchCard(string owner,string newsID) {
+            var cards = Card_List.CardList.FindAll(s => s.Owner == owner);
+            foreach (News_Card nc in cards) {
+                if (nc.NewsID == newsID) {
+                    return nc;
+                }
+            }
+            return null;
+        }
         public Card CopyCard(Card card)
         {
             Card cardToBeAdd = null;
@@ -86,6 +89,18 @@ namespace CardDesign
                 Matrix mtx = (element.RenderTransform as MatrixTransform).Matrix;
                 mtx.ScaleAt(1.0 / 1.5, 1.0 / 1.5, mtx.OffsetX, mtx.OffsetY);
                 element.RenderTransform = new MatrixTransform(mtx);
+            }
+        }
+
+        internal static void UpdateZoomWheels(string owner, string newsID, double scale)
+        {
+            var cards = Card_List.CardList.FindAll(s => s.Owner != owner);
+            foreach (News_Card nc in cards)
+            {
+                if (nc.NewsID == newsID)
+                {
+                    nc.UpdateZoomWheel(owner, scale);
+                }
             }
         }
     }

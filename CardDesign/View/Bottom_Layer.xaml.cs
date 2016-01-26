@@ -34,7 +34,8 @@ namespace CardDesign
             Rectangle rect = new Rectangle();
             rect.Width = STATICS.COLLABORATIVE_ZOON.Width;
             rect.Height = STATICS.COLLABORATIVE_ZOON.Height;
-            rect.Fill = new SolidColorBrush(Colors.Yellow);
+            rect.Fill = new SolidColorBrush(Colors.Silver);
+            rect.Opacity = 0.5;
             rect.RenderTransform = new MatrixTransform(new Matrix(1, 0, 0, 1, STATICS.COLLABORATIVE_ZOON.Left, STATICS.COLLABORATIVE_ZOON.Top));
             this.Children.Add(rect);
         }

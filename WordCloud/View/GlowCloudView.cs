@@ -21,16 +21,6 @@ namespace WordCloud
         {
             Dispatcher.Invoke(new Action(() =>
             {
-                foreach (GlowView glow in glowViews)
-                {
-                    if (glow.GetRanking() > 0)
-                    {
-                        if (!this.Children.Contains(glow))
-                        {
-                            this.Children.Add(glow);
-                        }
-                    }
-                }
                 List<GlowView> tobeRemoved = new List<GlowView>();
                 foreach (System.Windows.UIElement ele in this.Children)
                 {
@@ -44,7 +34,18 @@ namespace WordCloud
                 {
                     this.Children.Remove(gv);
                 }
-            }));
+                foreach (GlowView glow in glowViews)
+                {
+                    if (glow.GetRanking() > 0)
+                    {
+                        if (!this.Children.Contains(glow))
+                        {
+                            this.Children.Add(glow);
+                        }
+                    }
+                }
+                
+            }), System.Windows.Threading.DispatcherPriority.Render);
         }
     }
 }

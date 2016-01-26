@@ -90,24 +90,24 @@ namespace CardDesign
             base.OnManipulationStarting(e);
         }
 
-        protected override void OnManipulationInertiaStarting(ManipulationInertiaStartingEventArgs e)
-        {
-            e.TranslationBehavior = new InertiaTranslationBehavior();
-            if (e.InitialVelocities.LinearVelocity.Length < 6)
-            {
-                e.TranslationBehavior.InitialVelocity = e.InitialVelocities.LinearVelocity;
-            }
-            else
-            {
-                Vector newVector = e.InitialVelocities.LinearVelocity;
-                newVector.Normalize();
-                newVector.X *= 6;
-                newVector.Y *= 6;
-                e.TranslationBehavior.InitialVelocity = newVector;
-            }
-            e.TranslationBehavior.DesiredDeceleration = 20.0 * 96.0 / (1000.0 * 1000.0);
-            e.Handled = true;
-        }
+        //protected override void OnManipulationInertiaStarting(ManipulationInertiaStartingEventArgs e)
+        //{
+        //    e.TranslationBehavior = new InertiaTranslationBehavior();
+        //    if (e.InitialVelocities.LinearVelocity.Length < 6)
+        //    {
+        //        e.TranslationBehavior.InitialVelocity = e.InitialVelocities.LinearVelocity;
+        //    }
+        //    else
+        //    {
+        //        Vector newVector = e.InitialVelocities.LinearVelocity;
+        //        newVector.Normalize();
+        //        newVector.X *= 6;
+        //        newVector.Y *= 6;
+        //        e.TranslationBehavior.InitialVelocity = newVector;
+        //    }
+        //    e.TranslationBehavior.DesiredDeceleration = 20.0 * 96.0 / (1000.0 * 1000.0);
+        //    e.Handled = true;
+        //}
         protected override void OnManipulationDelta(ManipulationDeltaEventArgs e)
         {
             var element = e.Source as Card;
@@ -120,61 +120,61 @@ namespace CardDesign
                     element.CurrentScale * delta.Scale.X < STATICS.MAX_CARD_SCALE)
                 {
                     element.CurrentScale = element.CurrentScale * delta.Scale.X;
-                    matrix.Scale(element.CurrentScale, element.CurrentScale);
+                    //matrix.Scale(element.CurrentScale, element.CurrentScale);
                 }
                 else
                 {
-                    matrix.Scale(element.CurrentScale, element.CurrentScale);     
+                    //matrix.Scale(element.CurrentScale, element.CurrentScale);     
                 }
 
                 element.CurrentRotation += delta.Rotation;
-                matrix.Rotate(element.CurrentRotation);
-                if (e.IsInertial)
+                //matrix.Rotate(element.CurrentRotation);
+                //if (e.IsInertial)
+                //{
+                //    if (element.CurrentPosition.X >= STATICS.SCREEN_WIDTH)
+                //    {
+                //        element.Direction = new Vector(element.Direction.X * -1, element.Direction.Y);
+                //        element.CurrentPosition = new Point(STATICS.SCREEN_WIDTH - 1, element.CurrentPosition.Y);
+                //    }
+                //    if (element.CurrentPosition.X <= 0)
+                //    {
+                //        element.Direction = new Vector(element.Direction.X * -1, element.Direction.Y);
+                //        element.CurrentPosition = new Point(1, element.CurrentPosition.Y);
+                //    }
+                //    if (element.CurrentPosition.Y >= STATICS.SCREEN_HEIGHT)
+                //    {
+                //        element.Direction = new Vector(element.Direction.X, element.Direction.Y * -1);
+                //        element.CurrentPosition = new Point(element.CurrentPosition.X, STATICS.SCREEN_HEIGHT - 1);
+                //    }
+                //    if (element.CurrentPosition.Y <= 0)
+                //    {
+                //        element.Direction = new Vector(element.Direction.X, element.Direction.Y * -1);
+                //        element.CurrentPosition = new Point(element.CurrentPosition.X, 1);
+                //    }
+                //    Point newPosi = new Point(element.CurrentPosition.X + delta.Translation.X * element.Direction.X,
+                //         element.CurrentPosition.Y + delta.Translation.Y * element.Direction.Y);
+                //    element.CurrentPosition = newPosi;
+                //    matrix.Translate(element.CurrentPosition.X, element.CurrentPosition.Y);
+                //}
+                //else
+                //{
+                Point newPosi = new Point(element.CurrentPosition.X + delta.Translation.X,
+                    element.CurrentPosition.Y + delta.Translation.Y);
+                if (newPosi.X < STATICS.SCREEN_WIDTH &&
+                                    newPosi.X > 0 &&
+                                    newPosi.Y < STATICS.SCREEN_HEIGHT &&
+                                    newPosi.Y > 0)
                 {
-                    if (element.CurrentPosition.X >= STATICS.SCREEN_WIDTH)
-                    {
-                        element.Direction = new Vector(element.Direction.X * -1, element.Direction.Y);
-                        element.CurrentPosition = new Point(STATICS.SCREEN_WIDTH - 1, element.CurrentPosition.Y);
-                    }
-                    if (element.CurrentPosition.X <= 0)
-                    {
-                        element.Direction = new Vector(element.Direction.X * -1, element.Direction.Y);
-                        element.CurrentPosition = new Point(1, element.CurrentPosition.Y);
-                    }
-                    if (element.CurrentPosition.Y >= STATICS.SCREEN_HEIGHT)
-                    {
-                        element.Direction = new Vector(element.Direction.X, element.Direction.Y * -1);
-                        element.CurrentPosition = new Point(element.CurrentPosition.X, STATICS.SCREEN_HEIGHT - 1);
-                    }
-                    if (element.CurrentPosition.Y <= 0)
-                    {
-                        element.Direction = new Vector(element.Direction.X, element.Direction.Y * -1);
-                        element.CurrentPosition = new Point(element.CurrentPosition.X, 1);
-                    }
-                    Point newPosi = new Point(element.CurrentPosition.X + delta.Translation.X * element.Direction.X,
-                         element.CurrentPosition.Y + delta.Translation.Y * element.Direction.Y);
                     element.CurrentPosition = newPosi;
-                    matrix.Translate(element.CurrentPosition.X, element.CurrentPosition.Y);
+                    //matrix.Translate(element.CurrentPosition.X, element.CurrentPosition.Y);
                 }
                 else
                 {
-                    Point newPosi = new Point(element.CurrentPosition.X + delta.Translation.X,
-                        element.CurrentPosition.Y + delta.Translation.Y);
-                    if (newPosi.X < STATICS.SCREEN_WIDTH &&
-                                        newPosi.X > 0 &&
-                                        newPosi.Y < STATICS.SCREEN_HEIGHT &&
-                                        newPosi.Y > 0)
-                    {
-                        element.CurrentPosition = newPosi;
-                        matrix.Translate(element.CurrentPosition.X, element.CurrentPosition.Y);
-                    }
-                    else
-                    {
-                        matrix.Translate(element.CurrentPosition.X, element.CurrentPosition.Y);
-                    }                
+                    //matrix.Translate(element.CurrentPosition.X, element.CurrentPosition.Y);
                 }
+                //}
 
-                element.RenderTransform = new MatrixTransform(matrix);
+                element.UpdateTransform();
                 mainWindow.LinkingGestureLayer.Move(element);
             }
             else {

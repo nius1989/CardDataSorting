@@ -9,12 +9,12 @@ using System.Windows.Media;
 
 namespace CardDesign
 {
-    class Layer_Three : Layer_Base
+    class Layer_Four : Layer_Base
     {
         TextBlock titleBlock = new TextBlock();
         TextBlock abstrackBlock = new TextBlock();
         ZoomWheel[] zoomWheels;
-        public Layer_Three() :base()
+        public Layer_Four() :base()
         {            
             titleBlock = new TextBlock();
             titleBlock.Width = STATICS.DEAULT_CARD_SIZE.Width;
@@ -33,7 +33,7 @@ namespace CardDesign
             abstrackBlock.LineHeight = 1;
             abstrackBlock.TextWrapping = TextWrapping.Wrap;
             abstrackBlock.TextAlignment = TextAlignment.Justify;
-            abstrackBlock.FontSize = 8;
+            abstrackBlock.FontSize = 5;
             abstrackBlock.HorizontalAlignment = HorizontalAlignment.Center;
             abstrackBlock.VerticalAlignment = VerticalAlignment.Center;
             abstrackBlock.FontStretch = FontStretches.Normal;
@@ -44,16 +44,12 @@ namespace CardDesign
             Grid.SetColumn(titleBlock, 0);
             Grid.SetColumnSpan(titleBlock, 2);
 
-            Grid.SetRow(abstrackBlock, 2);
+            Grid.SetRow(abstrackBlock, 1);
             Grid.SetColumn(abstrackBlock, 0);
             Grid.SetColumnSpan(abstrackBlock, 2);
 
             RowDefinition rd = new RowDefinition();
             rd.Height = GridLength.Auto;
-            this.RowDefinitions.Add(rd);
-
-            rd = new RowDefinition();
-            rd.Height = new GridLength(STATICS.ZOOMWHEEL_RADIUS);
             this.RowDefinitions.Add(rd);
 
             rd = new RowDefinition();
@@ -68,23 +64,7 @@ namespace CardDesign
             gridCol2.Width = new GridLength(this.Width / 2);
             this.ColumnDefinitions.Add(gridCol2);
         }
-        public override void AddZoomWheel(ZoomWheel[] zm)
-        {
-            this.zoomWheels = zm;
-            for (int i = 0; i < zoomWheels.Length; i++)
-            {
-                this.Children.Add(zoomWheels[i]);
-                Grid.SetRow(zoomWheels[i], 1);
-                Grid.SetColumn(zoomWheels[i], i);
-            }
-        }
-        public override void RemoveZoomWheel()
-        {
-            foreach (ZoomWheel zm in zoomWheels)
-            {
-                this.Children.Remove(zm);
-            }
-        }
+        
         public override void SetArticle(My_News news)
         {
             Dispatcher.BeginInvoke(new Action(() =>

@@ -22,7 +22,20 @@ namespace WordCloud
         Controler ctrler;
         double maxConnectionValue = 0;
         Vector adjustmentVector = new Vector();
-        double maxConnectionLength = 0.6;
+        double maxConnectionLength = 0.7;
+
+        public bool IsRunning
+        {
+            get
+            {
+                return isRunning;
+            }
+
+            set
+            {
+                isRunning = value;
+            }
+        }
 
         public Graph_Generator(Controler controler) {
             this.ctrler = controler;
@@ -68,8 +81,8 @@ namespace WordCloud
                     keywords = newKeys;
                     for (int i = 0; i < newKeys.Length; i++)
                     {
-                        double rx = (rand.NextDouble() - 0.5) / 1000;
-                        double ry = (rand.NextDouble() - 0.5) / 1000;
+                        double rx = 4 * (rand.NextDouble() - 0.5) / 1000;
+                        double ry = 3 * (rand.NextDouble() - 0.5) / 1000;
                         pointList.Add(new Point(0.5 + rx, 0.5 + ry));
                     }
                 }
@@ -82,8 +95,8 @@ namespace WordCloud
                             tempList.Add(pointList[index]);
                         }
                         else {
-                            double rx = (rand.NextDouble() - 0.5) / 1000;
-                            double ry = (rand.NextDouble() - 0.5) / 1000;
+                            double rx = 4 * (rand.NextDouble() - 0.5) / 1000;
+                            double ry = 3 * (rand.NextDouble() - 0.5) / 1000;
                             tempList.Add(new Point(0.5 + rx, 0.5 + ry));
                         }
                     }
@@ -92,12 +105,12 @@ namespace WordCloud
                     keywords = newKeys;
                 }
                 step = 0.05;
-                isRunning = true;
+                IsRunning = true;
             }
             else
             {
                 ctrler.UpdateNodes();
-                isRunning = false;
+                IsRunning = false;
             }
         }
 
@@ -115,7 +128,7 @@ namespace WordCloud
             energy = double.MaxValue;
             while (true)
             {
-                if (isRunning)
+                if (IsRunning)
                 {
                     UpdateUI();
                     ctrler.UpdateNodes();

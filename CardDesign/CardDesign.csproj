@@ -165,6 +165,7 @@
     </Compile>
     <Compile Include="View\News_Card\Layer_Base.cs" />
     <Compile Include="View\News_Card\Layer_One.cs" />
+    <Compile Include="View\News_Card\Layer_Four.cs" />
     <Compile Include="View\News_Card\Layer_Three.cs" />
     <Compile Include="View\News_Card\Layer_Two.cs" />
     <Compile Include="View\News_Card\News_Card.cs" />

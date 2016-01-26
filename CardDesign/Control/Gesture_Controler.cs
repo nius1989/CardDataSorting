@@ -145,16 +145,16 @@ namespace CardDesign
             if (newGesturePoints.Count > 0)
             {
                 // the code that you want to measure comes here
-                //Gesture_Event_Linking.Detect(newGesturePoints, this);
+                Gesture_Event_Linking.Detect(newGesturePoints, this);
                 //Gesture_Event_Copying.Detect(newGesturePoints, this);
                 Gesture_Event_Sorting.Detect(newGesturePoints, this);
                 //Gesture_Event_Emphasizing.Detect(newGesturePoints, this);
                 //Gesture_Event_Grouping.Detect(newGesturePoints,this);
                 //Gesture_Event_Sorting_Group.Detect(newGesturePoints, this);
-                //Gesture_Event_Showing.Detect(newGesturePoints, this);
+                Gesture_Event_Showing.Detect(newGesturePoints, this);
                 Gesture_Event_Showing_Sorting.Detect(newGesturePoints,this);
                 Gesture_Event_Cutting_Sorting.Detect(newGesturePoints, this);
-                //Gesture_Event_Cutting_Link.Detect(newGesturePoints, this);
+                Gesture_Event_Cutting_Link.Detect(newGesturePoints, this);
                 Gesture_Event_Deleting_Bin.Detect(newGesturePoints, this);
                 Gesture_Event_Collaborative_Zoon.Detect(newGesturePoints, this);
             }

@@ -36,8 +36,9 @@ namespace CardDesign
         public static bool[] USER_ACTIVE = new bool[] { ALEX_ACTIVE, BEN_ACTIVE, CHRIS_ACTIVE, DANNY_ACTIVE };
         public static int USER_NUMER = 3;
         public static System.Drawing.Size MENU_BAR_SIZE = new System.Drawing.Size(600, 50);
-        //public static System.Drawing.Rectangle COLLABORATIVE_ZOON = new System.Drawing.Rectangle(STATICS.SCREEN_WIDTH / 4, 0, STATICS.SCREEN_WIDTH / 2, 3 * STATICS.SCREEN_HEIGHT / 4);
-        public static System.Drawing.Rectangle COLLABORATIVE_ZOON = new System.Drawing.Rectangle(300, 0, 500, 300);
+        public static System.Drawing.Rectangle COLLABORATIVE_ZOON = new System.Drawing.Rectangle(STATICS.SCREEN_WIDTH / 4, 0, STATICS.SCREEN_WIDTH / 2, 3 * STATICS.SCREEN_HEIGHT / 5);
+        //public static System.Drawing.Rectangle COLLABORATIVE_ZOON = new System.Drawing.Rectangle(300, 0, 500, 300);
         public static int NEWS_NUMBER = 15;
+        public static int ZOOMWHEEL_RADIUS = 20;
     }
 }

@@ -40,6 +40,7 @@ namespace WordCloud
         }
         public void UpdateMatrix(double[][] matrix)
         {
+            graphGenerator.IsRunning = false;
             Graph.SetFactorMatrix(matrix);
             graphGenerator.UpdateGraph(Graph.GetKeywords(), Graph.GetConMatrix());
         }
@@ -80,6 +81,7 @@ namespace WordCloud
         }
         internal void UpdateNodes()
         {
+            //points and keywordList are one-to-one mapped.
             Point[] points=graphGenerator.GetPoints(STATICS.SCREEN_WIDTH, STATICS.SCREEN_HEIGHT);
             String[] keywordList = Graph.GetKeywords();
             nodeList.UpdateNodeList(keywordList,points);

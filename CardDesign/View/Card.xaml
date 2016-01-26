@@ -7,6 +7,6 @@
         Height="120"
 >
 
-    <Grid x:Name="Container">
-    </Grid>
+    <Canvas x:Name="Container">
+    </Canvas>
 </Canvas>

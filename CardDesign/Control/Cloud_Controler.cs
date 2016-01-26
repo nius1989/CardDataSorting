@@ -48,7 +48,7 @@ namespace CardDesign
             foreach (News_Card card in Shared_Card_List.ShardCards)
             {
                 int index = Array.IndexOf(STATICS.USER_IDS, card.Owner);
-                matrix[index][int.Parse(card.NewsID)] = card.CurrentScale;
+                matrix[index][int.Parse(card.NewsID)] = (card.CurrentScale-STATICS.MIN_CARD_SCALE)/STATICS.MAX_CARD_SCALE;
             }
             cloudControler.UpdateMatrix(matrix);
         }

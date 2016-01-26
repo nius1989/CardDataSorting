@@ -31,8 +31,8 @@ namespace TFIDF_Generator
         string[] keywords;//selected #matrixSize words
         double[][] tokenGraph;//Connection between #matrixSize nodes
         Document[] docs;
-        int matrixSize = 30;
-        readonly int BUFFER_SIZE=1000;
+        int matrixSize = 40;
+        readonly int BUFFER_SIZE=500;
 
         public string[] Keywords
         {
@@ -182,17 +182,16 @@ namespace TFIDF_Generator
             int keywordNum = keywords.Length;
             if (keywordNum > 0)
             {
-                tokenGraph = new double[keywordNum][];
-                for (int m = 0; m < keywordNum; m++)
-                {
-                    tokenGraph[m] = new double[keywordNum];
-                }
-
+                    tokenGraph = new double[keywordNum][];
+                    for (int m = 0; m < keywordNum; m++)
+                    {
+                        tokenGraph[m] = new double[keywordNum];
+                    }
                 int i = 0, j = 0;
-                foreach (string k1 in Keywords)
+                foreach (string k1 in keywords)
                 {
                     j = 0;
-                    foreach (string k2 in Keywords)
+                    foreach (string k2 in keywords)
                     {
                         if (!k1.Equals(k2))
                         {

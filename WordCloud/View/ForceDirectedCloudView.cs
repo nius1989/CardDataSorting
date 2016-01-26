@@ -21,8 +21,21 @@ namespace WordCloud
 
         public void UpdateNodes(NodeView[] nodeList)
         {
-            Dispatcher.Invoke(new Action(() =>
+            Dispatcher.Invoke( new Action(() =>
             {
+                List<NodeView> tobeRemoved = new List<NodeView>();
+                foreach (System.Windows.UIElement ele in this.Children)
+                {
+                    NodeView nv = ele as NodeView;
+                    if (nv.Ranking == 0)
+                    {
+                        tobeRemoved.Add(nv);
+                    }
+                }
+                foreach (NodeView nv in tobeRemoved)
+                {
+                    this.Children.Remove(nv);
+                }
                 foreach (NodeView node in nodeList)
                 {
                     if (node.Ranking > 0)
@@ -32,18 +45,8 @@ namespace WordCloud
                             this.Children.Add(node);
                         }
                     }
-                }
-                List<NodeView> tobeRemoved = new List<NodeView>();
-                foreach (System.Windows.UIElement ele in this.Children) {
-                    NodeView nv = ele as NodeView;
-                    if (nv.Ranking == 0) {
-                        tobeRemoved.Add(nv);
-                    }
-                }
-                foreach (NodeView nv in tobeRemoved) {
-                    this.Children.Remove(nv);
-                }
-            }));
+                }                
+            }),System.Windows.Threading.DispatcherPriority.Render);
         }
     }
 }

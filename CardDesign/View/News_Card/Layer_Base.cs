@@ -21,5 +21,12 @@ namespace CardDesign
         public virtual void SetArticle(My_News paper)
         {
         }
+        public virtual void RemoveZoomWheel() {
+
+        }
+        public virtual void AddZoomWheel(ZoomWheel[] zm)
+        {
+
+        }
     }
 }
